@@ -59,13 +59,13 @@ const services = [
 
 export function ServicesPreview() {
   return (
-    <section className="py-32 bg-background relative border-t border-border/40 overflow-hidden">
+    <section className="py-16 md:py-32 bg-background relative border-t border-border/40 overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
         
-        <div className="flex flex-col md:flex-row justify-between md:items-end gap-8 mb-16">
+        <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 md:gap-8 mb-12 md:mb-16">
           <div className="max-w-2xl">
             <h2 className="text-sm font-medium tracking-[0.1em] text-accent uppercase mb-4">Our Services</h2>
-            <h3 className="text-3xl md:text-5xl font-heading font-bold tracking-tight text-foreground">
+            <h3 className="text-2xl sm:text-3xl md:text-5xl font-heading font-bold tracking-tight text-foreground leading-tight">
               Everything you need for a stronger digital presence.
             </h3>
           </div>
@@ -80,7 +80,7 @@ export function ServicesPreview() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {services.map((service, idx) => (
             <motion.div 
               key={idx}

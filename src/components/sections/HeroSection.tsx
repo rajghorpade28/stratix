@@ -39,7 +39,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-7xl lg:text-[6.5rem] font-heading font-bold tracking-tight leading-[1] mb-10 text-foreground"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-[6.5rem] font-heading font-bold tracking-tight leading-[1] mb-10 text-foreground"
           >
             We help your business get more <span className="text-accent italic font-serif font-medium">visibility</span> and leads online.
           </motion.h1>

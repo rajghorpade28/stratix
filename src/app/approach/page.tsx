@@ -44,12 +44,12 @@ export default function ApproachPage() {
       <div className="container mx-auto px-4 md:px-8">
         
         {/* Header Section */}
-        <section className="max-w-5xl mb-24">
+        <section className="max-w-5xl mb-12 md:mb-24">
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-7xl lg:text-[5.5rem] font-heading font-bold mb-8 leading-[0.95] tracking-tighter"
+            className="text-4xl md:text-7xl lg:text-[5.5rem] font-heading font-bold mb-6 md:mb-8 leading-[0.95] tracking-tighter"
           >
             How we engineer <br className="hidden md:block"/>predictable growth.
           </motion.h1>
@@ -57,7 +57,7 @@ export default function ApproachPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mb-12"
+            className="text-lg md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mb-8 md:mb-12"
           >
             We rely on proven strategic playbooks rather than guesswork. Here is the exact methodology we deploy to scale modern digital brands.
           </motion.p>
@@ -68,7 +68,7 @@ export default function ApproachPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full h-[50vh] relative mb-32 editorial-panel overflow-hidden"
+          className="w-full h-[30vh] sm:h-[40vh] md:h-[50vh] relative mb-16 md:mb-32 editorial-panel overflow-hidden"
         >
           <Image 
             src="/images/stratix_strategic_planning_1779964919486.png"
@@ -80,7 +80,7 @@ export default function ApproachPage() {
         </motion.div>
 
         {/* Playbooks */}
-        <div className="flex flex-col gap-32 mb-32">
+        <div className="flex flex-col gap-16 md:gap-32 mb-16 md:mb-32">
           {playbooks.map((playbook, idx) => (
             <motion.div 
               key={idx}
@@ -88,27 +88,27 @@ export default function ApproachPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-12 editorial-panel p-10 md:p-16 relative"
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 editorial-panel p-6 sm:p-10 md:p-16 relative"
             >
               <div className="lg:col-span-5 flex flex-col relative z-10">
-                <div className="flex items-center gap-3 mb-8">
+                <div className="flex items-center gap-3 mb-6 md:mb-8">
                   <span className="text-xs font-semibold tracking-widest text-muted-foreground uppercase border-b border-white/10 pb-1">{playbook.focus}</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6 tracking-tight">{playbook.title}</h2>
+                <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-4 md:mb-6 tracking-tight">{playbook.title}</h2>
               </div>
 
-              <div className="lg:col-span-7 flex flex-col gap-12 relative z-10">
-                <p className="text-muted-foreground leading-relaxed text-lg md:text-xl">
+              <div className="lg:col-span-7 flex flex-col gap-8 md:gap-12 relative z-10">
+                <p className="text-muted-foreground leading-relaxed text-base md:text-xl">
                   {playbook.description}
                 </p>
                 
-                <div className="bg-card/20 p-8 border border-white/5">
-                  <h3 className="text-xs font-semibold tracking-[0.2em] text-foreground uppercase mb-6">Core Methodology</h3>
-                  <ul className="flex flex-col gap-6">
+                <div className="bg-card/20 p-5 sm:p-8 border border-white/5">
+                  <h3 className="text-xs font-semibold tracking-[0.2em] text-foreground uppercase mb-4 md:mb-6">Core Methodology</h3>
+                  <ul className="flex flex-col gap-4 md:gap-6">
                     {playbook.steps.map((step, i) => (
                       <li key={i} className="flex items-start gap-4">
                         <span className="text-xs font-semibold tracking-widest text-muted-foreground mt-1">0{i+1}.</span>
-                        <span className="text-foreground text-base">{step}</span>
+                        <span className="text-foreground text-sm sm:text-base">{step}</span>
                       </li>
                     ))}
                   </ul>
@@ -119,9 +119,9 @@ export default function ApproachPage() {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center pt-16 border-t border-white/5">
-          <h3 className="text-3xl md:text-5xl font-heading font-bold mb-8 tracking-tighter">Ready to deploy these systems?</h3>
-          <Button size="lg" asChild className="h-14 px-10 text-sm font-medium rounded-none bg-foreground text-background hover:bg-muted-foreground">
+        <div className="text-center pt-12 md:pt-16 border-t border-white/5">
+          <h3 className="text-2xl md:text-5xl font-heading font-bold mb-6 md:mb-8 tracking-tighter">Ready to deploy these systems?</h3>
+          <Button size="lg" asChild className="h-14 px-10 text-sm font-medium rounded-none bg-accent text-accent-foreground hover:bg-accent/90 transition-colors">
             <Link href="/contact">Get In Touch</Link>
           </Button>
         </div>

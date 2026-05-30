@@ -23,12 +23,12 @@ export default function ContactPage() {
       <div className="container mx-auto px-4 md:px-8">
         
         {/* Header Section */}
-        <section className="max-w-5xl mb-24">
+        <section className="max-w-5xl mb-12 md:mb-24">
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-7xl lg:text-[5.5rem] font-heading font-bold mb-8 leading-[0.95] tracking-tighter"
+            className="text-4xl md:text-7xl lg:text-[5.5rem] font-heading font-bold mb-6 md:mb-8 leading-[0.95] tracking-tighter"
           >
             Let&apos;s talk about <br className="hidden md:block"/>your marketing.
           </motion.h1>
@@ -36,20 +36,20 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl"
+            className="text-lg md:text-2xl text-muted-foreground leading-relaxed max-w-3xl"
           >
             We are here to answer your questions and see if our services are the right fit for your business goals.
           </motion.p>
         </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
           
           {/* Contact Form */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 bg-card border border-border p-8 md:p-12 relative rounded-lg shadow-sm"
+            className="lg:col-span-7 bg-card border border-border p-6 sm:p-8 md:p-12 relative rounded-lg shadow-sm"
           >
             <h2 className="text-2xl font-heading font-bold mb-8">Send us a message</h2>
             <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
