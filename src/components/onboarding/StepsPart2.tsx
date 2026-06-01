@@ -8,6 +8,7 @@ import { YesNoSelector } from "./ui/YesNoSelector";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { QuotationResult } from "@/actions/calculateQuotation";
 
 interface StepProps {
   data: OnboardingData;
@@ -243,17 +244,52 @@ export function Step9Summary({ data }: { data: OnboardingData }) {
   );
 }
 
-export function StepSuccess() {
+export function StepSuccess({ quotation }: { quotation: QuotationResult }) {
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(price);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center text-center space-y-6 py-12 md:py-24">
-      <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mb-4">
-        <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-2xl">
+    <div className="flex flex-col items-center justify-center text-center space-y-8 py-12 md:py-16 w-full max-w-3xl mx-auto">
+      <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mb-2">
+        <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-2xl shadow-[0_0_15px_rgba(var(--primary-color),0.2)]">
           ✓
         </div>
       </div>
-      <h2 className="text-4xl md:text-5xl font-heading font-bold text-foreground">Thank You!</h2>
-      <p className="text-xl text-muted-foreground max-w-lg leading-relaxed">
-        We have received your requirements and will contact you shortly to begin building your premium digital experience.
+      
+      <div className="space-y-4">
+        <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground">Requirements Received</h2>
+        <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+          Thank you for sharing your vision with us. Based on your specific requirements, our intelligent engine has generated your estimated project investment.
+        </p>
+      </div>
+
+      <div className="w-full bg-card border border-border/50 rounded-2xl p-8 md:p-12 mt-8 shadow-2xl relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-50" />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 divide-y md:divide-y-0 md:divide-x divide-border/50">
+          
+          <div className="flex flex-col items-center justify-center space-y-3 pt-4 md:pt-0">
+            <span className="text-xs font-bold text-accent uppercase tracking-widest">Estimated Investment</span>
+            <div className="text-4xl md:text-5xl font-heading font-bold text-foreground tracking-tight">
+              {formatPrice(quotation.price)}
+            </div>
+            <span className="text-xs text-muted-foreground font-medium">Includes 15% project buffer</span>
+          </div>
+
+          <div className="flex flex-col items-center justify-center space-y-3 pt-8 md:pt-0">
+            <span className="text-xs font-bold text-accent uppercase tracking-widest">Estimated Timeline</span>
+            <div className="text-4xl md:text-5xl font-heading font-bold text-foreground tracking-tight">
+              {quotation.minDays} - {quotation.maxDays}
+            </div>
+            <span className="text-xs text-muted-foreground font-medium">Business Days Delivery</span>
+          </div>
+
+        </div>
+      </div>
+
+      <p className="text-sm text-muted-foreground mt-8 max-w-lg mx-auto">
+        Our team will review these exact details and contact you shortly to finalize the proposal and begin building your premium digital experience.
       </p>
     </div>
   );
