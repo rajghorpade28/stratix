@@ -62,7 +62,7 @@ export function HeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.8 }}
-              className="flex justify-start md:justify-end"
+              className="flex flex-col sm:flex-row justify-start md:justify-end gap-4"
             >
               <motion.div
                 whileHover={{ scale: 1.02 }}
@@ -70,11 +70,24 @@ export function HeroSection() {
                 transition={{ type: "spring", stiffness: 400, damping: 15 }}
               >
                 <Link 
+                  href="/start"
+                  className="group relative inline-flex items-center justify-center gap-4 overflow-hidden rounded-md bg-accent text-accent-foreground px-8 py-4 transition-all shadow-md font-semibold text-[15px] w-full sm:w-auto"
+                >
+                  <span className="relative z-10">Want to Build a Website?</span>
+                  <div className="absolute inset-0 bg-white/20 translate-y-[100%] group-hover:translate-y-[0%] transition-transform duration-300" />
+                </Link>
+              </motion.div>
+              
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 15 }}
+              >
+                <Link 
                   href="/contact"
-                  className="group relative inline-flex items-center gap-4 overflow-hidden rounded-md bg-accent text-accent-foreground px-8 py-4 transition-all shadow-md font-semibold text-[15px]"
+                  className="group relative inline-flex items-center justify-center gap-4 overflow-hidden rounded-md bg-transparent border border-border/50 text-foreground px-8 py-4 transition-all hover:bg-accent/10 font-semibold text-[15px] w-full sm:w-auto"
                 >
                   <span className="relative z-10">Let's Talk</span>
-                  <div className="absolute inset-0 bg-white/20 translate-y-[100%] group-hover:translate-y-[0%] transition-transform duration-300" />
                 </Link>
               </motion.div>
             </motion.div>
