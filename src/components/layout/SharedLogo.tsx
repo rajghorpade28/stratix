@@ -39,8 +39,8 @@ export function SharedLogo() {
       
       // Target center of the viewport
       const targetX = window.innerWidth / 2;
-      // Target a fixed, predictable distance from the top (e.g. 120px) to guarantee zero overlap with the text below
-      const targetY = 120;
+      // Target a fixed, predictable distance from the top (e.g. 150px) to guarantee zero overlap with the text below
+      const targetY = 150;
       
       // Current center of the element in its natural navbar position
       const currentX = rect.left + rect.width / 2;
