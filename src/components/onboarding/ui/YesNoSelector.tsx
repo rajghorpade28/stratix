@@ -17,7 +17,7 @@ export function YesNoSelector({ id, value, onChange, className }: YesNoSelectorP
         type="button"
         onClick={() => onChange(true)}
         className={cn(
-          "relative flex-1 sm:flex-none sm:w-24 px-4 py-2 rounded-md font-medium text-sm transition-colors z-10",
+          "relative flex-1 sm:flex-none sm:w-20 px-3 py-1.5 rounded-md font-medium text-[13px] transition-colors z-10",
           value === true ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
         )}
       >
@@ -37,7 +37,7 @@ export function YesNoSelector({ id, value, onChange, className }: YesNoSelectorP
         type="button"
         onClick={() => onChange(false)}
         className={cn(
-          "relative flex-1 sm:flex-none sm:w-24 px-4 py-2 rounded-md font-medium text-sm transition-colors z-10",
+          "relative flex-1 sm:flex-none sm:w-20 px-3 py-1.5 rounded-md font-medium text-[13px] transition-colors z-10",
           value === false ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
         )}
       >

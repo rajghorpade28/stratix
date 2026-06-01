@@ -100,8 +100,8 @@ export function OnboardingFlow() {
   const isSummary = currentStep === TOTAL_STEPS + 1;
 
   return (
-    <div className="min-h-screen pt-32 pb-24 px-4 sm:px-6">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-[90vh] pt-24 pb-16 px-4 sm:px-6 flex flex-col">
+      <div className="w-full max-w-2xl mx-auto flex-1 flex flex-col">
         {!isSummary && (
           <ProgressTracker 
             currentStep={currentStep} 
@@ -117,7 +117,7 @@ export function OnboardingFlow() {
           </div>
         )}
 
-        <div className="relative min-h-[500px]">
+        <div className="relative flex-1 flex flex-col justify-center min-h-[350px]">
           <AnimatePresence custom={direction} mode="wait">
             <motion.div
               key={currentStep}
@@ -133,7 +133,7 @@ export function OnboardingFlow() {
           </AnimatePresence>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-border/50 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
+        <div className="mt-8 pt-6 border-t border-border/50 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
           {currentStep > 1 ? (
             <button
               onClick={handleBack}

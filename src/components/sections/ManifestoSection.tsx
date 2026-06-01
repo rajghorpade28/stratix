@@ -23,7 +23,7 @@ const manifestoPoints = [
 
 export function ManifestoSection() {
   return (
-    <section className="py-32 bg-background relative border-t border-border/40">
+    <section className="py-20 md:py-28 bg-background relative border-t border-border/40">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-24">

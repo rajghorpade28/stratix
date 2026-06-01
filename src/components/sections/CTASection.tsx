@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 
 export function CTASection() {
   return (
-    <section className="py-16 md:py-32 relative overflow-hidden bg-primary border-t border-border/40">
+    <section className="py-20 md:py-28 relative overflow-hidden bg-primary border-t border-border/40">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10 flex flex-col items-center text-center">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}

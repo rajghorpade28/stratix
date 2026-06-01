@@ -19,7 +19,7 @@ export function CheckboxCard({ label, selected, onClick, className }: CheckboxCa
       onClick={onClick}
       type="button"
       className={cn(
-        "relative w-full p-4 rounded-lg border-2 text-left transition-all flex items-center gap-3",
+        "relative w-full p-3 rounded-lg border-2 text-left transition-all flex items-center gap-3",
         selected 
           ? "border-primary bg-primary/5 shadow-sm" 
           : "border-border bg-card hover:border-primary/50",
@@ -34,7 +34,7 @@ export function CheckboxCard({ label, selected, onClick, className }: CheckboxCa
       </div>
       
       <span className={cn(
-        "font-medium text-[15px] transition-colors leading-tight",
+        "font-medium text-[13px] transition-colors leading-tight",
         selected ? "text-foreground" : "text-muted-foreground"
       )}>
         {label}

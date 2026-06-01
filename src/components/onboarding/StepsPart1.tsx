@@ -25,11 +25,11 @@ export function Step1WebsiteType({ data, updateData }: StepProps) {
   ];
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-3xl font-heading font-bold">1. What Type of Website Do You Need?</h2>
-      <p className="text-muted-foreground">Please select the option that best describes you:</p>
+    <div className="space-y-4">
+      <h2 className="text-2xl font-heading font-bold">1. What Type of Website Do You Need?</h2>
+      <p className="text-sm text-muted-foreground">Please select the option that best describes you:</p>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {options.map((opt) => (
           <RadioCard
             key={opt}
@@ -67,10 +67,10 @@ export function Step2Goal({ data, updateData }: StepProps) {
   ];
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-3xl font-heading font-bold">2. What Is the Main Goal of Your Website?</h2>
+    <div className="space-y-4">
+      <h2 className="text-2xl font-heading font-bold">2. What Is the Main Goal of Your Website?</h2>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {options.map((opt) => (
           <RadioCard
             key={opt}
@@ -111,11 +111,11 @@ export function Step3Pages({ data, updateData }: StepProps) {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div>
-        <h2 className="text-3xl font-heading font-bold mb-6">3. Website Pages Required</h2>
-        <h3 className="text-xl font-semibold mb-4">Essential Pages</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <h2 className="text-2xl font-heading font-bold mb-4">3. Website Pages Required</h2>
+        <h3 className="text-lg font-semibold mb-3">Essential Pages</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
           {essentialPages.map(page => (
             <CheckboxCard
               key={page}
@@ -128,12 +128,12 @@ export function Step3Pages({ data, updateData }: StepProps) {
       </div>
 
       <div>
-        <h3 className="text-xl font-semibold mb-4">Additional Custom Pages</h3>
+        <h3 className="text-lg font-semibold mb-3">Additional Custom Pages</h3>
         <Textarea 
           placeholder="Please mention page names separated by commas..."
           value={data.customPages}
           onChange={(e) => updateData({ customPages: e.target.value })}
-          className="min-h-[100px]"
+          className="min-h-[80px] text-sm"
         />
       </div>
     </div>
@@ -161,11 +161,11 @@ export function Step4Design({ data, updateData }: StepProps) {
   ];
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-3xl font-heading font-bold">4. Preferred Website Design Style</h2>
-      <p className="text-muted-foreground">Choose the website experience you want:</p>
+    <div className="space-y-4">
+      <h2 className="text-2xl font-heading font-bold">4. Preferred Website Design Style</h2>
+      <p className="text-sm text-muted-foreground">Choose the website experience you want:</p>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {styles.map((style) => (
           <RadioCard
             key={style.title}

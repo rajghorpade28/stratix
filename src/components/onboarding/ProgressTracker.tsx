@@ -13,7 +13,7 @@ export function ProgressTracker({ currentStep, totalSteps, stepName }: ProgressT
   const progressPercentage = Math.round(((currentStep - 1) / totalSteps) * 100);
 
   return (
-    <div className="w-full max-w-3xl mx-auto mb-8 md:mb-12">
+    <div className="w-full max-w-2xl mx-auto mb-6 md:mb-8">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <span className="text-sm font-semibold text-primary uppercase tracking-wider">
@@ -29,7 +29,7 @@ export function ProgressTracker({ currentStep, totalSteps, stepName }: ProgressT
         </div>
       </div>
       
-      <div className="h-1.5 w-full bg-accent/30 rounded-full overflow-hidden flex gap-1">
+      <div className="h-1 w-full bg-accent/30 rounded-full overflow-hidden flex gap-0.5">
         {Array.from({ length: totalSteps }).map((_, i) => (
           <div key={i} className="h-full flex-1 relative rounded-full overflow-hidden bg-background/50">
             {i < currentStep && (

@@ -31,8 +31,8 @@ export function Step5Features({ data, updateData }: StepProps) {
   };
 
   return (
-    <div className="space-y-8">
-      <h2 className="text-3xl font-heading font-bold">5. Website Features Required</h2>
+    <div className="space-y-6">
+      <h2 className="text-2xl font-heading font-bold">5. Website Features Required</h2>
       
       {Object.entries(categories).map(([key, features]) => (
         <FeatureGroup key={key} title={key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1').trim()}>
@@ -47,12 +47,13 @@ export function Step5Features({ data, updateData }: StepProps) {
         </FeatureGroup>
       ))}
 
-      <div className="mt-8">
-        <h3 className="text-lg font-heading font-semibold mb-4">Custom Features</h3>
+      <div className="mt-6">
+        <h3 className="text-base font-heading font-semibold mb-3">Custom Features</h3>
         <Textarea 
           placeholder="Please describe any custom features you need..."
           value={data.features.custom}
           onChange={(e) => updateData({ features: { ...data.features, custom: e.target.value }})}
+          className="min-h-[80px] text-sm"
         />
       </div>
     </div>
@@ -61,11 +62,11 @@ export function Step5Features({ data, updateData }: StepProps) {
 
 export function Step6Storage({ data, updateData }: StepProps) {
   return (
-    <div className="space-y-10">
+    <div className="space-y-8">
       <div>
-        <h2 className="text-3xl font-heading font-bold mb-6">6. Storage & Content Requirements</h2>
-        <p className="text-muted-foreground mb-4">What type of content will your website contain?</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <h2 className="text-2xl font-heading font-bold mb-4">6. Storage & Content Requirements</h2>
+        <p className="text-sm text-muted-foreground mb-4">What type of content will your website contain?</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {["Mostly Text Content", "Images & Portfolio Content", "Heavy Media (Photos/Videos)", "Downloadable Files / PDFs"].map(opt => (
             <RadioCard
               key={opt}
@@ -77,8 +78,8 @@ export function Step6Storage({ data, updateData }: StepProps) {
         </div>
       </div>
       <div>
-        <h3 className="text-xl font-semibold mb-4">Approximate requirement:</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <h3 className="text-lg font-semibold mb-3">Approximate requirement:</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {["Small Business Usage", "Medium Business Usage", "High Storage Requirement"].map(opt => (
             <RadioCard
               key={opt}
@@ -99,10 +100,10 @@ export function Step7BusinessInfo({ data, updateData }: StepProps) {
   };
 
   return (
-    <div className="space-y-8">
-      <h2 className="text-3xl font-heading font-bold">7. Business Information Required</h2>
+    <div className="space-y-6">
+      <h2 className="text-2xl font-heading font-bold">7. Business Information Required</h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label>Business Name</Label>
           <Input value={data.businessInfo.name} onChange={e => updateInfo("name", e.target.value)} />
@@ -174,12 +175,12 @@ export function Step8Content({ data, updateData }: StepProps) {
   ];
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8">
       <div>
-        <h2 className="text-3xl font-heading font-bold mb-6">8. Content Availability</h2>
-        <p className="text-muted-foreground mb-8">Do you already have the following?</p>
+        <h2 className="text-2xl font-heading font-bold mb-4">8. Content Availability</h2>
+        <p className="text-sm text-muted-foreground mb-6">Do you already have the following?</p>
         
-        <div className="space-y-4 max-w-2xl">
+        <div className="space-y-3 max-w-2xl">
           {questions.map((q) => (
             <div key={q.key} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-lg bg-card border border-border/50">
               <span className="font-medium">{q.label}</span>
@@ -193,16 +194,16 @@ export function Step8Content({ data, updateData }: StepProps) {
         </div>
       </div>
 
-      <div className="pt-8 border-t border-border/50">
-        <h2 className="text-2xl font-heading font-bold mb-4">Additional Notes / Requirements</h2>
-        <p className="text-muted-foreground mb-4 text-sm">
+      <div className="pt-6 border-t border-border/50">
+        <h2 className="text-xl font-heading font-bold mb-3">Additional Notes / Requirements</h2>
+        <p className="text-muted-foreground mb-3 text-xs">
           Maintenance can include updates, edits, backups, security monitoring, bug fixing, and technical support.
         </p>
         <Textarea 
           placeholder="Please mention anything specific you want..."
           value={data.additionalNotes}
           onChange={(e) => updateData({ additionalNotes: e.target.value })}
-          className="min-h-[150px]"
+          className="min-h-[100px] text-sm"
         />
       </div>
     </div>
@@ -211,11 +212,11 @@ export function Step8Content({ data, updateData }: StepProps) {
 
 export function Step9Summary({ data }: { data: OnboardingData }) {
   return (
-    <div className="space-y-8">
-      <h2 className="text-3xl font-heading font-bold text-primary">Ready to Submit?</h2>
-      <p className="text-muted-foreground text-lg">Please review your requirements before submitting.</p>
+    <div className="space-y-6">
+      <h2 className="text-2xl font-heading font-bold text-primary">Ready to Submit?</h2>
+      <p className="text-muted-foreground text-base">Please review your requirements before submitting.</p>
       
-      <div className="space-y-6 rounded-xl bg-card border border-border p-6 md:p-8">
+      <div className="space-y-5 rounded-xl bg-card border border-border p-5 md:p-6">
         <div>
           <h3 className="text-sm font-bold text-accent uppercase tracking-wider mb-2">Website Type</h3>
           <p className="text-lg font-medium">{data.websiteType || "Not selected"}</p>

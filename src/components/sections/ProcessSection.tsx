@@ -27,7 +27,7 @@ const steps = [
 
 export function ProcessSection() {
   return (
-    <section className="py-32 bg-card relative border-t border-border/40">
+    <section className="py-20 md:py-28 bg-card relative border-t border-border/40">
       
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
         

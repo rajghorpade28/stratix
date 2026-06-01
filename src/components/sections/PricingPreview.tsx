@@ -53,7 +53,7 @@ const plans = [
 
 export function PricingPreview() {
   return (
-    <section className="py-16 md:py-32 bg-card relative border-t border-border/40">
+    <section className="py-20 md:py-28 bg-card relative border-t border-border/40">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         
         <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 md:mb-16">

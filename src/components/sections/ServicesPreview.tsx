@@ -59,7 +59,7 @@ const services = [
 
 export function ServicesPreview() {
   return (
-    <section className="py-16 md:py-32 bg-background relative border-t border-border/40 overflow-hidden">
+    <section className="py-20 md:py-28 bg-background relative border-t border-border/40 overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
         
         <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 md:gap-8 mb-12 md:mb-16">
