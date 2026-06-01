@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
+import { SharedLogo } from "@/components/layout/SharedLogo";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -46,7 +47,7 @@ export function Navbar() {
         <div className="container mx-auto px-6 md:px-12 max-w-7xl">
           <div className="flex items-center justify-between">
             <div className="flex-shrink-0">
-              <Logo />
+              <SharedLogo />
             </div>
 
             {/* Desktop Navigation */}
