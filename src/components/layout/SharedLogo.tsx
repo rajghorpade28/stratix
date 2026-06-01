@@ -39,8 +39,8 @@ export function SharedLogo() {
       
       // Target center of the viewport
       const targetX = window.innerWidth / 2;
-      // Target slightly above true vertical center to align perfectly in the hero
-      const targetY = window.innerHeight * 0.35;
+      // Target upper center of the viewport to leave room for hero text below
+      const targetY = window.innerHeight * 0.25;
       
       // Current center of the element in its natural navbar position
       const currentX = rect.left + rect.width / 2;
@@ -71,8 +71,8 @@ export function SharedLogo() {
   const x = useTransform(smoothProgress, p => p * offsets.x);
   const y = useTransform(smoothProgress, p => p * offsets.y);
   
-  // Scale from 1 (navbar) to 8 (hero)
-  const scale = useTransform(smoothProgress, [0, 1], [1, 10]);
+  // Scale from 1 (navbar) to 6 (hero) - large but leaves room for text
+  const scale = useTransform(smoothProgress, [0, 1], [1, 6]);
 
   // If not on home page or not ready yet, keep in navbar position (but hide until ready to avoid flash)
   const finalX = isHome ? x : 0;

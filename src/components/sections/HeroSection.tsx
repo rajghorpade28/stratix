@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center pt-32 pb-16 overflow-hidden bg-background">
+    <section className="relative min-h-screen flex flex-col justify-end pt-32 pb-16 md:pb-24 overflow-hidden bg-background">
       
       {/* Background Image - Warmer, slightly more visible */}
       <div className="absolute inset-0 z-0 opacity-[0.25] mix-blend-overlay">
@@ -30,7 +30,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-10 pt-24"
+            className="mb-6"
           >
             <span className="text-sm font-medium tracking-[0.1em] text-accent uppercase">
               Digital Marketing Partner
@@ -41,12 +41,12 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-[6.5rem] font-heading font-bold tracking-tight leading-[1] mb-10 text-foreground"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] font-heading font-bold tracking-tight leading-[1] mb-8 text-foreground"
           >
             We help your business get more <span className="text-accent italic font-serif font-medium">visibility</span> and leads online.
           </motion.h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
