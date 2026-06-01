@@ -7,7 +7,7 @@ import { Logo } from "@/components/ui/logo";
 
 export function SharedLogo() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [offsets, setOffsets] = useState({ x: 0, y: 0 });
+  const [offsets, setOffsets] = useState({ x: 0, y: 0, scale: 5 });
   const [isReady, setIsReady] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
@@ -37,10 +37,24 @@ export function SharedLogo() {
       
       const rect = el.getBoundingClientRect();
       
-      // Target center of the viewport
-      const targetX = window.innerWidth / 2;
-      // Target a fixed, predictable distance from the top (e.g. 150px) to guarantee zero overlap with the text below
-      const targetY = 150;
+      const w = window.innerWidth;
+      
+      // Responsive constraints
+      let targetScale = 5;
+      let targetY = 150;
+      
+      if (w < 768) {
+        // Mobile: Smaller scale to prevent horizontal overflow, slightly higher up
+        targetScale = 2.2;
+        targetY = 110;
+      } else if (w < 1024) {
+        // Tablet: Medium scale
+        targetScale = 3.5;
+        targetY = 130;
+      }
+
+      // Target center of the viewport horizontally
+      const targetX = w / 2;
       
       // Current center of the element in its natural navbar position
       const currentX = rect.left + rect.width / 2;
@@ -48,7 +62,8 @@ export function SharedLogo() {
       
       setOffsets({
         x: targetX - currentX,
-        y: targetY - currentY
+        y: targetY - currentY,
+        scale: targetScale
       });
       
       // Restore transform
@@ -71,8 +86,8 @@ export function SharedLogo() {
   const x = useTransform(smoothProgress, p => p * offsets.x);
   const y = useTransform(smoothProgress, p => p * offsets.y);
   
-  // Scale from 1 (navbar) to 5 (hero) - large but strictly contained
-  const scale = useTransform(smoothProgress, [0, 1], [1, 5]);
+  // Scale dynamically based on viewport width
+  const scale = useTransform(smoothProgress, [0, 1], [1, offsets.scale]);
 
   // If not on home page or not ready yet, keep in navbar position (but hide until ready to avoid flash)
   const finalX = isHome ? x : 0;

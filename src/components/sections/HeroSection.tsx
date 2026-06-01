@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[100vh] flex flex-col justify-start pt-[240px] md:pt-[280px] pb-16 overflow-hidden bg-background">
+    <section className="relative min-h-[100vh] flex flex-col justify-start pt-[180px] sm:pt-[240px] md:pt-[280px] pb-16 overflow-hidden bg-background">
       
       {/* Background Image - Warmer, slightly more visible */}
       <div className="absolute inset-0 z-0 opacity-[0.25] mix-blend-overlay">
