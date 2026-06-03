@@ -1,24 +1,63 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/ui/logo";
+
+interface FragmentData {
+  id: string;
+  clipPath: string;
+  tx: number;
+  ty: number;
+  tr: number;
+  ts: number;
+}
+
+function FragmentLayer({
+  data,
+  progress,
+  children
+}: {
+  data: FragmentData;
+  progress: MotionValue<number>;
+  children: React.ReactNode;
+}) {
+  const x = useTransform(progress, [1, 0.5, 0], [0, data.tx, 0]);
+  const y = useTransform(progress, [1, 0.5, 0], [0, data.ty, 0]);
+  const rotate = useTransform(progress, [1, 0.5, 0], [0, data.tr, 0]);
+  const scale = useTransform(progress, [1, 0.5, 0], [1, data.ts, 1]);
+
+  return (
+    <motion.div
+      style={{
+        clipPath: data.clipPath,
+        x,
+        y,
+        rotate,
+        scale,
+        WebkitClipPath: data.clipPath
+      }}
+      className="absolute inset-0 origin-center will-change-transform pointer-events-none"
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export function SharedLogo() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [offsets, setOffsets] = useState({ x: 0, y: 0, scale: 5 });
+  const [fragments, setFragments] = useState<FragmentData[]>([]);
   const [isReady, setIsReady] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
 
-  // We want to scrub from scrollY 0 to 400
   const { scrollY } = useScroll();
 
-  // Create smooth springs for the transform to ensure premium feel
   const smoothProgress = useSpring(
     useTransform(scrollY, [0, 400], [1, 0]),
-    { stiffness: 100, damping: 25, restDelta: 0.001 }
+    { stiffness: 80, damping: 20, restDelta: 0.001 }
   );
 
   useEffect(() => {
@@ -30,33 +69,29 @@ export function SharedLogo() {
     const calculateOffset = () => {
       if (!containerRef.current) return;
       
-      // Temporarily remove transforms to get accurate natural position
       const el = containerRef.current;
       const originalTransform = el.style.transform;
       el.style.transform = "none";
       
       const rect = el.getBoundingClientRect();
-      
       const w = window.innerWidth;
       
-      // Responsive constraints
-      let targetScale = 2.222; // 200px target hero height / 90px navbar height
+      let targetScale = 2.222;
       let targetY = 150;
+      let cols = 4;
+      let rows = 4;
       
       if (w < 768) {
-        // Mobile: 70px target hero height / 56px navbar height
         targetScale = 1.25;
         targetY = 110;
+        cols = 3;
+        rows = 2; // reduced complexity for mobile
       } else if (w < 1024) {
-        // Tablet: 126px target hero height / 72px navbar height
         targetScale = 1.75;
         targetY = 130;
       }
 
-      // Target center of the viewport horizontally
       const targetX = w / 2;
-      
-      // Current center of the element in its natural navbar position
       const currentX = rect.left + rect.width / 2;
       const currentY = rect.top + rect.height / 2;
       
@@ -66,12 +101,44 @@ export function SharedLogo() {
         scale: targetScale
       });
       
-      // Restore transform
       el.style.transform = originalTransform;
+      
+      // Generate fragments
+      const newFragments: FragmentData[] = [];
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const top = (r / rows) * 100;
+          const bottom = 100 - ((r + 1) / rows) * 100;
+          const left = (c / cols) * 100;
+          const right = 100 - ((c + 1) / cols) * 100;
+
+          // Scatter amount based on distance from center to push outwards
+          const centerX = cols / 2 - 0.5;
+          const centerY = rows / 2 - 0.5;
+          const dirX = c - centerX;
+          const dirY = r - centerY;
+          
+          const maxDisplacement = w < 768 ? 40 : 80;
+          
+          const tx = (dirX * maxDisplacement * 0.4) + (Math.random() - 0.5) * maxDisplacement;
+          const ty = (dirY * maxDisplacement * 0.4) + (Math.random() - 0.5) * maxDisplacement;
+          const tr = (Math.random() - 0.5) * 45; 
+          const ts = 0.8 + Math.random() * 0.4; 
+
+          newFragments.push({
+            id: `frag-${r}-${c}`,
+            clipPath: `inset(${top}% ${right}% ${bottom}% ${left}%)`,
+            tx,
+            ty,
+            tr,
+            ts
+          });
+        }
+      }
+      setFragments(newFragments);
       setIsReady(true);
     };
 
-    // Calculate on mount and a slight delay to ensure fonts/layout are loaded
     calculateOffset();
     const timeoutId = setTimeout(calculateOffset, 100);
     
@@ -82,14 +149,10 @@ export function SharedLogo() {
     };
   }, [isHome]);
 
-  // Calculate dynamic transform values based on scroll
   const x = useTransform(smoothProgress, p => p * offsets.x);
   const y = useTransform(smoothProgress, p => p * offsets.y);
-  
-  // Scale dynamically based on viewport width
   const scale = useTransform(smoothProgress, [0, 1], [1, offsets.scale]);
 
-  // If not on home page or not ready yet, keep in navbar position (but hide until ready to avoid flash)
   const finalX = isHome ? x : 0;
   const finalY = isHome ? y : 0;
   const finalScale = isHome ? scale : 1;
@@ -105,9 +168,24 @@ export function SharedLogo() {
         opacity,
         transformOrigin: "center center",
       }}
-      className="origin-center transform-gpu will-change-transform z-[100]"
+      className="origin-center transform-gpu will-change-transform z-[100] relative"
     >
-      <Logo />
+      {(!isHome || fragments.length === 0) ? (
+        <Logo />
+      ) : (
+        <>
+          {/* Base logo holds dimensions and handles clicks, but is visually hidden */}
+          <div className="opacity-0">
+            <Logo />
+          </div>
+          {/* Absolute fragmented layers overlay to perform the visual magic */}
+          {fragments.map(frag => (
+            <FragmentLayer key={frag.id} data={frag} progress={smoothProgress}>
+              <Logo />
+            </FragmentLayer>
+          ))}
+        </>
+      )}
     </motion.div>
   );
 }
