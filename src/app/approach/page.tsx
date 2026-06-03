@@ -92,7 +92,7 @@ export default function ApproachPage() {
             >
               <div className="lg:col-span-5 flex flex-col relative z-10">
                 <div className="flex items-center gap-3 mb-6 md:mb-8">
-                  <span className="text-xs font-semibold tracking-widest text-muted-foreground uppercase border-b border-white/10 pb-1">{playbook.focus}</span>
+                  <span className="text-xs font-semibold tracking-widest text-muted-foreground uppercase border-b border-border/40 pb-1">{playbook.focus}</span>
                 </div>
                 <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-4 md:mb-6 tracking-tight">{playbook.title}</h2>
               </div>
@@ -102,7 +102,7 @@ export default function ApproachPage() {
                   {playbook.description}
                 </p>
                 
-                <div className="bg-card/20 p-5 sm:p-8 border border-white/5">
+                <div className="bg-card/50 p-5 sm:p-8 border border-border/40">
                   <h3 className="text-xs font-semibold tracking-[0.2em] text-foreground uppercase mb-4 md:mb-6">Core Methodology</h3>
                   <ul className="flex flex-col gap-4 md:gap-6">
                     {playbook.steps.map((step, i) => (
@@ -119,7 +119,7 @@ export default function ApproachPage() {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center pt-12 md:pt-16 border-t border-white/5">
+        <div className="text-center pt-12 md:pt-16 border-t border-border/40">
           <h3 className="text-2xl md:text-5xl font-heading font-bold mb-6 md:mb-8 tracking-tighter">Ready to deploy these systems?</h3>
           <Button size="lg" asChild className="h-14 px-10 text-sm font-medium rounded-none bg-accent text-accent-foreground hover:bg-accent/90 transition-colors">
             <Link href="/contact">Get In Touch</Link>

@@ -34,41 +34,41 @@
 }
 
 :root {
-  /* Modern Performance Agency / Streetwear Aesthetic */
+  /* Premium Light Theme / Editorial Aesthetic */
   
-  /* Background: Charcoal Black / Dark Slate */
-  --background: oklch(0.15 0.01 250); 
-  /* Foreground: Soft Grey / Off-white */
-  --foreground: oklch(0.92 0 0); 
+  /* Background: #F5F1E8 */
+  --background: #F5F1E8;
+  /* Foreground: #111111 */
+  --foreground: #111111;
   
-  /* Cards: Graphite Black */
-  --card: oklch(0.18 0.01 250); 
-  --card-foreground: oklch(0.92 0 0);
+  /* Cards: #FFFFFF */
+  --card: #FFFFFF;
+  --card-foreground: #111111;
   
-  --popover: oklch(0.18 0.01 250);
-  --popover-foreground: oklch(0.92 0 0);
+  --popover: #FFFFFF;
+  --popover-foreground: #111111;
   
-  /* Primary: Neon Green / Acid Green */
-  --primary: oklch(0.85 0.25 145); 
-  --primary-foreground: oklch(0.12 0 0);
+  /* Primary: Neon Lime #B4FF39 */
+  --primary: #B4FF39;
+  --primary-foreground: #111111;
   
-  /* Secondary: Soft Slate / Muted Graphite */
-  --secondary: oklch(0.22 0.01 250);
-  --secondary-foreground: oklch(0.92 0 0);
+  /* Secondary Buttons: White background */
+  --secondary: #FFFFFF;
+  --secondary-foreground: #111111;
   
-  /* Muted: Subtle backgrounds */
-  --muted: oklch(0.20 0.01 250);
-  /* Muted Foreground: Legible warm grey */
-  --muted-foreground: oklch(0.70 0.01 250); 
+  /* Muted / Secondary Background: #F9F7F2 */
+  --muted: #F9F7F2;
+  /* Muted Foreground / Secondary Text: #5C5C5C */
+  --muted-foreground: #5C5C5C;
   
-  /* Accent: Neon Green / Acid Green Highlights */
-  --accent: oklch(0.85 0.25 145); 
-  --accent-foreground: oklch(0.12 0 0); 
+  /* Accent: Neon Lime #B4FF39 */
+  --accent: #B4FF39;
+  --accent-foreground: #111111;
   
-  /* Borders: Graphite for subtle structure */
-  --border: oklch(0.22 0.01 250); 
-  --input: oklch(0.22 0.01 250);
-  --ring: oklch(0.85 0.25 145); /* Neon green focus rings */
+  /* Borders: #E7E0D3 */
+  --border: #E7E0D3;
+  --input: #E7E0D3;
+  --ring: #B4FF39;
   
   /* Subtle rounded corners */
   --radius: 0.25rem; 
