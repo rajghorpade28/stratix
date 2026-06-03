@@ -41,7 +41,7 @@ export function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-700",
           isScrolled
-            ? "bg-background/95 backdrop-blur-md py-4 shadow-sm border-b border-border/50"
+            ? "bg-[#F1ECFA]/95 backdrop-blur-md py-4 shadow-md border-b border-[#E6E1ED]"
             : "bg-transparent py-8"
         )}
       >
@@ -61,14 +61,14 @@ export function Navbar() {
                     href={link.href}
                     className={cn(
                       "relative text-[13px] uppercase tracking-[0.1em] font-medium transition-colors group py-2",
-                      isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                      isActive ? "text-primary" : "text-[#1A1A1A] hover:text-primary"
                     )}
                   >
                     {link.name}
                     {isActive && (
                       <motion.div
                         layoutId="navbar-indicator"
-                        className="absolute bottom-0 left-0 right-0 h-[1px] bg-foreground"
+                        className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-primary"
                         transition={{ duration: 0.3 }}
                       />
                     )}
@@ -80,7 +80,7 @@ export function Navbar() {
             <div className="hidden md:flex items-center">
               <Link 
                 href="/contact"
-                className="text-[13px] uppercase tracking-[0.1em] font-medium text-primary border-b border-primary pb-1 hover:text-foreground hover:border-foreground transition-all"
+                className="text-[13px] uppercase tracking-[0.1em] font-medium text-primary border-b border-primary/30 pb-1 hover:text-[var(--primary-hover)] hover:border-[var(--primary-hover)] transition-all"
               >
                 Contact Us
               </Link>
@@ -105,7 +105,7 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-background md:hidden"
+            className="fixed inset-0 z-[60] bg-[#F1ECFA] md:hidden"
           >
             <div className="flex flex-col h-full p-6">
               <div className="flex items-center justify-between mb-16">
@@ -131,7 +131,7 @@ export function Navbar() {
                       href={link.href}
                       className={cn(
                         "text-4xl font-heading tracking-tight transition-colors",
-                        pathname === link.href ? "text-foreground" : "text-muted-foreground"
+                        pathname === link.href ? "text-primary" : "text-[#1A1A1A] hover:text-primary"
                       )}
                     >
                       {link.name}
