@@ -8,7 +8,7 @@ const headlineWords = "We help your business get more visibility and leads onlin
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[100vh] flex flex-col justify-center pt-[120px] sm:pt-[150px] md:pt-[180px] pb-16 overflow-hidden bg-background">
+    <section className="relative min-h-[100vh] flex flex-col justify-center pt-[100px] sm:pt-[120px] md:pt-[130px] pb-16 overflow-hidden bg-background">
       
       {/* Background Image */}
       <div className="absolute inset-0 z-0 opacity-[0.25] mix-blend-overlay">
@@ -27,36 +27,37 @@ export function HeroSection() {
         
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-12">
           
-          {/* Left Column: Cat Mascot */}
-          <motion.div 
-            initial={{ opacity: 0, x: -50, rotate: 5 }}
-            animate={{ opacity: 1, x: 0, rotate: 0 }}
-            transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full sm:w-2/3 lg:w-[45%] relative aspect-square lg:aspect-auto lg:h-[600px] flex items-center justify-center lg:justify-start mt-4 lg:mt-0 z-10 pointer-events-none"
-          >
-            {/* Subtle Megaphone Projection Glow */}
+          {/* Left Column: Logo Target & Cat Mascot */}
+          <div className="w-full sm:w-2/3 lg:w-[45%] flex flex-col items-center lg:items-start relative z-10 pointer-events-none mt-4 lg:mt-0">
+            <div
+              id="hero-logo-target"
+              className="mb-2 h-[76px] md:h-[110px] lg:h-[150px] w-full flex items-center origin-left"
+            />
             <motion.div 
-              animate={{ opacity: [0.3, 0.6, 0.3], scale: [0.95, 1.05, 0.95] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[40%] right-0 w-64 h-64 bg-accent/20 rounded-full blur-[70px] translate-x-1/4 -translate-y-1/2"
-            />
-            
-            <Image 
-              src="/images/cat_megaphone.jpg"
-              alt="STRATIX Mascot"
-              fill
-              className="object-contain object-center lg:object-left-bottom scale-[1.1] origin-bottom-left"
-              priority
-            />
-          </motion.div>
+              initial={{ opacity: 0, x: -50, rotate: 5 }}
+              animate={{ opacity: 1, x: 0, rotate: 0 }}
+              transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full relative aspect-square lg:aspect-auto lg:h-[450px] flex items-center justify-center lg:justify-start"
+            >
+              {/* Subtle Megaphone Projection Glow */}
+              <motion.div 
+                animate={{ opacity: [0.3, 0.6, 0.3], scale: [0.95, 1.05, 0.95] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-[40%] right-0 w-64 h-64 bg-accent/20 rounded-full blur-[70px] translate-x-1/4 -translate-y-1/2"
+              />
+              
+              <Image 
+                src="/images/cat_megaphone.jpg"
+                alt="STRATIX Mascot"
+                fill
+                className="object-contain object-center lg:object-left-bottom scale-[1.1] origin-bottom-left"
+                priority
+              />
+            </motion.div>
+          </div>
 
           {/* Right Column: Text & CTA */}
           <div className="w-full lg:w-[55%] flex flex-col justify-start relative z-20">
-            
-            <div
-              id="hero-logo-target"
-              className="mb-4 md:mb-6 h-[76px] md:h-[126px] lg:h-[180px] w-full flex items-center origin-left"
-            />
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-heading font-bold tracking-tight leading-[1.05] mb-8 text-foreground flex flex-wrap">
               {headlineWords.map((word, idx) => (
