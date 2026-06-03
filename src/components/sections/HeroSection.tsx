@@ -8,7 +8,7 @@ const headlineWords = "We help your business get more visibility and leads onlin
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex flex-col justify-start pt-[100px] sm:pt-[120px] md:pt-[140px] pb-16 overflow-hidden bg-background">
+    <section className="relative min-h-[90vh] flex flex-col justify-start pt-[30px] sm:pt-[40px] md:pt-[50px] pb-16 overflow-hidden bg-background">
       
       {/* Background Image */}
       <div className="absolute inset-0 z-0 opacity-[0.25] mix-blend-overlay">
@@ -29,10 +29,15 @@ export function HeroSection() {
           
           {/* Left Column: Logo Target & Cat Mascot */}
           <div className="w-full sm:w-2/3 lg:w-[45%] flex flex-col items-center lg:items-start relative z-10 pointer-events-none mt-4 lg:mt-0">
-            <div
-              id="hero-logo-target"
-              className="mb-0 h-[64px] md:h-[90px] lg:h-[120px] w-full flex items-center origin-left"
-            />
+            <div className="mb-4 h-[60px] md:h-[80px] lg:h-[90px] w-full max-w-[280px] relative origin-left">
+              <Image
+                src="/stratix-logo.png"
+                alt="STRATIX Logo"
+                fill
+                className="object-contain object-center lg:object-left"
+                priority
+              />
+            </div>
             <motion.div 
               initial={{ opacity: 0, x: -50, rotate: 5 }}
               animate={{ opacity: 1, x: 0, rotate: 0 }}
