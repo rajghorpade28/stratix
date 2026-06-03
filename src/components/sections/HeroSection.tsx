@@ -8,7 +8,7 @@ const headlineWords = "We help your business get more visibility and leads onlin
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[100vh] flex flex-col justify-center pt-[100px] sm:pt-[120px] md:pt-[130px] pb-16 overflow-hidden bg-background">
+    <section className="relative min-h-[90vh] flex flex-col justify-start pt-[100px] sm:pt-[120px] md:pt-[140px] pb-16 overflow-hidden bg-background">
       
       {/* Background Image */}
       <div className="absolute inset-0 z-0 opacity-[0.25] mix-blend-overlay">
@@ -31,13 +31,13 @@ export function HeroSection() {
           <div className="w-full sm:w-2/3 lg:w-[45%] flex flex-col items-center lg:items-start relative z-10 pointer-events-none mt-4 lg:mt-0">
             <div
               id="hero-logo-target"
-              className="mb-2 h-[76px] md:h-[110px] lg:h-[150px] w-full flex items-center origin-left"
+              className="mb-0 h-[64px] md:h-[90px] lg:h-[120px] w-full flex items-center origin-left"
             />
             <motion.div 
               initial={{ opacity: 0, x: -50, rotate: 5 }}
               animate={{ opacity: 1, x: 0, rotate: 0 }}
               transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full relative aspect-square lg:aspect-auto lg:h-[450px] flex items-center justify-center lg:justify-start"
+              className="w-full relative aspect-square lg:aspect-auto lg:h-[380px] flex items-center justify-center lg:justify-start"
             >
               {/* Subtle Megaphone Projection Glow */}
               <motion.div 
