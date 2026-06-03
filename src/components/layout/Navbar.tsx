@@ -9,14 +9,6 @@ import { Logo } from "@/components/ui/logo";
 import { SharedLogo } from "@/components/layout/SharedLogo";
 import { cn } from "@/lib/utils";
 
-const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Services", href: "/services" },
-  { name: "Graphics", href: "/graphics" },
-  { name: "Pricing", href: "/pricing" },
-];
-
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -50,32 +42,6 @@ export function Navbar() {
             <div className="flex-shrink-0">
               <SharedLogo />
             </div>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-10">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    className={cn(
-                      "relative text-[13px] uppercase tracking-[0.1em] font-medium transition-colors group py-2",
-                      isActive ? "text-primary" : "text-[#1A1A1A] hover:text-primary"
-                    )}
-                  >
-                    {link.name}
-                    {isActive && (
-                      <motion.div
-                        layoutId="navbar-indicator"
-                        className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-primary"
-                        transition={{ duration: 0.3 }}
-                      />
-                    )}
-                  </Link>
-                );
-              })}
-            </nav>
 
             <div className="hidden md:flex items-center">
               <Link 
@@ -119,31 +85,10 @@ export function Navbar() {
                 </button>
               </div>
 
-              <nav className="flex flex-col gap-8 flex-1 px-4">
-                {navLinks.map((link, i) => (
-                  <motion.div
-                    key={link.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <Link
-                      href={link.href}
-                      className={cn(
-                        "text-4xl font-heading tracking-tight transition-colors",
-                        pathname === link.href ? "text-primary" : "text-[#1A1A1A] hover:text-primary"
-                      )}
-                    >
-                      {link.name}
-                    </Link>
-                  </motion.div>
-                ))}
-              </nav>
-
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
+                transition={{ delay: 0.1 }}
                 className="mt-auto pb-12 px-4"
               >
                 <Link 
