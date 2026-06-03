@@ -26,16 +26,10 @@ export function HeroSection() {
           
 
 
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-6"
-          >
-            <span className="text-sm font-medium tracking-[0.1em] text-accent uppercase">
-              Digital Marketing Partner
-            </span>
-          </motion.div>
+          <div
+            id="hero-logo-target"
+            className="mb-8 md:mb-12 h-[76px] md:h-[126px] lg:h-[180px] w-full flex items-center"
+          />
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}

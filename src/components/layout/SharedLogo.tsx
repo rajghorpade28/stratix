@@ -76,28 +76,49 @@ export function SharedLogo() {
       const rect = el.getBoundingClientRect();
       const w = window.innerWidth;
       
-      let targetScale = 2.0;
-      let targetY = 150;
+      const heroTarget = document.getElementById('hero-logo-target');
+      
+      if (!heroTarget) {
+        setIsReady(true);
+        return;
+      }
+
+      const heroRect = heroTarget.getBoundingClientRect();
+      
+      // Calculate absolute positions relative to the document
+      const absoluteHeroTop = heroRect.top + window.scrollY;
+      const absoluteHeroLeft = heroRect.left + window.scrollX;
+      
+      const absoluteCurrentLeft = rect.left + window.scrollX;
+      const absoluteCurrentTop = rect.top + window.scrollY;
+
+      let targetScale = 1.8;
       let cols = 4;
       let rows = 4;
       
       if (w < 768) {
         targetScale = 1.2;
-        targetY = 110;
         cols = 3;
         rows = 2; // reduced complexity for mobile
       } else if (w < 1024) {
-        targetScale = 1.6;
-        targetY = 130;
+        targetScale = 1.5;
       }
 
-      const targetX = w / 2;
-      const currentX = rect.left + rect.width / 2;
-      const currentY = rect.top + rect.height / 2;
+      const scaledWidth = rect.width * targetScale;
       
+      // Since transform-origin is center center, we map the center points.
+      // We want the left edge of the scaled logo to touch the left edge of the target container.
+      const targetCenterX = absoluteHeroLeft + scaledWidth / 2;
+      // We want the vertical center of the scaled logo to match the target container's vertical center.
+      const targetCenterY = absoluteHeroTop + heroRect.height / 2;
+      
+      // The current unscaled logo's center:
+      const currentCenterX = absoluteCurrentLeft + rect.width / 2;
+      const currentCenterY = absoluteCurrentTop + rect.height / 2;
+
       setOffsets({
-        x: targetX - currentX,
-        y: targetY - currentY,
+        x: targetCenterX - currentCenterX,
+        y: targetCenterY - currentCenterY,
         scale: targetScale
       });
       
