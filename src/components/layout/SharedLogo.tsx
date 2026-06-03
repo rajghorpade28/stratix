@@ -76,18 +76,18 @@ export function SharedLogo() {
       const rect = el.getBoundingClientRect();
       const w = window.innerWidth;
       
-      let targetScale = 2.222;
+      let targetScale = 2.0;
       let targetY = 150;
       let cols = 4;
       let rows = 4;
       
       if (w < 768) {
-        targetScale = 1.25;
+        targetScale = 1.2;
         targetY = 110;
         cols = 3;
         rows = 2; // reduced complexity for mobile
       } else if (w < 1024) {
-        targetScale = 1.75;
+        targetScale = 1.6;
         targetY = 130;
       }
 

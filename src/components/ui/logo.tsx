@@ -6,7 +6,7 @@ export function Logo({ className = "" }: { className?: string }) {
       <img 
         src="/stratix-logo.png" 
         alt="STRATIX" 
-        className="w-auto h-[56px] md:h-[72px] lg:h-[90px] object-contain transition-transform group-hover:scale-105"
+        className="w-auto h-[64px] sm:h-[72px] md:h-[84px] lg:h-[100px] object-contain transition-transform group-hover:scale-105"
       />
     </Link>
   );
