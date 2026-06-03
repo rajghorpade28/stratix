@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export function WhatWeDo() {
   return (
-    <section className="py-20 md:py-28 bg-background relative border-t border-border/40">
+    <section className="py-20 md:py-28 bg-muted relative border-t border-border/40">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         <div className="flex flex-col lg:flex-row justify-between items-start gap-10 lg:gap-24">
           

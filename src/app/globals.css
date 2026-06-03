@@ -34,41 +34,43 @@
 }
 
 :root {
-  /* Premium Light Theme / Editorial Aesthetic */
+  /* Premium Purple-Themed Brand Experience */
   
-  /* Background: #F5F1E8 */
-  --background: #F5F1E8;
-  /* Foreground: #111111 */
-  --foreground: #111111;
+  /* Primary Background: Warm Ivory / Soft Cream */
+  --background: #FCFAF5;
+  /* Foreground: Very Dark Charcoal */
+  --foreground: #1A1523;
   
-  /* Cards: #FFFFFF */
+  /* Cards: White */
   --card: #FFFFFF;
-  --card-foreground: #111111;
+  --card-foreground: #1A1523;
   
   --popover: #FFFFFF;
-  --popover-foreground: #111111;
+  --popover-foreground: #1A1523;
   
-  /* Primary: Neon Lime #B4FF39 */
-  --primary: #B4FF39;
-  --primary-foreground: #111111;
+  /* Primary: Deep Royal Purple */
+  --primary: #5E2B97;
+  --primary-hover: #7645B8;
+  /* White text on deep purple buttons */
+  --primary-foreground: #FFFFFF; 
   
   /* Secondary Buttons: White background */
   --secondary: #FFFFFF;
-  --secondary-foreground: #111111;
+  --secondary-foreground: #1A1523;
   
-  /* Muted / Secondary Background: #F9F7F2 */
-  --muted: #F9F7F2;
-  /* Muted Foreground / Secondary Text: #5C5C5C */
-  --muted-foreground: #5C5C5C;
+  /* Muted / Secondary Sections: Soft Lavender Tint */
+  --muted: #F4F0F8;
+  /* Muted Foreground / Secondary Text: Muted Dark Grey */
+  --muted-foreground: #605A69;
   
-  /* Accent: Neon Lime #B4FF39 */
-  --accent: #B4FF39;
-  --accent-foreground: #111111;
+  /* Accent: Deep Royal Purple */
+  --accent: #5E2B97;
+  --accent-foreground: #FFFFFF;
   
-  /* Borders: #E7E0D3 */
-  --border: #E7E0D3;
-  --input: #E7E0D3;
-  --ring: #B4FF39;
+  /* Borders: Soft Lavender/Cream Tint */
+  --border: #E6E1ED;
+  --input: #E6E1ED;
+  --ring: #5E2B97;
   
   /* Subtle rounded corners */
   --radius: 0.25rem; 
