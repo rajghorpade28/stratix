@@ -25,9 +25,32 @@ export function HeroSection() {
       
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
         
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-12">
           
-          {/* Left Column: Text & CTA */}
+          {/* Left Column: Cat Mascot */}
+          <motion.div 
+            initial={{ opacity: 0, x: -50, rotate: 5 }}
+            animate={{ opacity: 1, x: 0, rotate: 0 }}
+            transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full sm:w-2/3 lg:w-[45%] relative aspect-square lg:aspect-auto lg:h-[600px] flex items-center justify-center lg:justify-start mt-4 lg:mt-0 z-10 pointer-events-none"
+          >
+            {/* Subtle Megaphone Projection Glow */}
+            <motion.div 
+              animate={{ opacity: [0.3, 0.6, 0.3], scale: [0.95, 1.05, 0.95] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-[40%] right-0 w-64 h-64 bg-accent/20 rounded-full blur-[70px] translate-x-1/4 -translate-y-1/2"
+            />
+            
+            <Image 
+              src="/images/cat_megaphone.png"
+              alt="STRATIX Mascot"
+              fill
+              className="object-contain object-center lg:object-left-bottom scale-[1.1] origin-bottom-left"
+              priority
+            />
+          </motion.div>
+
+          {/* Right Column: Text & CTA */}
           <div className="w-full lg:w-[55%] flex flex-col justify-start relative z-20">
             
             <div
@@ -39,7 +62,7 @@ export function HeroSection() {
               {headlineWords.map((word, idx) => (
                 <motion.span
                   key={idx}
-                  initial={{ opacity: 0, x: 30, scale: 0.95 }}
+                  initial={{ opacity: 0, x: -30, scale: 0.95 }}
                   animate={{ opacity: 1, x: 0, scale: 1 }}
                   transition={{ 
                     duration: 0.7, 
@@ -104,29 +127,6 @@ export function HeroSection() {
               </motion.div>
             </div>
           </div>
-
-          {/* Right Column: Cat Mascot */}
-          <motion.div 
-            initial={{ opacity: 0, x: 50, rotate: -5 }}
-            animate={{ opacity: 1, x: 0, rotate: 0 }}
-            transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full sm:w-2/3 lg:w-[45%] relative aspect-square lg:aspect-auto lg:h-[600px] flex items-center justify-center lg:justify-end mt-4 lg:mt-0 z-10 pointer-events-none"
-          >
-            {/* Subtle Megaphone Projection Glow */}
-            <motion.div 
-              animate={{ opacity: [0.3, 0.6, 0.3], scale: [0.95, 1.05, 0.95] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-1/3 left-0 w-48 h-48 bg-accent/15 rounded-full blur-[60px] -translate-x-1/4 -translate-y-1/2"
-            />
-            
-            <Image 
-              src="/images/cat_megaphone.png"
-              alt="STRATIX Mascot"
-              fill
-              className="object-contain object-center lg:object-right-bottom scale-[1.1] origin-bottom-right"
-              priority
-            />
-          </motion.div>
 
         </div>
       </div>
