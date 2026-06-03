@@ -40,16 +40,16 @@ export function SharedLogo() {
       const w = window.innerWidth;
       
       // Responsive constraints
-      let targetScale = 5;
+      let targetScale = 3.57; // 200px target hero height / 56px navbar height (h-14)
       let targetY = 150;
       
       if (w < 768) {
-        // Mobile: Smaller scale to prevent horizontal overflow, slightly higher up
-        targetScale = 2.2;
+        // Mobile: 70px target hero height / 40px navbar height (h-10)
+        targetScale = 1.76;
         targetY = 110;
       } else if (w < 1024) {
-        // Tablet: Medium scale
-        targetScale = 3.5;
+        // Tablet: 126px target hero height / 48px navbar height (h-12)
+        targetScale = 2.625;
         targetY = 130;
       }
 
