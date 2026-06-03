@@ -42,7 +42,7 @@ export function HeroSection() {
             />
             
             <Image 
-              src="/images/cat_megaphone.png"
+              src="/images/cat_megaphone.jpg"
               alt="STRATIX Mascot"
               fill
               className="object-contain object-center lg:object-left-bottom scale-[1.1] origin-bottom-left"
