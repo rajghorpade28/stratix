@@ -25,7 +25,7 @@ export function HeroSection() {
       
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
         
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-12">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-6">
           
           {/* Left Column: Logo Target & Cat Mascot */}
           <div className="w-full sm:w-2/3 lg:w-[45%] flex flex-col items-center lg:items-start relative z-10 pointer-events-none mt-4 lg:mt-0">
@@ -51,14 +51,16 @@ export function HeroSection() {
                 priority
               />
             </motion.div>
+            
+            {/* Logo target positioned absolutely so it doesn't affect flex alignment of the cat */}
             <div
               id="hero-logo-target"
-              className="mt-6 md:mt-10 h-[64px] md:h-[90px] lg:h-[120px] w-full flex items-center origin-left"
+              className="absolute -bottom-16 left-0 h-[64px] md:h-[90px] lg:h-[120px] w-full flex items-center origin-left"
             />
           </div>
 
-          {/* Right Column: Text */}
-          <div className="w-full lg:w-[55%] flex flex-col justify-start relative z-20 mt-8 lg:mt-24">
+          {/* Right Column: Text & CTA */}
+          <div className="w-full lg:w-[55%] flex flex-col justify-start relative z-20">
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-heading font-bold tracking-tight leading-[1.05] mb-8 text-foreground flex flex-wrap">
               {headlineWords.map((word, idx) => (
@@ -92,6 +94,26 @@ export function HeroSection() {
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-sans">
                   We partner with local businesses and growing brands to reach more customers through advertising and content creation.
                 </p>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 1.0 }}
+                className="flex flex-col sm:flex-row justify-start gap-4 mt-2 pointer-events-auto"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                >
+                  <Link 
+                    href="/start"
+                    className="group relative inline-flex items-center justify-center gap-4 overflow-hidden rounded-md bg-accent text-accent-foreground px-8 py-4 transition-all shadow-md font-semibold text-[15px] w-full sm:w-auto"
+                  >
+                    <span className="relative z-10">Want to Build a Website?</span>
+                    <div className="absolute inset-0 bg-white/20 translate-y-[100%] group-hover:translate-y-[0%] transition-transform duration-300" />
+                  </Link>
+                </motion.div>
               </motion.div>
             </div>
           </div>
