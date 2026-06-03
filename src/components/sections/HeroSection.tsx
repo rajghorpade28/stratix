@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[100vh] flex flex-col justify-start pt-[180px] sm:pt-[240px] md:pt-[280px] pb-16 overflow-hidden bg-background">
+    <section className="relative min-h-[100vh] flex flex-col justify-start pt-[120px] sm:pt-[150px] md:pt-[180px] pb-16 overflow-hidden bg-background">
       
       {/* Background Image - Warmer, slightly more visible */}
       <div className="absolute inset-0 z-0 opacity-[0.25] mix-blend-overlay">
@@ -28,7 +28,7 @@ export function HeroSection() {
 
           <div
             id="hero-logo-target"
-            className="mb-8 md:mb-12 h-[76px] md:h-[126px] lg:h-[180px] w-full flex items-center"
+            className="mb-4 md:mb-6 h-[76px] md:h-[126px] lg:h-[180px] w-full flex items-center"
           />
 
           <motion.h1
