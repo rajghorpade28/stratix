@@ -28,7 +28,7 @@ export async function submitContactForm(formData: FormData) {
     });
 
     if (!validatedData.success) {
-      return { error: validatedData.error.errors[0].message };
+      return { error: validatedData.error.issues[0].message };
     }
 
     if (!rawData.service) {

@@ -43,7 +43,7 @@ export async function resetPassword(token: string, newPassword: string) {
   try {
     const validatedPassword = passwordValidation.safeParse(newPassword);
     if (!validatedPassword.success) {
-      return { error: validatedPassword.error.errors[0].message };
+      return { error: validatedPassword.error.issues[0].message };
     }
 
     const existingToken = await prisma.verificationToken.findUnique({

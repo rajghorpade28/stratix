@@ -20,7 +20,7 @@ export async function registerUser(formData: FormData) {
     const validatedData = registerSchema.safeParse(rawData);
 
     if (!validatedData.success) {
-      return { error: validatedData.error.errors[0].message };
+      return { error: validatedData.error.issues[0].message };
     }
 
     const { name, email, phone, password } = validatedData.data;
