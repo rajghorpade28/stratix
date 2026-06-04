@@ -101,7 +101,7 @@ export function AppOnboardingFlow() {
       case 5: return <Step5FeaturesStorage data={data} updateData={updateData} />;
       case 6: return <Step6ScaleAdmin data={data} updateData={updateData} />;
       case 7: return <Step7SecurityIntegrations data={data} updateData={updateData} />;
-      case 8: return <Step8BusinessAssets data={data} updateData={updateData} />;
+      case 8: return <Step8BusinessAssets data={data} updateData={updateData} onValidSubmit={handleNext} />;
       case 9: return <Step9Additional data={data} updateData={updateData} />;
       default: return null;
     }
@@ -146,13 +146,24 @@ export function AppOnboardingFlow() {
           )}
 
           {currentStep < TOTAL_STEPS ? (
-            <button
-              onClick={handleNext}
-              className="flex items-center justify-center gap-2 px-8 py-3 rounded-md font-semibold transition-colors bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto shadow-md"
-            >
-              Continue
-              <ArrowRight size={18} />
-            </button>
+            currentStep === 8 ? (
+              <button
+                type="submit"
+                form="app-step8-form"
+                className="flex items-center justify-center gap-2 px-8 py-3 rounded-md font-semibold transition-colors bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto shadow-md"
+              >
+                Continue
+                <ArrowRight size={18} />
+              </button>
+            ) : (
+              <button
+                onClick={handleNext}
+                className="flex items-center justify-center gap-2 px-8 py-3 rounded-md font-semibold transition-colors bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto shadow-md"
+              >
+                Continue
+                <ArrowRight size={18} />
+              </button>
+            )
           ) : (
             <button
               onClick={handleSubmit}

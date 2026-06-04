@@ -4,19 +4,24 @@ import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { generatePasswordResetToken } from "@/lib/tokens";
 import { sendPasswordResetEmail } from "@/lib/mail";
+import { emailValidation, passwordValidation } from "@/lib/validations";
 
 export async function requestPasswordReset(email: string) {
   try {
+    const validatedEmail = emailValidation.safeParse(email);
+    if (!validatedEmail.success) {
+      return { error: "Please enter a valid email address." };
+    }
+
     const existingUser = await prisma.user.findUnique({
-      where: { email }
+      where: { email: validatedEmail.data }
     });
 
     if (!existingUser) {
-      // Return success even if user doesn't exist for security reasons (don't leak emails)
       return { success: true };
     }
 
-    const passwordResetToken = await generatePasswordResetToken(email);
+    const passwordResetToken = await generatePasswordResetToken(validatedEmail.data);
 
     try {
       await sendPasswordResetEmail(
@@ -36,6 +41,11 @@ export async function requestPasswordReset(email: string) {
 
 export async function resetPassword(token: string, newPassword: string) {
   try {
+    const validatedPassword = passwordValidation.safeParse(newPassword);
+    if (!validatedPassword.success) {
+      return { error: validatedPassword.error.errors[0].message };
+    }
+
     const existingToken = await prisma.verificationToken.findUnique({
       where: { token }
     });
@@ -48,7 +58,7 @@ export async function resetPassword(token: string, newPassword: string) {
       return { error: "Reset link has expired. Please request a new one." };
     }
 
-    const passwordHash = await bcrypt.hash(newPassword, 12);
+    const passwordHash = await bcrypt.hash(validatedPassword.data, 12);
 
     await prisma.user.update({
       where: { email: existingToken.identifier },

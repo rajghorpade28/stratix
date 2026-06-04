@@ -7,13 +7,54 @@ import { Textarea } from "@/components/ui/textarea";
 import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { nameValidation, emailValidation, phoneValidation } from "@/lib/validations";
+
+const appStep8Schema = z.object({
+  name: nameValidation,
+  email: emailValidation,
+  phone: phoneValidation,
+  companyName: z.string().optional(),
+});
+
+type AppStep8FormValues = z.infer<typeof appStep8Schema>;
+
 interface AppStepProps {
   data: AppOnboardingData;
   updateData: (updates: Partial<AppOnboardingData>) => void;
+  onValidSubmit?: () => void;
 }
 
-export function Step8BusinessAssets({ data, updateData }: AppStepProps) {
+export function Step8BusinessAssets({ data, updateData, onValidSubmit }: AppStepProps) {
   const assets = ["Logo", "Brand Guidelines", "UI Design", "Wireframes", "Existing Website", "Existing App", "Existing Database", "None"];
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AppStep8FormValues>({
+    resolver: zodResolver(appStep8Schema),
+    defaultValues: {
+      name: data.businessInfo.name,
+      email: data.businessInfo.email,
+      phone: data.businessInfo.phone,
+      companyName: data.businessInfo.companyName,
+    },
+  });
+
+  const onSubmit = (formData: AppStep8FormValues) => {
+    updateData({
+      businessInfo: {
+        ...data.businessInfo,
+        ...formData,
+      },
+    });
+    if (onValidSubmit) {
+      onValidSubmit();
+    }
+  };
 
   const toggleAsset = (asset: string) => {
     const current = data.existingAssets;
@@ -29,15 +70,6 @@ export function Step8BusinessAssets({ data, updateData }: AppStepProps) {
       updated = [...updated, asset];
     }
     updateData({ existingAssets: updated });
-  };
-
-  const handleInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateData({
-      businessInfo: {
-        ...data.businessInfo,
-        [e.target.name]: e.target.value
-      }
-    });
   };
 
   return (
@@ -57,24 +89,43 @@ export function Step8BusinessAssets({ data, updateData }: AppStepProps) {
           <p className="text-sm text-muted-foreground">Please provide your contact details so we can get back to you with a proposal.</p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <form id="app-step8-form" onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">Your Name <span className="text-destructive">*</span></label>
-            <Input name="name" value={data.businessInfo.name} onChange={handleInfoChange} placeholder="John Doe" required />
+            <Input 
+              {...register("name")} 
+              placeholder="John Doe" 
+              className={errors.name ? "border-destructive focus-visible:ring-destructive" : ""}
+            />
+            {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">Company Name</label>
-            <Input name="companyName" value={data.businessInfo.companyName} onChange={handleInfoChange} placeholder="Company Ltd." />
+            <Input 
+              {...register("companyName")} 
+              placeholder="Company Ltd." 
+            />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">Email Address <span className="text-destructive">*</span></label>
-            <Input name="email" type="email" value={data.businessInfo.email} onChange={handleInfoChange} placeholder="john@example.com" required />
+            <Input 
+              type="email" 
+              {...register("email")} 
+              placeholder="john@example.com" 
+              className={errors.email ? "border-destructive focus-visible:ring-destructive" : ""}
+            />
+            {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">Phone / WhatsApp <span className="text-destructive">*</span></label>
-            <Input name="phone" value={data.businessInfo.phone} onChange={handleInfoChange} placeholder="+1 234 567 890" required />
+            <Input 
+              {...register("phone")} 
+              placeholder="+1 234 567 890" 
+              className={errors.phone ? "border-destructive focus-visible:ring-destructive" : ""}
+            />
+            {errors.phone && <p className="text-xs text-destructive">{errors.phone.message}</p>}
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

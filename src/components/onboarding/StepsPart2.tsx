@@ -95,8 +95,62 @@ export function Step6Storage({ data, updateData }: StepProps) {
   );
 }
 
-export function Step7BusinessInfo({ data, updateData }: StepProps) {
-  const updateInfo = (key: keyof OnboardingData["businessInfo"], value: any) => {
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { nameValidation, emailValidation, phoneValidation } from "@/lib/validations";
+
+const step7Schema = z.object({
+  name: nameValidation,
+  email: emailValidation,
+  phone: phoneValidation,
+  services: z.string().optional(),
+  description: z.string().optional(),
+  whatsapp: z.string().optional(),
+  social: z.string().optional(),
+  address: z.string().optional(),
+});
+
+type Step7FormValues = z.infer<typeof step7Schema>;
+
+interface Step7Props {
+  data: OnboardingData;
+  updateData: (updates: Partial<OnboardingData>) => void;
+  onValidSubmit?: () => void;
+}
+
+export function Step7BusinessInfo({ data, updateData, onValidSubmit }: Step7Props) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Step7FormValues>({
+    resolver: zodResolver(step7Schema),
+    defaultValues: {
+      name: data.businessInfo.name,
+      email: data.businessInfo.email,
+      phone: data.businessInfo.phone,
+      services: data.businessInfo.services,
+      description: data.businessInfo.description,
+      whatsapp: data.businessInfo.whatsapp,
+      social: data.businessInfo.social,
+      address: data.businessInfo.address,
+    },
+  });
+
+  const onSubmit = (formData: Step7FormValues) => {
+    updateData({
+      businessInfo: {
+        ...data.businessInfo,
+        ...formData,
+      },
+    });
+    if (onValidSubmit) {
+      onValidSubmit();
+    }
+  };
+
+  const updateNonFormInfo = (key: keyof OnboardingData["businessInfo"], value: any) => {
     updateData({ businessInfo: { ...data.businessInfo, [key]: value } });
   };
 
@@ -104,57 +158,74 @@ export function Step7BusinessInfo({ data, updateData }: StepProps) {
     <div className="space-y-6">
       <h2 className="text-2xl font-heading font-bold">7. Business Information Required</h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <form id="step7-form" onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label>Business Name</Label>
-          <Input value={data.businessInfo.name} onChange={e => updateInfo("name", e.target.value)} />
+          <Label>Business Name *</Label>
+          <Input 
+            {...register("name")} 
+            className={errors.name ? "border-destructive focus-visible:ring-destructive" : ""}
+          />
+          {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
         </div>
         <div className="space-y-2">
           <Label>Services / Products</Label>
-          <Input value={data.businessInfo.services} onChange={e => updateInfo("services", e.target.value)} />
+          <Input {...register("services")} />
         </div>
         <div className="space-y-2 md:col-span-2">
           <Label>Business Description</Label>
-          <Textarea value={data.businessInfo.description} onChange={e => updateInfo("description", e.target.value)} />
+          <Textarea {...register("description")} />
         </div>
         <div className="space-y-2">
-          <Label>Contact Number</Label>
-          <Input type="tel" value={data.businessInfo.phone} onChange={e => updateInfo("phone", e.target.value)} />
+          <Label>Contact Number *</Label>
+          <Input 
+            type="tel" 
+            {...register("phone")} 
+            className={errors.phone ? "border-destructive focus-visible:ring-destructive" : ""}
+          />
+          {errors.phone && <p className="text-xs text-destructive">{errors.phone.message}</p>}
         </div>
         <div className="space-y-2">
-          <Label>Email Address</Label>
-          <Input type="email" value={data.businessInfo.email} onChange={e => updateInfo("email", e.target.value)} />
+          <Label>Email Address *</Label>
+          <Input 
+            type="email" 
+            {...register("email")} 
+            className={errors.email ? "border-destructive focus-visible:ring-destructive" : ""}
+          />
+          {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
         </div>
         <div className="space-y-2">
           <Label>WhatsApp Number</Label>
-          <Input type="tel" value={data.businessInfo.whatsapp} onChange={e => updateInfo("whatsapp", e.target.value)} />
+          <Input type="tel" {...register("whatsapp")} />
         </div>
         <div className="space-y-2">
           <Label>Social Media Links</Label>
-          <Input value={data.businessInfo.social} onChange={e => updateInfo("social", e.target.value)} />
+          <Input {...register("social")} />
         </div>
         <div className="space-y-2 md:col-span-2">
           <Label>Business Address</Label>
-          <Textarea value={data.businessInfo.address} onChange={e => updateInfo("address", e.target.value)} />
+          <Textarea {...register("address")} />
         </div>
-      </div>
+      </form>
 
       <div className="space-y-6 pt-4 border-t border-border/50">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <Label className="text-base">Do you already have a logo?</Label>
-          <YesNoSelector id="logo" value={data.businessInfo.hasLogo} onChange={v => updateInfo("hasLogo", v)} />
+          <YesNoSelector id="logo" value={data.businessInfo.hasLogo} onChange={v => updateNonFormInfo("hasLogo", v)} />
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <Label className="text-base">Do you already own a domain?</Label>
-          <YesNoSelector id="domain" value={data.businessInfo.hasDomain} onChange={v => updateInfo("hasDomain", v)} />
+          <YesNoSelector id="domain" value={data.businessInfo.hasDomain} onChange={v => updateNonFormInfo("hasDomain", v)} />
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <Label className="text-base">Do you already have hosting?</Label>
-          <YesNoSelector id="hosting" value={data.businessInfo.hasHosting} onChange={v => updateInfo("hasHosting", v)} />
+          <YesNoSelector id="hosting" value={data.businessInfo.hasHosting} onChange={v => updateNonFormInfo("hasHosting", v)} />
         </div>
         <div className="space-y-2 pt-2">
           <Label>Please share websites/designs you like (optional):</Label>
-          <Textarea value={data.businessInfo.referenceSites} onChange={e => updateInfo("referenceSites", e.target.value)} />
+          <Textarea 
+            value={data.businessInfo.referenceSites} 
+            onChange={e => updateNonFormInfo("referenceSites", e.target.value)} 
+          />
         </div>
       </div>
     </div>

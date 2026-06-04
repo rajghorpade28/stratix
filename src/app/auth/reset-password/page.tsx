@@ -4,63 +4,65 @@ import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Loader2, ArrowLeft } from "lucide-react";
+import { Loader2, ArrowLeft, AlertCircle } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { requestPasswordResetSchema, resetPasswordSchema } from "@/lib/validations";
 import { Input } from "@/components/ui/input";
 import { requestPasswordReset, resetPassword } from "@/actions/reset-password";
+
+type RequestFormValues = z.infer<typeof requestPasswordResetSchema>;
+type ResetFormValues = z.infer<typeof resetPasswordSchema>;
 
 function ResetPasswordForm() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const token = searchParams.get("token");
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [globalError, setGlobalError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [requestEmail, setRequestEmail] = useState("");
 
-  const handleRequestSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError("");
+  const {
+    register: registerRequest,
+    handleSubmit: handleSubmitRequest,
+    formState: { errors: requestErrors, isSubmitting: isSubmittingRequest },
+  } = useForm<RequestFormValues>({
+    resolver: zodResolver(requestPasswordResetSchema),
+    defaultValues: { email: "" },
+  });
 
+  const {
+    register: registerReset,
+    handleSubmit: handleSubmitReset,
+    formState: { errors: resetErrors, isSubmitting: isSubmittingReset },
+  } = useForm<ResetFormValues>({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: { password: "", confirmPassword: "" },
+  });
+
+  const onRequestSubmit = async (data: RequestFormValues) => {
+    setGlobalError("");
     try {
-      const res = await requestPasswordReset(email);
+      const res = await requestPasswordReset(data.email);
       if (res.error) {
-        setError(res.error);
+        setGlobalError(res.error);
       } else {
+        setRequestEmail(data.email);
         setSuccess(true);
       }
     } catch (err) {
-      setError("An unexpected error occurred");
-    } finally {
-      setIsLoading(false);
+      setGlobalError("An unexpected error occurred");
     }
   };
 
-  const handleResetSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError("");
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      setIsLoading(false);
-      return;
-    }
-
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters.");
-      setIsLoading(false);
-      return;
-    }
-
+  const onResetSubmit = async (data: ResetFormValues) => {
+    setGlobalError("");
     try {
-      const res = await resetPassword(token as string, password);
+      const res = await resetPassword(token as string, data.password);
       if (res.error) {
-        setError(res.error);
+        setGlobalError(res.error);
       } else {
         setSuccess(true);
         setTimeout(() => {
@@ -68,9 +70,7 @@ function ResetPasswordForm() {
         }, 2000);
       }
     } catch (err) {
-      setError("An unexpected error occurred");
-    } finally {
-      setIsLoading(false);
+      setGlobalError("An unexpected error occurred");
     }
   };
 
@@ -84,7 +84,7 @@ function ResetPasswordForm() {
         >
           <h2 className="text-2xl font-heading font-bold text-foreground mb-4">Check your email</h2>
           <p className="text-muted-foreground mb-8">
-            If an account exists with {email}, we have sent a password reset link to it.
+            If an account exists with {requestEmail}, we have sent a password reset link to it.
           </p>
           <Link href="/auth/login" className="text-primary font-semibold hover:underline">
             Return to Login
@@ -124,42 +124,41 @@ function ResetPasswordForm() {
             <p className="text-muted-foreground text-sm">Please enter your new password below.</p>
           </div>
 
-          {error && (
-            <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-md mb-6">
-              {error}
+          {globalError && (
+            <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-md mb-6 flex items-center gap-2">
+              <AlertCircle size={16} />
+              {globalError}
             </div>
           )}
 
-          <form onSubmit={handleResetSubmit} className="space-y-4">
+          <form onSubmit={handleSubmitReset(onResetSubmit)} className="space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-foreground">New Password</label>
               <Input 
                 type="password" 
                 placeholder="••••••••" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required 
-                minLength={8}
+                {...registerReset("password")}
+                className={resetErrors.password ? "border-destructive focus-visible:ring-destructive" : ""}
               />
+              {resetErrors.password && <p className="text-xs text-destructive mt-1">{resetErrors.password.message}</p>}
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium text-foreground">Confirm New Password</label>
               <Input 
                 type="password" 
                 placeholder="••••••••" 
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required 
-                minLength={8}
+                {...registerReset("confirmPassword")}
+                className={resetErrors.confirmPassword ? "border-destructive focus-visible:ring-destructive" : ""}
               />
+              {resetErrors.confirmPassword && <p className="text-xs text-destructive mt-1">{resetErrors.confirmPassword.message}</p>}
             </div>
 
             <button
               type="submit"
-              disabled={isLoading}
-              className="w-full bg-primary text-primary-foreground font-semibold py-3 rounded-md hover:bg-primary/90 transition-colors flex justify-center items-center gap-2 shadow-md mt-4"
+              disabled={isSubmittingReset}
+              className="w-full bg-primary text-primary-foreground font-semibold py-3 rounded-md hover:bg-primary/90 transition-colors flex justify-center items-center gap-2 shadow-md mt-4 disabled:opacity-50"
             >
-              {isLoading ? <Loader2 size={18} className="animate-spin" /> : "Update Password"}
+              {isSubmittingReset ? <Loader2 size={18} className="animate-spin" /> : "Update Password"}
             </button>
           </form>
         </motion.div>
@@ -183,30 +182,31 @@ function ResetPasswordForm() {
           <p className="text-muted-foreground text-sm">Enter your email address and we'll send you a link to reset your password.</p>
         </div>
 
-        {error && (
-          <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-md mb-6">
-            {error}
+        {globalError && (
+          <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-md mb-6 flex items-center gap-2">
+            <AlertCircle size={16} />
+            {globalError}
           </div>
         )}
 
-        <form onSubmit={handleRequestSubmit} className="space-y-4">
+        <form onSubmit={handleSubmitRequest(onRequestSubmit)} className="space-y-4">
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">Email Address</label>
             <Input 
               type="email" 
               placeholder="name@company.com" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required 
+              {...registerRequest("email")}
+              className={requestErrors.email ? "border-destructive focus-visible:ring-destructive" : ""}
             />
+            {requestErrors.email && <p className="text-xs text-destructive mt-1">{requestErrors.email.message}</p>}
           </div>
 
           <button
             type="submit"
-            disabled={isLoading}
-            className="w-full bg-primary text-primary-foreground font-semibold py-3 rounded-md hover:bg-primary/90 transition-colors flex justify-center items-center gap-2 shadow-md mt-4"
+            disabled={isSubmittingRequest}
+            className="w-full bg-primary text-primary-foreground font-semibold py-3 rounded-md hover:bg-primary/90 transition-colors flex justify-center items-center gap-2 shadow-md mt-4 disabled:opacity-50"
           >
-            {isLoading ? <Loader2 size={18} className="animate-spin" /> : "Send Reset Link"}
+            {isSubmittingRequest ? <Loader2 size={18} className="animate-spin" /> : "Send Reset Link"}
           </button>
         </form>
       </motion.div>

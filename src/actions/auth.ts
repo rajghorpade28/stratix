@@ -5,25 +5,25 @@ import bcrypt from "bcryptjs";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
 
+import { registerSchema } from "@/lib/validations";
+
 export async function registerUser(formData: FormData) {
   try {
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const phone = formData.get("phone") as string;
-    const password = formData.get("password") as string;
-    const confirmPassword = formData.get("confirmPassword") as string;
+    const rawData = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      password: formData.get("password"),
+      confirmPassword: formData.get("confirmPassword"),
+    };
 
-    if (!name || !email || !password || !confirmPassword) {
-      return { error: "Please fill in all required fields." };
+    const validatedData = registerSchema.safeParse(rawData);
+
+    if (!validatedData.success) {
+      return { error: validatedData.error.errors[0].message };
     }
 
-    if (password !== confirmPassword) {
-      return { error: "Passwords do not match." };
-    }
-
-    if (password.length < 8) {
-      return { error: "Password must be at least 8 characters long." };
-    }
+    const { name, email, phone, password } = validatedData.data;
 
     const existingUser = await prisma.user.findUnique({
       where: { email },

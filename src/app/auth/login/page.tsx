@@ -1,51 +1,52 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { motion } from "framer-motion";
-import { Loader2 } from "lucide-react";
+import { Loader2, AlertCircle } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { loginSchema } from "@/lib/validations";
 import { Input } from "@/components/ui/input";
+
+type LoginFormValues = z.infer<typeof loginSchema>;
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [globalError, setGlobalError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { email: "", password: "" },
+  });
 
+  const onSubmit = async (data: LoginFormValues) => {
+    setGlobalError("");
     try {
       const res = await signIn("credentials", {
         redirect: false,
-        email,
-        password,
+        email: data.email,
+        password: data.password,
       });
 
       if (res?.error) {
-        if (res.error === "Configuration" || res.error.includes("EmailNotVerified")) {
-          // NextAuth sometimes wraps custom errors in Configuration or AccessDenied
-          // In v5 beta, custom errors thrown in authorize return the error string.
-          router.push(`/auth/verify-email?email=${encodeURIComponent(email)}${callbackUrl !== "/dashboard" ? `&callbackUrl=${encodeURIComponent(callbackUrl)}` : ""}`);
-        } else {
-          setError("Invalid email or password");
-        }
-        setIsLoading(false);
+        setGlobalError("Invalid email or password.");
       } else {
         router.push(callbackUrl);
         router.refresh();
       }
     } catch (err) {
-      setError("An unexpected error occurred");
-      setIsLoading(false);
+      setGlobalError("An unexpected error occurred. Please try again.");
     }
   };
 
@@ -61,22 +62,23 @@ function LoginForm() {
           <p className="text-muted-foreground">Sign in to access your dashboard</p>
         </div>
 
-        {error && (
-          <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-md mb-6">
-            {error}
+        {globalError && (
+          <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-md mb-6 flex items-center gap-2">
+            <AlertCircle size={16} />
+            {globalError}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">Email Address</label>
             <Input 
               type="email" 
               placeholder="name@company.com" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required 
+              {...register("email")}
+              className={errors.email ? "border-destructive focus-visible:ring-destructive" : ""}
             />
+            {errors.email && <p className="text-xs text-destructive mt-1">{errors.email.message}</p>}
           </div>
 
           <div className="space-y-2">
@@ -89,23 +91,23 @@ function LoginForm() {
             <Input 
               type="password" 
               placeholder="••••••••" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required 
+              {...register("password")}
+              className={errors.password ? "border-destructive focus-visible:ring-destructive" : ""}
             />
+            {errors.password && <p className="text-xs text-destructive mt-1">{errors.password.message}</p>}
           </div>
 
-          <div className="flex items-center gap-2 pb-2">
+          <div className="flex items-center gap-2 pb-2 mt-2">
             <input type="checkbox" id="remember" className="rounded border-border bg-background" />
             <label htmlFor="remember" className="text-sm text-muted-foreground">Remember me</label>
           </div>
 
           <button
             type="submit"
-            disabled={isLoading}
-            className="w-full bg-primary text-primary-foreground font-semibold py-3 rounded-md hover:bg-primary/90 transition-colors flex justify-center items-center gap-2 shadow-md"
+            disabled={isSubmitting}
+            className="w-full bg-primary text-primary-foreground font-semibold py-3 rounded-md hover:bg-primary/90 transition-colors flex justify-center items-center gap-2 shadow-md disabled:opacity-50"
           >
-            {isLoading ? <Loader2 size={18} className="animate-spin" /> : "Sign In"}
+            {isSubmitting ? <Loader2 size={18} className="animate-spin" /> : "Sign In"}
           </button>
         </form>
 

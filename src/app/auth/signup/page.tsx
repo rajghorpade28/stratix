@@ -1,38 +1,103 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { Loader2 } from "lucide-react";
+import { Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { registerSchema } from "@/lib/validations";
 import { Input } from "@/components/ui/input";
 import { registerUser } from "@/actions/auth";
+
+type SignupFormValues = z.infer<typeof registerSchema>;
+
+function PasswordStrength({ password }: { password?: string }) {
+  const [strength, setStrength] = useState(0);
+
+  useEffect(() => {
+    if (!password) {
+      setStrength(0);
+      return;
+    }
+    let s = 0;
+    if (password.length >= 8) s++;
+    if (/[A-Z]/.test(password)) s++;
+    if (/[a-z]/.test(password)) s++;
+    if (/[0-9]/.test(password)) s++;
+    if (/[^A-Za-z0-9]/.test(password)) s++;
+    setStrength(s);
+  }, [password]);
+
+  const getColor = () => {
+    if (strength === 0) return "bg-border";
+    if (strength <= 2) return "bg-destructive";
+    if (strength <= 4) return "bg-yellow-500";
+    return "bg-green-500";
+  };
+
+  const getLabel = () => {
+    if (strength === 0) return "";
+    if (strength <= 2) return "Weak";
+    if (strength <= 4) return "Medium";
+    return "Strong";
+  };
+
+  return (
+    <div className="mt-2">
+      <div className="flex gap-1 h-1.5 w-full bg-muted rounded-full overflow-hidden">
+        {[1, 2, 3, 4, 5].map((level) => (
+          <div
+            key={level}
+            className={`flex-1 ${level <= strength ? getColor() : "bg-transparent"} transition-all duration-300`}
+          />
+        ))}
+      </div>
+      <p className="text-xs mt-1 text-muted-foreground text-right">{getLabel()}</p>
+    </div>
+  );
+}
 
 function SignupForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "";
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [globalError, setGlobalError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError("");
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm<SignupFormValues>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: { name: "", email: "", phone: "", password: "", confirmPassword: "" },
+  });
 
-    const formData = new FormData(e.currentTarget);
+  const passwordValue = watch("password");
+
+  const onSubmit = async (data: SignupFormValues) => {
+    setGlobalError("");
+
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("email", data.email);
+    formData.append("phone", data.phone);
+    formData.append("password", data.password);
+    formData.append("confirmPassword", data.confirmPassword);
+
     const result = await registerUser(formData);
 
     if (result.error) {
-      setError(result.error);
-      setIsLoading(false);
+      setGlobalError(result.error);
     } else if (result.success) {
       setSuccess(true);
-      const userEmail = formData.get("email") as string;
       setTimeout(() => {
-        router.push(`/auth/verify-email?email=${encodeURIComponent(userEmail)}${callbackUrl ? `&callbackUrl=${encodeURIComponent(callbackUrl)}` : ""}`);
+        router.push(`/auth/verify-email?email=${encodeURIComponent(data.email)}${callbackUrl ? `&callbackUrl=${encodeURIComponent(callbackUrl)}` : ""}`);
       }, 2000);
     }
   };
@@ -46,9 +111,7 @@ function SignupForm() {
           className="w-full max-w-md bg-card border border-border/50 rounded-lg shadow-xl p-8 text-center"
         >
           <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
+            <CheckCircle2 className="w-8 h-8 text-accent" />
           </div>
           <h2 className="text-2xl font-heading font-bold text-foreground mb-2">Account Created!</h2>
           <p className="text-muted-foreground mb-6">Your account has been successfully created. Redirecting to verification...</p>
@@ -69,45 +132,75 @@ function SignupForm() {
           <p className="text-muted-foreground">Join us to start managing your projects</p>
         </div>
 
-        {error && (
-          <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-md mb-6">
-            {error}
+        {globalError && (
+          <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-md mb-6 flex items-center gap-2">
+            <AlertCircle size={16} />
+            {globalError}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-foreground">Full Name</label>
-              <Input name="name" placeholder="John Doe" required />
+              <Input 
+                {...register("name")} 
+                placeholder="John Doe" 
+                className={errors.name ? "border-destructive focus-visible:ring-destructive" : ""}
+              />
+              {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium text-foreground">Phone Number</label>
-              <Input name="phone" placeholder="+1 234 567 890" required />
+              <Input 
+                {...register("phone")} 
+                placeholder="+1 234 567 890" 
+                className={errors.phone ? "border-destructive focus-visible:ring-destructive" : ""}
+              />
+              {errors.phone && <p className="text-xs text-destructive">{errors.phone.message}</p>}
             </div>
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">Email Address</label>
-            <Input name="email" type="email" placeholder="name@company.com" required />
+            <Input 
+              {...register("email")} 
+              type="email" 
+              placeholder="name@company.com" 
+              className={errors.email ? "border-destructive focus-visible:ring-destructive" : ""}
+            />
+            {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">Password</label>
-            <Input name="password" type="password" placeholder="••••••••" required minLength={8} />
+            <Input 
+              {...register("password")} 
+              type="password" 
+              placeholder="••••••••" 
+              className={errors.password ? "border-destructive focus-visible:ring-destructive" : ""}
+            />
+            {passwordValue && <PasswordStrength password={passwordValue} />}
+            {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">Confirm Password</label>
-            <Input name="confirmPassword" type="password" placeholder="••••••••" required minLength={8} />
+            <Input 
+              {...register("confirmPassword")} 
+              type="password" 
+              placeholder="••••••••" 
+              className={errors.confirmPassword ? "border-destructive focus-visible:ring-destructive" : ""}
+            />
+            {errors.confirmPassword && <p className="text-xs text-destructive">{errors.confirmPassword.message}</p>}
           </div>
 
           <button
             type="submit"
-            disabled={isLoading}
-            className="w-full bg-primary text-primary-foreground font-semibold py-3 rounded-md hover:bg-primary/90 transition-colors flex justify-center items-center gap-2 shadow-md mt-6"
+            disabled={isSubmitting}
+            className="w-full bg-primary text-primary-foreground font-semibold py-3 rounded-md hover:bg-primary/90 transition-colors flex justify-center items-center gap-2 shadow-md mt-6 disabled:opacity-50"
           >
-            {isLoading ? <Loader2 size={18} className="animate-spin" /> : "Create Account"}
+            {isSubmitting ? <Loader2 size={18} className="animate-spin" /> : "Create Account"}
           </button>
         </form>
 
