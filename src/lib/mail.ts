@@ -1,11 +1,15 @@
-import { Resend } from "resend";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import nodemailer from "nodemailer";
 
 const domain = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-// Resend requires a verified domain to send emails. 
-// For testing without a verified domain, you MUST use onboarding@resend.dev
-const fromEmail = "STRATIX <onboarding@resend.dev>"; 
+
+// Configure the nodemailer transport using Gmail SMTP
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_SERVER_USER,
+    pass: process.env.EMAIL_SERVER_PASSWORD, // App Password, NOT regular password
+  },
+});
 
 export const sendVerificationEmail = async (
   email: string,
@@ -13,8 +17,8 @@ export const sendVerificationEmail = async (
   name: string
 ) => {
   try {
-    const { data, error } = await resend.emails.send({
-      from: fromEmail,
+    const info = await transporter.sendMail({
+      from: `"STRATIX" <${process.env.EMAIL_SERVER_USER}>`,
       to: email,
       subject: "STRATIX Verification Code",
       html: `
@@ -31,12 +35,7 @@ export const sendVerificationEmail = async (
         </div>
       `,
     });
-
-    if (error) {
-      console.error("Resend API Error (Verification):", error);
-    } else {
-      console.log("Verification email sent successfully:", data);
-    }
+    console.log("Verification email sent successfully:", info.messageId);
   } catch (err) {
     console.error("Exception during sendVerificationEmail:", err);
   }
@@ -49,8 +48,8 @@ export const sendPasswordResetEmail = async (
   const resetLink = `${domain}/auth/reset-password?token=${token}`;
 
   try {
-    const { data, error } = await resend.emails.send({
-      from: fromEmail,
+    const info = await transporter.sendMail({
+      from: `"STRATIX" <${process.env.EMAIL_SERVER_USER}>`,
       to: email,
       subject: "Reset your STRATIX password",
       html: `
@@ -65,12 +64,7 @@ export const sendPasswordResetEmail = async (
         </div>
       `,
     });
-
-    if (error) {
-      console.error("Resend API Error (Password Reset):", error);
-    } else {
-      console.log("Password reset email sent successfully:", data);
-    }
+    console.log("Password reset email sent successfully:", info.messageId);
   } catch (err) {
     console.error("Exception during sendPasswordResetEmail:", err);
   }
