@@ -4,7 +4,11 @@ import { NextResponse } from "next/server";
 export default auth((req) => {
   const isLoggedIn = !!req.auth;
   const isAuthRoute = req.nextUrl.pathname.startsWith("/auth");
-  const isProtectedRoute = req.nextUrl.pathname.startsWith("/dashboard") || req.nextUrl.pathname.startsWith("/admin");
+  const isProtectedRoute = 
+    req.nextUrl.pathname.startsWith("/dashboard") || 
+    req.nextUrl.pathname.startsWith("/admin") ||
+    req.nextUrl.pathname.startsWith("/start") ||
+    req.nextUrl.pathname.startsWith("/start-app");
 
   if (isAuthRoute) {
     if (isLoggedIn) {
@@ -14,7 +18,9 @@ export default auth((req) => {
   }
 
   if (isProtectedRoute && !isLoggedIn) {
-    return Response.redirect(new URL("/auth/login", req.nextUrl));
+    // Redirect to login with a callbackUrl parameter so they can be sent back to the form
+    const callbackUrl = encodeURIComponent(req.nextUrl.pathname);
+    return Response.redirect(new URL(`/auth/login?callbackUrl=${callbackUrl}`, req.nextUrl));
   }
 
   // Basic admin protection

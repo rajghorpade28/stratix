@@ -1,8 +1,11 @@
 "use client";
-
+import { useState } from "react";
+import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
 import { ArrowRight, Share2, Target, PenTool, Search, MessageCircle, Magnet, MapPin, Layout, Cpu, Palette, AppWindow } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { AuthGateModal } from "@/components/auth/AuthGateModal";
 
 const buildServices = [
   {
@@ -70,10 +73,35 @@ const growthSolutions = [
 ];
 
 export function ServicesPreview() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [pendingHref, setPendingHref] = useState("");
+
+  const handleServiceClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // If we're loading session, prevent navigation to avoid flickering issues
+    if (status === "loading") {
+      e.preventDefault();
+      return;
+    }
+
+    if (!session) {
+      e.preventDefault();
+      setPendingHref(href);
+      setAuthModalOpen(true);
+    }
+  };
+
   return (
     <section className="py-20 md:py-28 bg-background relative border-t border-border/40 overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
         
+        <AuthGateModal 
+          isOpen={authModalOpen} 
+          onClose={() => setAuthModalOpen(false)} 
+          targetHref={pendingHref} 
+        />
+
         <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 md:gap-8 mb-12 md:mb-16">
           <div className="max-w-2xl">
             <h2 className="text-sm font-medium tracking-[0.1em] text-accent uppercase mb-4">Our Expertise</h2>
@@ -136,6 +164,7 @@ export function ServicesPreview() {
                   {service.href ? (
                     <Link 
                       href={service.href}
+                      onClick={(e) => handleServiceClick(e, service.href!)}
                       className="block h-full group p-6 bg-card border border-border/50 rounded-lg hover:border-accent/50 hover:shadow-[0_8px_30px_rgba(204,255,0,0.08)] transition-colors"
                     >
                       {CardInner}

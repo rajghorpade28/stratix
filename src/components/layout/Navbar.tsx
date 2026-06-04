@@ -57,17 +57,25 @@ export function Navbar() {
                 session ? (
                   <Link 
                     href="/dashboard"
-                    className="flex items-center gap-2 text-[13px] uppercase tracking-[0.1em] font-medium bg-primary text-primary-foreground px-4 py-2 rounded hover:bg-primary/90 transition-all"
+                    className="flex items-center gap-2 text-[13px] uppercase tracking-[0.1em] font-medium bg-primary text-primary-foreground px-6 py-2.5 rounded-md hover:bg-primary/90 transition-all shadow-sm"
                   >
                     <UserIcon size={16} /> Dashboard
                   </Link>
                 ) : (
-                  <Link 
-                    href="/auth/login"
-                    className="text-[13px] uppercase tracking-[0.1em] font-medium text-foreground hover:text-accent transition-all"
-                  >
-                    Log In
-                  </Link>
+                  <div className="flex items-center gap-4">
+                    <Link 
+                      href="/auth/login"
+                      className="text-[13px] uppercase tracking-[0.1em] font-bold text-foreground hover:text-accent transition-all"
+                    >
+                      Log In
+                    </Link>
+                    <Link 
+                      href="/auth/signup"
+                      className="text-[13px] uppercase tracking-[0.1em] font-bold bg-primary text-primary-foreground px-6 py-2.5 rounded-md hover:bg-primary/90 transition-all shadow-sm"
+                    >
+                      Sign Up
+                    </Link>
+                  </div>
                 )
               )}
             </div>
@@ -109,14 +117,40 @@ export function Navbar() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.1 }}
-                className="mt-auto pb-12 px-4"
+                className="mt-auto pb-12 px-4 flex flex-col gap-6"
               >
                 <Link 
                   href="/contact"
-                  className="text-lg uppercase tracking-[0.1em] font-medium text-primary border-b border-primary pb-2 inline-block"
+                  className="text-lg uppercase tracking-[0.1em] font-medium text-primary border-b border-primary pb-2 inline-block w-max"
                 >
                   Contact Us
                 </Link>
+
+                {status !== "loading" && (
+                  session ? (
+                    <Link 
+                      href="/dashboard"
+                      className="flex items-center justify-center gap-2 text-sm uppercase tracking-[0.1em] font-bold bg-primary text-primary-foreground px-6 py-4 rounded-md hover:bg-primary/90 transition-all w-full text-center mt-4"
+                    >
+                      <UserIcon size={18} /> Dashboard
+                    </Link>
+                  ) : (
+                    <div className="flex flex-col gap-4 mt-4">
+                      <Link 
+                        href="/auth/login"
+                        className="text-sm uppercase tracking-[0.1em] font-bold text-foreground border-2 border-border/50 px-6 py-4 rounded-md hover:border-foreground/30 transition-all w-full text-center"
+                      >
+                        Log In
+                      </Link>
+                      <Link 
+                        href="/auth/signup"
+                        className="text-sm uppercase tracking-[0.1em] font-bold bg-primary text-primary-foreground px-6 py-4 rounded-md hover:bg-primary/90 transition-all w-full text-center"
+                      >
+                        Sign Up
+                      </Link>
+                    </div>
+                  )
+                )}
               </motion.div>
             </div>
           </motion.div>

@@ -1,15 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { registerUser } from "@/actions/auth";
 
-export default function SignupPage() {
+function SignupForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "";
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -28,7 +31,7 @@ export default function SignupPage() {
     } else if (result.success) {
       setSuccess(true);
       setTimeout(() => {
-        router.push("/auth/login");
+        router.push(`/auth/login${callbackUrl ? `?callbackUrl=${encodeURIComponent(callbackUrl)}` : ""}`);
       }, 2000);
     }
   };
@@ -109,11 +112,19 @@ export default function SignupPage() {
 
         <div className="mt-6 text-center text-sm text-muted-foreground">
           Already have an account?{" "}
-          <Link href="/auth/login" className="text-foreground font-semibold hover:text-accent transition-colors">
+          <Link href={`/auth/login${callbackUrl ? `?callbackUrl=${encodeURIComponent(callbackUrl)}` : ""}`} className="text-foreground font-semibold hover:text-accent transition-colors">
             Sign In
           </Link>
         </div>
       </motion.div>
     </div>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin" /></div>}>
+      <SignupForm />
+    </Suspense>
   );
 }
