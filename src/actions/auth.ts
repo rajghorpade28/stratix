@@ -2,6 +2,8 @@
 
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
+import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export async function registerUser(formData: FormData) {
   try {
@@ -41,6 +43,20 @@ export async function registerUser(formData: FormData) {
         passwordHash,
       },
     });
+
+    const verificationToken = await generateVerificationToken(email);
+    
+    // In local dev without API keys, this might throw if RESEND_API_KEY is missing.
+    // Wrap in try-catch so registration doesn't completely fail for dev environment.
+    try {
+      await sendVerificationEmail(
+        verificationToken.identifier,
+        verificationToken.token,
+        name
+      );
+    } catch (emailError) {
+      console.warn("Failed to send verification email (API Key missing?):", emailError);
+    }
 
     return { success: true };
   } catch (error) {
