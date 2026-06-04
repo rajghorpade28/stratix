@@ -1,96 +1,90 @@
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
-import { prisma } from "@/lib/prisma";
+import { getDashboardStats, getRecentActivity } from "@/actions/admin";
+import { Users, FileText, Globe, Smartphone, Palette, Zap, MessageSquare } from "lucide-react";
 import Link from "next/link";
-import { LogOut, Users, ShieldAlert, FileText, LayoutDashboard, ArrowLeft } from "lucide-react";
+import { formatDistanceToNow } from "date-fns";
 
-export const metadata = {
-  title: "Admin Panel | STRATIX",
-};
+export default async function AdminDashboard() {
+  const stats = await getDashboardStats();
+  const recentActivity = await getRecentActivity();
 
-export default async function AdminPage() {
-  const session = await auth();
-  
-  if (!session?.user || session.user.role !== "ADMIN") {
-    redirect("/dashboard");
-  }
-
-  const [users, websiteRequests, appRequests, contactLeads] = await Promise.all([
-    prisma.user.findMany({ orderBy: { createdAt: "desc" } }),
-    prisma.websiteRequest.findMany({ include: { user: true }, orderBy: { createdAt: "desc" } }),
-    prisma.appRequest.findMany({ include: { user: true }, orderBy: { createdAt: "desc" } }),
-    prisma.contactLead.findMany({ include: { user: true }, orderBy: { createdAt: "desc" } }),
-  ]);
+  const kpis = [
+    { label: "Total Users", value: stats.totalUsers, icon: Users, color: "text-blue-500", bg: "bg-blue-500/10" },
+    { label: "Total Leads", value: stats.totalLeads, icon: FileText, color: "text-green-500", bg: "bg-green-500/10" },
+    { label: "Website Req", value: stats.totalWebsiteRequests, icon: Globe, color: "text-purple-500", bg: "bg-purple-500/10" },
+    { label: "App Req", value: stats.totalAppRequests, icon: Smartphone, color: "text-orange-500", bg: "bg-orange-500/10" },
+    { label: "Graphics Req", value: stats.totalGraphicsRequests, icon: Palette, color: "text-pink-500", bg: "bg-pink-500/10" },
+    { label: "Automation Req", value: stats.totalAutomationRequests, icon: Zap, color: "text-yellow-500", bg: "bg-yellow-500/10" },
+    { label: "Contact Subs", value: stats.totalContactSubmissions, icon: MessageSquare, color: "text-teal-500", bg: "bg-teal-500/10" },
+  ];
 
   return (
-    <div className="min-h-screen bg-background pt-24 pb-12 px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-border/50">
-          <div className="flex items-center gap-4">
-            <ShieldAlert className="w-8 h-8 text-destructive" />
-            <div>
-              <h1 className="text-2xl font-heading font-bold text-foreground">Admin Control Panel</h1>
-              <p className="text-sm text-muted-foreground">Manage users and incoming service requests</p>
-            </div>
-          </div>
-          <Link href="/dashboard" className="flex items-center gap-2 px-4 py-2 bg-accent/10 text-accent font-semibold rounded hover:bg-accent/20 transition-colors text-sm">
-            <ArrowLeft size={16} /> Exit Admin
-          </Link>
+    <div className="space-y-10">
+      
+      {/* KPIs */}
+      <section>
+        <h2 className="text-xl font-heading font-bold mb-6">Overview</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {kpis.map((kpi, idx) => {
+            const Icon = kpi.icon;
+            return (
+              <div key={idx} className="bg-card border border-border p-6 rounded-lg shadow-sm flex items-center gap-4">
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${kpi.bg}`}>
+                  <Icon className={`w-6 h-6 ${kpi.color}`} />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">{kpi.label}</p>
+                  <h3 className="text-3xl font-bold mt-1">{kpi.value}</h3>
+                </div>
+              </div>
+            );
+          })}
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-card border border-border/50 rounded-lg p-6">
-            <h3 className="text-sm font-medium text-muted-foreground mb-2 flex items-center gap-2"><Users size={16}/> Total Users</h3>
-            <p className="text-3xl font-heading font-bold text-foreground">{users.length}</p>
-          </div>
-          <div className="bg-card border border-border/50 rounded-lg p-6">
-            <h3 className="text-sm font-medium text-muted-foreground mb-2 flex items-center gap-2"><FileText size={16}/> Website Reqs</h3>
-            <p className="text-3xl font-heading font-bold text-foreground">{websiteRequests.length}</p>
-          </div>
-          <div className="bg-card border border-border/50 rounded-lg p-6">
-            <h3 className="text-sm font-medium text-muted-foreground mb-2 flex items-center gap-2"><LayoutDashboard size={16}/> App Reqs</h3>
-            <p className="text-3xl font-heading font-bold text-foreground">{appRequests.length}</p>
-          </div>
-          <div className="bg-card border border-border/50 rounded-lg p-6">
-            <h3 className="text-sm font-medium text-muted-foreground mb-2 flex items-center gap-2"><FileText size={16}/> Contact Leads</h3>
-            <p className="text-3xl font-heading font-bold text-foreground">{contactLeads.length}</p>
-          </div>
-        </div>
+      {/* Recent Activity */}
+      <section>
+        <h2 className="text-xl font-heading font-bold mb-6">Recent Activity</h2>
+        <div className="bg-card border border-border rounded-lg overflow-hidden">
+          <div className="divide-y divide-border">
+            {recentActivity.length === 0 ? (
+              <div className="p-8 text-center text-muted-foreground">No recent activity.</div>
+            ) : (
+              recentActivity.map((activity, idx) => {
+                let identifier = "Unknown";
+                if (activity.type === "New User Registered") {
+                  identifier = activity.data.email;
+                } else if (activity.type === "Contact Submission") {
+                  identifier = activity.data.email;
+                } else {
+                  identifier = activity.data.user?.email || "Guest User";
+                }
 
-        <div className="space-y-8">
-          <div className="bg-card border border-border/50 rounded-lg overflow-hidden">
-            <div className="px-6 py-4 bg-muted/30 border-b border-border/50 flex items-center justify-between">
-              <h2 className="font-heading font-bold text-lg">Registered Users</h2>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm text-left">
-                <thead className="text-xs text-muted-foreground uppercase bg-muted/20 border-b border-border/50">
-                  <tr>
-                    <th className="px-6 py-3 font-semibold">Name</th>
-                    <th className="px-6 py-3 font-semibold">Email</th>
-                    <th className="px-6 py-3 font-semibold">Role</th>
-                    <th className="px-6 py-3 font-semibold">Joined</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border/50">
-                  {users.map((u) => (
-                    <tr key={u.id} className="hover:bg-muted/10">
-                      <td className="px-6 py-4 font-medium text-foreground">{u.name || "N/A"}</td>
-                      <td className="px-6 py-4">{u.email}</td>
-                      <td className="px-6 py-4">
-                        <span className={`px-2 py-1 rounded text-xs font-bold ${u.role === "ADMIN" ? "bg-destructive/20 text-destructive" : "bg-primary/20 text-primary"}`}>
-                          {u.role}
+                return (
+                  <div key={idx} className="p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-accent/5 transition-colors">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                          {activity.type}
                         </span>
-                      </td>
-                      <td className="px-6 py-4 text-muted-foreground">{new Date(u.createdAt).toLocaleDateString()}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                        <span className="text-sm text-muted-foreground">
+                          {formatDistanceToNow(activity.date, { addSuffix: true })}
+                        </span>
+                      </div>
+                      <p className="text-foreground font-medium">{identifier}</p>
+                    </div>
+                    {activity.type !== "New User Registered" && activity.type !== "Contact Submission" && (
+                       <div className="text-sm">
+                         Status: <span className="font-semibold">{activity.data.status}</span>
+                       </div>
+                    )}
+                  </div>
+                );
+              })
+            )}
           </div>
         </div>
-      </div>
+      </section>
+
     </div>
   );
 }

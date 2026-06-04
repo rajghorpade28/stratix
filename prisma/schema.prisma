@@ -20,9 +20,11 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  websiteRequests WebsiteRequest[]
-  appRequests     AppRequest[]
-  contactLeads    ContactLead[]
+  websiteRequests   WebsiteRequest[]
+  appRequests       AppRequest[]
+  graphicsRequests  GraphicsRequest[]
+  automationRequests AutomationRequest[]
+  contactLeads      ContactLead[]
 }
 
 model VerificationToken {
@@ -38,10 +40,9 @@ model WebsiteRequest {
   userId               String?
   user                 User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   
-  // Stored as JSON to comfortably hold the complex onboarding structure
   data                 String
   
-  status               String   @default("PENDING") // PENDING, REVIEWED, COMPLETED
+  status               String   @default("NEW")
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
 }
@@ -51,10 +52,33 @@ model AppRequest {
   userId               String?
   user                 User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   
-  // Stored as JSON string
   data                 String
   
-  status               String   @default("PENDING")
+  status               String   @default("NEW")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model GraphicsRequest {
+  id                   String   @id @default(cuid())
+  userId               String?
+  user                 User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  data                 String
+  
+  status               String   @default("NEW")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model AutomationRequest {
+  id                   String   @id @default(cuid())
+  userId               String?
+  user                 User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  data                 String
+  
+  status               String   @default("NEW")
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
 }

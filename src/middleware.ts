@@ -26,7 +26,10 @@ export default auth((req) => {
   // Basic admin protection
   if (req.nextUrl.pathname.startsWith("/admin")) {
     if (req.auth?.user?.role !== "ADMIN") {
-      return Response.redirect(new URL("/dashboard", req.nextUrl));
+      return new NextResponse(
+        JSON.stringify({ error: "403 Forbidden - Admin Access Required" }),
+        { status: 403, headers: { "content-type": "application/json" } }
+      );
     }
   }
 

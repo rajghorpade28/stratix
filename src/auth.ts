@@ -15,8 +15,46 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null;
         }
 
+        const inputEmail = credentials.email as string;
+        const inputPassword = credentials.password as string;
+
+        // Admin Auto-Seeding Logic
+        const adminEmail = process.env.ADMIN_EMAIL;
+        const adminPassword = process.env.ADMIN_PASSWORD;
+
+        if (adminEmail && adminPassword && inputEmail === adminEmail) {
+          let adminUser = await prisma.user.findUnique({
+            where: { email: adminEmail },
+          });
+
+          if (!adminUser) {
+            const passwordHash = await bcrypt.hash(adminPassword, 12);
+            adminUser = await prisma.user.create({
+              data: {
+                name: "Administrator",
+                email: adminEmail,
+                passwordHash,
+                role: "ADMIN",
+                emailVerified: new Date(),
+              },
+            });
+          }
+
+          const passwordsMatch = await bcrypt.compare(inputPassword, adminUser.passwordHash!);
+          if (passwordsMatch) {
+            return {
+              id: adminUser.id,
+              name: adminUser.name,
+              email: adminUser.email,
+              role: adminUser.role,
+              emailVerified: adminUser.emailVerified,
+            };
+          }
+          return null;
+        }
+
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email as string },
+          where: { email: inputEmail },
         });
 
         if (!user || !user.passwordHash) {
@@ -24,7 +62,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
 
         const passwordsMatch = await bcrypt.compare(
-          credentials.password as string,
+          inputPassword,
           user.passwordHash
         );
 
