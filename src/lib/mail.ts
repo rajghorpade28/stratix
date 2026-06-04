@@ -10,21 +10,21 @@ export const sendVerificationEmail = async (
   token: string,
   name: string
 ) => {
-  const confirmLink = `${domain}/api/auth/verify?token=${token}`;
-
   await resend.emails.send({
     from: fromEmail,
     to: email,
-    subject: "Welcome to STRATIX! Please verify your email.",
+    subject: "STRATIX Verification Code",
     html: `
-      <div style="font-family: sans-serif; max-w: 600px; margin: 0 auto;">
-        <h2>Welcome to STRATIX, ${name}!</h2>
-        <p>Thank you for creating an account with us. We're excited to help you scale your brand.</p>
-        <p>Please click the button below to verify your email address and activate your account:</p>
+      <div style="font-family: sans-serif; max-w: 600px; margin: 0 auto; text-align: center;">
+        <h2 style="color: #1a1a1a;">Welcome to STRATIX, ${name}!</h2>
+        <p style="color: #4a4a4a; font-size: 16px;">Please use the verification code below to activate your account:</p>
         <div style="margin: 30px 0;">
-          <a href="${confirmLink}" style="background-color: #6366f1; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold;">Verify Email</a>
+          <div style="background-color: #f4f4f5; border: 1px solid #e4e4e7; border-radius: 8px; padding: 20px; font-size: 32px; font-weight: bold; letter-spacing: 4px; color: #6366f1; display: inline-block;">
+            ${token}
+          </div>
         </div>
-        <p>If you did not request this, please ignore this email.</p>
+        <p style="color: #71717a; font-size: 14px;">This code will expire in 1 hour.</p>
+        <p style="color: #71717a; font-size: 14px;">If you did not request this, please ignore this email.</p>
       </div>
     `,
   });

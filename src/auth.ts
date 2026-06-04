@@ -29,6 +29,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         );
 
         if (passwordsMatch) {
+          if (!user.emailVerified) {
+            throw new Error("EmailNotVerified");
+          }
+
           // Return user object without sensitive data
           return {
             id: user.id,

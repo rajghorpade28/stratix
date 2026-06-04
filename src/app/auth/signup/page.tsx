@@ -30,8 +30,9 @@ function SignupForm() {
       setIsLoading(false);
     } else if (result.success) {
       setSuccess(true);
+      const userEmail = formData.get("email") as string;
       setTimeout(() => {
-        router.push(`/auth/login${callbackUrl ? `?callbackUrl=${encodeURIComponent(callbackUrl)}` : ""}`);
+        router.push(`/auth/verify-email?email=${encodeURIComponent(userEmail)}${callbackUrl ? `&callbackUrl=${encodeURIComponent(callbackUrl)}` : ""}`);
       }, 2000);
     }
   };
@@ -50,7 +51,7 @@ function SignupForm() {
             </svg>
           </div>
           <h2 className="text-2xl font-heading font-bold text-foreground mb-2">Account Created!</h2>
-          <p className="text-muted-foreground mb-6">Your account has been successfully created. Redirecting to login...</p>
+          <p className="text-muted-foreground mb-6">Your account has been successfully created. Redirecting to verification...</p>
         </motion.div>
       </div>
     );

@@ -64,3 +64,41 @@ export async function registerUser(formData: FormData) {
     return { error: "An error occurred during registration. Please try again." };
   }
 }
+
+export async function verifyEmailOTP(email: string, code: string) {
+  try {
+    const existingToken = await prisma.verificationToken.findFirst({
+      where: {
+        identifier: email,
+        token: code,
+      },
+    });
+
+    if (!existingToken) {
+      return { error: "Invalid verification code." };
+    }
+
+    if (new Date(existingToken.expires) < new Date()) {
+      return { error: "Verification code has expired. Please register again or request a new code." };
+    }
+
+    await prisma.user.update({
+      where: { email },
+      data: { emailVerified: new Date() },
+    });
+
+    await prisma.verificationToken.delete({
+      where: {
+        identifier_token: {
+          identifier: email,
+          token: code,
+        },
+      },
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error("OTP verification error:", error);
+    return { error: "An error occurred during verification." };
+  }
+}

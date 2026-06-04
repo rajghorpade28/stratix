@@ -31,7 +31,13 @@ function LoginForm() {
       });
 
       if (res?.error) {
-        setError("Invalid email or password");
+        if (res.error === "Configuration" || res.error.includes("EmailNotVerified")) {
+          // NextAuth sometimes wraps custom errors in Configuration or AccessDenied
+          // In v5 beta, custom errors thrown in authorize return the error string.
+          router.push(`/auth/verify-email?email=${encodeURIComponent(email)}${callbackUrl !== "/dashboard" ? `&callbackUrl=${encodeURIComponent(callbackUrl)}` : ""}`);
+        } else {
+          setError("Invalid email or password");
+        }
         setIsLoading(false);
       } else {
         router.push(callbackUrl);
