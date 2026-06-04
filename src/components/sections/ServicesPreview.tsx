@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Share2, Target, PenTool, Search, MessageCircle, Magnet, MapPin, Layout, Cpu, Palette } from "lucide-react";
+import { ArrowRight, Share2, Target, PenTool, Search, MessageCircle, Magnet, MapPin, Layout, Cpu, Palette, AppWindow } from "lucide-react";
 import Link from "next/link";
 
 const buildServices = [
@@ -11,6 +11,13 @@ const buildServices = [
     desc: "Custom, high-performance websites that drive conversions.",
     href: "/start",
     ctaText: "Start Website Project"
+  },
+  {
+    icon: AppWindow,
+    name: "App Development",
+    desc: "Premium iOS, Android, and Web applications tailored to your business.",
+    href: "/start-app",
+    ctaText: "Start App Project"
   },
   {
     icon: Cpu,
