@@ -2,7 +2,8 @@ const { spawnSync } = require('child_process');
 
 const envs = {
   EMAIL_SERVER_USER: "rajghorpade231@gmail.com",
-  EMAIL_SERVER_PASSWORD: "ozfiiiieagxhobby"
+  EMAIL_SERVER_PASSWORD: "ozfiiiieagxhobby",
+  NEXT_PUBLIC_APP_URL: "https://stratix00.vercel.app"
 };
 
 for (const [key, value] of Object.entries(envs)) {

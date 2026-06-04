@@ -4,7 +4,7 @@ import { useState, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
-import { verifyEmailOTP } from "@/actions/auth";
+import { verifyEmailOTP, resendVerificationOTP } from "@/actions/auth";
 
 function VerifyEmailForm() {
   const searchParams = useSearchParams();
@@ -15,7 +15,9 @@ function VerifyEmailForm() {
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isResending, setIsResending] = useState(false);
   const [error, setError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleChange = (index: number, value: string) => {
@@ -67,6 +69,7 @@ function VerifyEmailForm() {
 
     setIsLoading(true);
     setError("");
+    setSuccessMsg("");
 
     const result = await verifyEmailOTP(email, code);
 
@@ -74,10 +77,24 @@ function VerifyEmailForm() {
       setError(result.error);
       setIsLoading(false);
     } else {
-      // Success! Send them to login to actually authenticate (or auto-login if preferred)
-      // Since they just verified, sending them to login with the callbackUrl preserves flow.
       router.push(`/auth/login?verified=true&email=${encodeURIComponent(email)}${callbackUrl ? `&callbackUrl=${encodeURIComponent(callbackUrl)}` : ""}`);
     }
+  };
+
+  const handleResend = async () => {
+    if (!email) return;
+    setIsResending(true);
+    setError("");
+    setSuccessMsg("");
+    
+    const result = await resendVerificationOTP(email);
+    
+    if (result.error) {
+      setError(result.error);
+    } else {
+      setSuccessMsg("A new verification code has been sent to your email!");
+    }
+    setIsResending(false);
   };
 
   return (
@@ -102,6 +119,12 @@ function VerifyEmailForm() {
         {error && (
           <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-md mb-6">
             {error}
+          </div>
+        )}
+        
+        {successMsg && (
+          <div className="bg-green-500/10 text-green-600 text-sm p-3 rounded-md mb-6">
+            {successMsg}
           </div>
         )}
 
@@ -130,9 +153,14 @@ function VerifyEmailForm() {
           </button>
         </form>
 
-        <div className="mt-8 text-sm text-muted-foreground">
+        <div className="mt-8 text-sm text-muted-foreground flex items-center justify-center gap-2">
           Didn't receive the code?{" "}
-          <button onClick={() => window.location.reload()} className="text-foreground font-semibold hover:text-accent transition-colors">
+          <button 
+            onClick={handleResend} 
+            disabled={isResending}
+            className="text-foreground font-semibold hover:text-accent transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isResending ? <Loader2 size={12} className="animate-spin" /> : null}
             Try again
           </button>
         </div>

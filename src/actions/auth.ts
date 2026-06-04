@@ -102,3 +102,37 @@ export async function verifyEmailOTP(email: string, code: string) {
     return { error: "An error occurred during verification." };
   }
 }
+
+export async function resendVerificationOTP(email: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      // Return success silently for security
+      return { success: true };
+    }
+
+    if (user.emailVerified) {
+      return { error: "Email is already verified." };
+    }
+
+    const verificationToken = await generateVerificationToken(email);
+
+    try {
+      await sendVerificationEmail(
+        verificationToken.identifier,
+        verificationToken.token,
+        user.name || "User"
+      );
+    } catch (emailError) {
+      console.warn("Failed to resend verification email:", emailError);
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("OTP resend error:", error);
+    return { error: "An error occurred while resending the code." };
+  }
+}
