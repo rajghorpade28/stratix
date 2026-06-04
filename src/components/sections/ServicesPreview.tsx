@@ -8,7 +8,9 @@ const buildServices = [
   {
     icon: Layout,
     name: "Website Development",
-    desc: "Custom, high-performance websites that drive conversions."
+    desc: "Custom, high-performance websites that drive conversions.",
+    href: "/start",
+    ctaText: "Start Website Project"
   },
   {
     icon: Cpu,
@@ -90,31 +92,55 @@ export function ServicesPreview() {
             <p className="text-muted-foreground mt-2 text-sm md:text-base">Things we build and create for your business.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {buildServices.map((service, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                whileHover={{ y: -5, scale: 1.02 }}
-                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="group p-6 bg-card border border-border/50 rounded-lg hover:border-accent/50 hover:shadow-[0_8px_30px_rgba(204,255,0,0.08)] transition-colors cursor-default"
-              >
+            {buildServices.map((service, idx) => {
+              const CardInner = (
+                <>
+                  <motion.div 
+                    whileHover={{ rotate: 5, scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 10 }}
+                    className="w-12 h-12 rounded-full bg-accent/5 border border-accent/20 flex items-center justify-center mb-5 group-hover:bg-accent/15 transition-colors"
+                  >
+                    <service.icon className="w-5 h-5 text-accent" />
+                  </motion.div>
+                  <h4 className="text-[17px] font-heading font-bold text-foreground mb-2 tracking-tight group-hover:text-accent transition-colors">
+                    {service.name}
+                  </h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {service.desc}
+                  </p>
+                  {service.ctaText && (
+                    <div className="mt-6 flex items-center gap-2 text-accent font-bold text-[13px] uppercase tracking-wide group-hover:text-accent/80 transition-colors">
+                      {service.ctaText} <ArrowRight size={14} className="transform group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  )}
+                </>
+              );
+
+              return (
                 <motion.div 
-                  whileHover={{ rotate: 5, scale: 1.1 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 10 }}
-                  className="w-12 h-12 rounded-full bg-accent/5 border border-accent/20 flex items-center justify-center mb-5 group-hover:bg-accent/15 transition-colors"
+                  key={idx}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="h-full"
                 >
-                  <service.icon className="w-5 h-5 text-accent" />
+                  {service.href ? (
+                    <Link 
+                      href={service.href}
+                      className="block h-full group p-6 bg-card border border-border/50 rounded-lg hover:border-accent/50 hover:shadow-[0_8px_30px_rgba(204,255,0,0.08)] transition-colors"
+                    >
+                      {CardInner}
+                    </Link>
+                  ) : (
+                    <div className="block h-full group p-6 bg-card border border-border/50 rounded-lg hover:border-accent/50 hover:shadow-[0_8px_30px_rgba(204,255,0,0.08)] transition-colors cursor-default">
+                      {CardInner}
+                    </div>
+                  )}
                 </motion.div>
-                <h4 className="text-[17px] font-heading font-bold text-foreground mb-2 tracking-tight group-hover:text-accent transition-colors">
-                  {service.name}
-                </h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {service.desc}
-                </p>
-              </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
 

@@ -37,15 +37,6 @@ export function CTASection() {
                 Contact Us Today
               </Link>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
-              <Link 
-                href="/start"
-                className="bg-transparent border border-primary-foreground/30 text-primary-foreground px-8 py-4 rounded-md font-semibold text-[16px] hover:bg-primary-foreground/10 transition-colors flex items-center justify-center w-full gap-3"
-              >
-                Want to Build a Website?
-                <ArrowRight size={18} />
-              </Link>
-            </motion.div>
           </div>
           
         </motion.div>
