@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { initialAppOnboardingData, AppOnboardingData } from "@/types/appOnboarding";
+import { submitAppRequest } from "@/actions/submissions";
 import { ProgressTracker } from "@/components/onboarding/ProgressTracker";
 import { Step1AppType, Step2GoalPlatform, Step3AuthScreens, Step4Design } from "./AppStepsPart1";
 import { Step5FeaturesStorage, Step6ScaleAdmin, Step7SecurityIntegrations } from "./AppStepsPart2";
@@ -52,8 +53,7 @@ export function AppOnboardingFlow() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      // Simulate submission delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await submitAppRequest(data);
       setIsSubmitted(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {

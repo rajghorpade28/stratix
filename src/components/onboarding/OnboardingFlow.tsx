@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { initialOnboardingData, OnboardingData } from "@/types/onboarding";
 import { ProgressTracker } from "./ProgressTracker";
+import { submitWebsiteRequest } from "@/actions/submissions";
 import { Step1WebsiteType, Step2Goal, Step3Pages, Step4Design } from "./StepsPart1";
 import { Step5Features, Step6Storage, Step7BusinessInfo, Step8Content, Step9Summary, StepSuccess } from "./StepsPart2";
 import { ArrowLeft, ArrowRight, CheckCircle, Loader2 } from "lucide-react";
@@ -54,13 +55,13 @@ export function OnboardingFlow() {
   const handleSubmit = async () => {
     setIsCalculating(true);
     try {
+      await submitWebsiteRequest(data);
       const result = await calculateQuotation(data);
       setQuotation(result);
       setIsSubmitted(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {
       console.error(error);
-      // Fallback in case of error
       setIsSubmitted(true);
     } finally {
       setIsCalculating(false);

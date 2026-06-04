@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User as UserIcon } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { SharedLogo } from "@/components/layout/SharedLogo";
 import { cn } from "@/lib/utils";
@@ -13,6 +14,7 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,13 +45,31 @@ export function Navbar() {
               <SharedLogo />
             </div>
 
-            <div className="hidden md:flex items-center">
+            <div className="hidden md:flex items-center gap-6">
               <Link 
                 href="/contact"
                 className="text-[13px] uppercase tracking-[0.1em] font-medium text-primary border-b border-primary/30 pb-1 hover:text-[var(--primary-hover)] hover:border-[var(--primary-hover)] transition-all"
               >
                 Contact Us
               </Link>
+
+              {status !== "loading" && (
+                session ? (
+                  <Link 
+                    href="/dashboard"
+                    className="flex items-center gap-2 text-[13px] uppercase tracking-[0.1em] font-medium bg-primary text-primary-foreground px-4 py-2 rounded hover:bg-primary/90 transition-all"
+                  >
+                    <UserIcon size={16} /> Dashboard
+                  </Link>
+                ) : (
+                  <Link 
+                    href="/auth/login"
+                    className="text-[13px] uppercase tracking-[0.1em] font-medium text-foreground hover:text-accent transition-all"
+                  >
+                    Log In
+                  </Link>
+                )
+              )}
             </div>
 
             {/* Mobile Menu Toggle */}
