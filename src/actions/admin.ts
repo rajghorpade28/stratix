@@ -4,11 +4,13 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
 
+import { redirect } from "next/navigation";
+
 // Helper to check admin access
 async function checkAdmin() {
   const session = await auth();
   if (session?.user?.role !== "ADMIN") {
-    throw new Error("Unauthorized");
+    redirect("/dashboard");
   }
 }
 
