@@ -52,11 +52,11 @@ export default async function AdminDashboard() {
               recentActivity.map((activity, idx) => {
                 let identifier = "Unknown";
                 if (activity.type === "New User Registered") {
-                  identifier = activity.data.email;
+                  identifier = (activity.data as any).email;
                 } else if (activity.type === "Contact Submission") {
-                  identifier = activity.data.email;
+                  identifier = (activity.data as any).email;
                 } else {
-                  identifier = activity.data.user?.email || "Guest User";
+                  identifier = (activity.data as any).user?.email || "Guest User";
                 }
 
                 return (
@@ -74,7 +74,7 @@ export default async function AdminDashboard() {
                     </div>
                     {activity.type !== "New User Registered" && activity.type !== "Contact Submission" && (
                        <div className="text-sm">
-                         Status: <span className="font-semibold">{activity.data.status}</span>
+                         Status: <span className="font-semibold">{(activity.data as any).status}</span>
                        </div>
                     )}
                   </div>
