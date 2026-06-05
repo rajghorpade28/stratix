@@ -30,7 +30,9 @@ const buildServices = [
   {
     icon: Palette,
     name: "Graphic Design",
-    desc: "Premium visual assets, branding, and creative direction."
+    desc: "Premium visual assets, branding, and creative direction.",
+    href: "/graphics",
+    ctaText: "View Pricing"
   }
 ];
 
@@ -131,21 +133,19 @@ export function ServicesPreview() {
               const CardInner = (
                 <>
                   <motion.div 
-                    whileHover={{ rotate: 5, scale: 1.1 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 10 }}
-                    className="w-12 h-12 rounded-full bg-accent/5 border border-accent/20 flex items-center justify-center mb-5 group-hover:bg-accent/15 transition-colors"
+                    className="w-12 h-12 rounded-full bg-accent/5 border border-accent/20 flex items-center justify-center mb-5 group-hover:bg-accent group-hover:text-primary-foreground group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 ease-out"
                   >
-                    <service.icon className="w-5 h-5 text-accent" />
+                    <service.icon className="w-5 h-5 text-accent group-hover:text-primary-foreground transition-colors duration-500" />
                   </motion.div>
                   <h4 className="text-[17px] font-heading font-bold text-foreground mb-2 tracking-tight group-hover:text-accent transition-colors">
                     {service.name}
                   </h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
                     {service.desc}
                   </p>
                   {service.ctaText && (
-                    <div className="mt-6 flex items-center gap-2 text-accent font-bold text-[13px] uppercase tracking-wide group-hover:text-accent/80 transition-colors">
-                      {service.ctaText} <ArrowRight size={14} className="transform group-hover:translate-x-1 transition-transform" />
+                    <div className="flex items-center gap-2 text-accent font-bold text-[13px] uppercase tracking-wide overflow-hidden max-h-0 opacity-0 group-hover:max-h-12 group-hover:opacity-100 group-hover:mt-6 transition-all duration-500 ease-out">
+                      {service.ctaText} <ArrowRight size={14} className="transform -translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 delay-100" />
                     </div>
                   )}
                 </>
@@ -196,16 +196,14 @@ export function ServicesPreview() {
                 className="group p-6 bg-card border border-border/50 rounded-lg hover:border-primary/40 hover:shadow-[0_12px_40px_rgba(94,43,151,0.12)] hover:-translate-y-1 transition-all duration-300 cursor-default"
               >
                 <motion.div 
-                  whileHover={{ rotate: 5, scale: 1.1 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 10 }}
-                  className="w-12 h-12 rounded-full bg-accent/5 border border-accent/20 flex items-center justify-center mb-5 group-hover:bg-accent/15 transition-colors"
+                  className="w-12 h-12 rounded-full bg-accent/5 border border-accent/20 flex items-center justify-center mb-5 group-hover:bg-accent group-hover:text-primary-foreground group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 ease-out"
                 >
-                  <service.icon className="w-5 h-5 text-accent" />
+                  <service.icon className="w-5 h-5 text-accent group-hover:text-primary-foreground transition-colors duration-500" />
                 </motion.div>
                 <h4 className="text-[17px] font-heading font-bold text-foreground mb-2 tracking-tight group-hover:text-accent transition-colors">
                   {service.name}
                 </h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
                   {service.desc}
                 </p>
               </motion.div>

@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { NextAuthProvider } from "@/components/providers/SessionProvider";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -33,6 +34,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col bg-background text-foreground font-sans selection:bg-foreground selection:text-background">
         <NextAuthProvider>
+          <ScrollProgress />
           <Navbar />
           <div className="flex-1">
             {children}

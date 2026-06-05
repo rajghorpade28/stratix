@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { CheckCircle2, Clock, Zap, Star, Tag, Sparkles, Image as ImageIcon, Infinity } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -148,89 +148,120 @@ const bannerPlans = [
   }
 ];
 
+import { useState } from "react";
+
 export function GraphicsPricing() {
+  const [activeTab, setActiveTab] = useState<"graphics" | "banners">("graphics");
+
   return (
     <section className="py-20 md:py-28 bg-background relative overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
         
-        {/* GRAPHICS DESIGN SECTION */}
-        <div className="mb-24">
-          <div className="text-center mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent font-semibold text-sm mb-6 border border-accent/20"
-            >
-              <ImageIcon size={16} />
-              <span>Category 01</span>
-            </motion.div>
-            <motion.h2 
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-4"
-            >
-              Graphics Design
-            </motion.h2>
-            <motion.p 
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-lg text-muted-foreground max-w-2xl mx-auto"
-            >
-              Professional graphics for social media, print, and branding.
-            </motion.p>
-          </div>
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent font-semibold text-sm mb-6 border border-accent/20"
+          >
+            <Sparkles size={16} />
+            <span>Creative Services</span>
+          </motion.div>
+          <motion.h2 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-4"
+          >
+            Pricing & Packages
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12"
+          >
+            Select the category below to explore our transparent pricing models.
+          </motion.p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {graphicPlans.map((plan, idx) => (
-              <PricingCard key={plan.name} plan={plan} index={idx} />
-            ))}
-          </div>
+          {/* Premium Tab Selector */}
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="inline-flex p-1.5 bg-card border border-border/50 rounded-xl relative"
+          >
+            <button
+              onClick={() => setActiveTab("graphics")}
+              className={cn(
+                "relative px-8 py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition-all duration-300 z-10",
+                activeTab === "graphics" ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {activeTab === "graphics" && (
+                <motion.div
+                  layoutId="activeTabIndicator"
+                  className="absolute inset-0 bg-primary rounded-lg -z-10"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
+              <span className="flex items-center gap-2"><ImageIcon size={16} /> Graphics Design</span>
+            </button>
+            <button
+              onClick={() => setActiveTab("banners")}
+              className={cn(
+                "relative px-8 py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition-all duration-300 z-10",
+                activeTab === "banners" ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {activeTab === "banners" && (
+                <motion.div
+                  layoutId="activeTabIndicator"
+                  className="absolute inset-0 bg-primary rounded-lg -z-10"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
+              <span className="flex items-center gap-2"><Sparkles size={16} /> Banner Design</span>
+            </button>
+          </motion.div>
         </div>
 
-        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-border to-transparent mb-24" />
+        {/* Content Area */}
+        <div className="relative min-h-[600px]">
+          <AnimatePresence mode="wait">
+            {activeTab === "graphics" && (
+              <motion.div
+                key="graphics"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+              >
+                {graphicPlans.map((plan, idx) => (
+                  <PricingCard key={plan.name} plan={plan} index={idx} />
+                ))}
+              </motion.div>
+            )}
 
-        {/* BANNER DESIGN SECTION */}
-        <div>
-          <div className="text-center mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-6 border border-primary/20"
-            >
-              <Sparkles size={16} />
-              <span>Category 02</span>
-            </motion.div>
-            <motion.h2 
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-4"
-            >
-              Banner Design
-            </motion.h2>
-            <motion.p 
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-lg text-muted-foreground max-w-2xl mx-auto"
-            >
-              High-impact banners to capture attention instantly.
-            </motion.p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {bannerPlans.map((plan, idx) => (
-              <PricingCard key={plan.name} plan={plan} index={idx} />
-            ))}
-          </div>
+            {activeTab === "banners" && (
+              <motion.div
+                key="banners"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+              >
+                {bannerPlans.map((plan, idx) => (
+                  <PricingCard key={plan.name} plan={plan} index={idx} />
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
       </div>
@@ -347,7 +378,7 @@ function PricingCard({ plan, index }: { plan: any, index: number }) {
               : "bg-transparent border-2 border-primary text-primary hover:bg-primary/10"
           )}
         >
-          {plan.isPopular ? "Order Design" : "Discuss Requirement"}
+          {plan.isPopular ? "Get Started" : "Get Started"}
         </Link>
       </div>
     </motion.div>

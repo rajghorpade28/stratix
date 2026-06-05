@@ -57,13 +57,17 @@ export function FAQSection() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7"
           >
-            <Accordion className="w-full">
+            <Accordion className="w-full space-y-4">
               {faqs.map((faq, idx) => (
-                <AccordionItem key={idx} value={`item-${idx}`} className="border-border/40 px-0">
-                  <AccordionTrigger className="text-left font-heading text-lg md:text-2xl font-bold hover:text-accent text-foreground transition-colors py-6 md:py-8">
-                    {faq.question}
+                <AccordionItem 
+                  key={idx} 
+                  value={`item-${idx}`} 
+                  className="bg-card border border-border/50 rounded-xl px-6 data-open:border-primary/50 transition-colors duration-300 shadow-sm hover:shadow-md"
+                >
+                  <AccordionTrigger className="text-left font-heading text-lg md:text-xl font-bold hover:text-primary text-foreground transition-all duration-300 py-6 group hover:no-underline border-b-0">
+                    <span className="flex-1">{faq.question}</span>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground text-[15px] sm:text-[16px] leading-relaxed pb-6 md:pb-8 pr-4 sm:pr-12">
+                  <AccordionContent className="text-muted-foreground text-[15px] sm:text-[16px] leading-relaxed pb-6 pr-4 sm:pr-12 pt-0 mt-[-10px]">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>

@@ -3,6 +3,7 @@ import { WhatWeDo } from "@/components/sections/WhatWeDo";
 import { ServicesPreview } from "@/components/sections/ServicesPreview";
 import { ProcessSection } from "@/components/sections/ProcessSection";
 import { ManifestoSection } from "@/components/sections/ManifestoSection";
+import { StatisticsCounter } from "@/components/sections/StatisticsCounter";
 import { FAQSection } from "@/components/sections/FAQSection";
 import { CTASection } from "@/components/sections/CTASection";
 import { QuoteSeparator } from "@/components/ui/QuoteSeparator";
@@ -18,6 +19,7 @@ export default function Home() {
       
       <ProcessSection />
       <ManifestoSection />
+      <StatisticsCounter />
       <FAQSection />
       
       <QuoteSeparator quote="Being discovered is better than being the best-kept secret." />
