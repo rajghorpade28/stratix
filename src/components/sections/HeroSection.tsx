@@ -8,7 +8,7 @@ const headlineWords = "We help your business get more visibility and leads onlin
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex flex-col justify-start pt-[30px] sm:pt-[40px] md:pt-[50px] pb-16 overflow-hidden bg-background">
+    <section className="relative min-h-[90vh] flex flex-col justify-start pt-[140px] sm:pt-[160px] md:pt-[180px] pb-16 overflow-hidden bg-background">
       
       {/* Background Image */}
       <div className="absolute inset-0 z-0 opacity-[0.25] mix-blend-overlay">

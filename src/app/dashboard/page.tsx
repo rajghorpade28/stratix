@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { LogOut, User as UserIcon, LayoutDashboard, FileText, Settings } from "lucide-react";
+import { SignOutButton } from "@/components/auth/SignOutButton";
 
 export const metadata = {
   title: "Dashboard | STRATIX",
@@ -62,15 +63,7 @@ export default async function DashboardPage() {
                 <Settings size={18} />
                 Profile Settings
               </Link>
-              <form action={async () => {
-                "use server";
-                await signOut({ redirectTo: "/auth/login" });
-              }}>
-                <button type="submit" className="w-full flex items-center gap-3 px-4 py-3 text-destructive hover:bg-destructive/10 transition-colors text-left">
-                  <LogOut size={18} />
-                  Sign Out
-                </button>
-              </form>
+              <SignOutButton />
             </nav>
           </div>
 

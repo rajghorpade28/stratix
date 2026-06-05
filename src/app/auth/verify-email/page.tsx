@@ -98,7 +98,7 @@ function VerifyEmailForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-20">
+    <div className="min-h-screen flex items-center justify-center bg-background px-4 pt-32 pb-12">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
