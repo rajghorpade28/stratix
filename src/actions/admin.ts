@@ -127,6 +127,25 @@ export async function getRequestsByType(type: "website" | "app" | "graphics" | "
   }
 }
 
+export async function getRequestById(type: string, id: string) {
+  await checkAdmin();
+  
+  switch (type) {
+    case "website":
+      return prisma.websiteRequest.findUnique({ where: { id }, include: { user: true } });
+    case "app":
+      return prisma.appRequest.findUnique({ where: { id }, include: { user: true } });
+    case "graphics":
+      return prisma.graphicsRequest.findUnique({ where: { id }, include: { user: true } });
+    case "automation":
+      return prisma.automationRequest.findUnique({ where: { id }, include: { user: true } });
+    case "contact":
+      return prisma.contactLead.findUnique({ where: { id }, include: { user: true } });
+    default:
+      return null;
+  }
+}
+
 export async function updateRequestStatus(type: string, id: string, status: string) {
   await checkAdmin();
   
@@ -153,5 +172,30 @@ export async function updateRequestStatus(type: string, id: string, status: stri
 
   revalidatePath(`/admin/requests/${type}`);
   revalidatePath("/dashboard");
+  return result;
+}
+
+export async function saveAdminNotes(type: string, id: string, notes: string) {
+  await checkAdmin();
+  
+  let result;
+  switch (type) {
+    case "website":
+      result = await prisma.websiteRequest.update({ where: { id }, data: { adminNotes: notes } });
+      break;
+    case "app":
+      result = await prisma.appRequest.update({ where: { id }, data: { adminNotes: notes } });
+      break;
+    case "graphics":
+      result = await prisma.graphicsRequest.update({ where: { id }, data: { adminNotes: notes } });
+      break;
+    case "automation":
+      result = await prisma.automationRequest.update({ where: { id }, data: { adminNotes: notes } });
+      break;
+    default:
+      throw new Error("Invalid request type for notes");
+  }
+
+  revalidatePath(`/admin/requests/${type}/${id}`);
   return result;
 }

@@ -5,7 +5,6 @@ import { getRequestsByType, updateRequestStatus } from "@/actions/admin";
 import { format } from "date-fns";
 import Link from "next/link";
 import { Loader2 } from "lucide-react";
-import { RequestDetailsModal } from "@/components/admin/RequestDetailsModal";
 
 const statuses = ["NEW", "UNDER_REVIEW", "CONTACTED", "PROPOSAL_SENT", "APPROVED", "IN_PROGRESS", "COMPLETED", "CLOSED"];
 
@@ -13,7 +12,6 @@ export default function AdminRequestsPage({ params }: { params: { type: string }
   const [requests, setRequests] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<string | null>(null);
-  const [selectedRequest, setSelectedRequest] = useState<any | null>(null);
 
   const type = params.type as "website" | "app" | "graphics" | "automation" | "contact";
   
@@ -131,12 +129,12 @@ export default function AdminRequestsPage({ params }: { params: { type: string }
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <button 
+                      <Link 
+                        href={`/admin/requests/${type}/${req.id}`}
                         className="text-primary hover:underline font-medium text-xs"
-                        onClick={() => setSelectedRequest(req)}
                       >
                         View Details
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                 );
@@ -152,13 +150,6 @@ export default function AdminRequestsPage({ params }: { params: { type: string }
           </table>
         </div>
       </div>
-
-      <RequestDetailsModal 
-        isOpen={!!selectedRequest}
-        onClose={() => setSelectedRequest(null)}
-        request={selectedRequest}
-        type={type}
-      />
     </div>
   );
 }
