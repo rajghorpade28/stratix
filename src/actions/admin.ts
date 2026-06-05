@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
+import { revalidatePath } from "next/cache";
 
 // Helper to check admin access
 async function checkAdmin() {
@@ -127,18 +128,28 @@ export async function getRequestsByType(type: "website" | "app" | "graphics" | "
 export async function updateRequestStatus(type: string, id: string, status: string) {
   await checkAdmin();
   
+  let result;
   switch (type) {
     case "website":
-      return prisma.websiteRequest.update({ where: { id }, data: { status } });
+      result = await prisma.websiteRequest.update({ where: { id }, data: { status } });
+      break;
     case "app":
-      return prisma.appRequest.update({ where: { id }, data: { status } });
+      result = await prisma.appRequest.update({ where: { id }, data: { status } });
+      break;
     case "graphics":
-      return prisma.graphicsRequest.update({ where: { id }, data: { status } });
+      result = await prisma.graphicsRequest.update({ where: { id }, data: { status } });
+      break;
     case "automation":
-      return prisma.automationRequest.update({ where: { id }, data: { status } });
+      result = await prisma.automationRequest.update({ where: { id }, data: { status } });
+      break;
     case "contact":
-      return prisma.contactLead.update({ where: { id }, data: { status } });
+      result = await prisma.contactLead.update({ where: { id }, data: { status } });
+      break;
     default:
       throw new Error("Invalid request type");
   }
+
+  revalidatePath(`/admin/requests/${type}`);
+  revalidatePath("/dashboard");
+  return result;
 }

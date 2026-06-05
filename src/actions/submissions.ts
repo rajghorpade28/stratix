@@ -2,8 +2,8 @@
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
-
 import { calculateInternalQuotation } from "./calculateQuotation";
+import { revalidatePath } from "next/cache";
 
 export async function submitWebsiteRequest(data: any) {
   try {
@@ -41,6 +41,9 @@ export async function submitWebsiteRequest(data: any) {
         calculationVersion: 1.0,
       },
     });
+    revalidatePath("/admin");
+    revalidatePath("/admin/requests/website");
+    revalidatePath("/dashboard");
 
     return { success: true };
   } catch (error) {
@@ -78,6 +81,10 @@ export async function submitAppRequest(data: any) {
         data: JSON.stringify(data),
       },
     });
+
+    revalidatePath("/admin");
+    revalidatePath("/admin/requests/app");
+    revalidatePath("/dashboard");
 
     return { success: true };
   } catch (error) {
