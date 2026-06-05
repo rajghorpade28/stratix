@@ -57,10 +57,10 @@ export function Navbar() {
               {status !== "loading" && (
                 session ? (
                   <Link 
-                    href="/dashboard"
+                    href={session.user?.role === "ADMIN" ? "/admin" : "/dashboard"}
                     className="flex items-center gap-2 text-[13px] uppercase tracking-[0.1em] font-bold bg-primary text-primary-foreground px-6 py-2.5 rounded-md hover:bg-[var(--primary-hover)] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 shadow-sm"
                   >
-                    <UserIcon size={16} /> Dashboard
+                    <UserIcon size={16} /> {session.user?.role === "ADMIN" ? "Admin Panel" : "Dashboard"}
                   </Link>
                 ) : (
                   <div className="flex items-center gap-6">
@@ -131,10 +131,10 @@ export function Navbar() {
                 {status !== "loading" && (
                   session ? (
                     <Link 
-                      href="/dashboard"
+                      href={session.user?.role === "ADMIN" ? "/admin" : "/dashboard"}
                       className="flex items-center justify-center gap-2 text-sm uppercase tracking-[0.1em] font-bold bg-primary text-primary-foreground px-6 py-4 rounded-md hover:bg-primary/90 transition-all w-full text-center mt-4"
                     >
-                      <UserIcon size={18} /> Dashboard
+                      <UserIcon size={18} /> {session.user?.role === "ADMIN" ? "Admin Panel" : "Dashboard"}
                     </Link>
                   ) : (
                     <div className="flex flex-col gap-4 mt-4">

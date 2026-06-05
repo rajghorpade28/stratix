@@ -3,33 +3,45 @@ import { NextResponse } from "next/server";
 
 export default auth((req) => {
   const isLoggedIn = !!req.auth;
-  const isAuthRoute = req.nextUrl.pathname.startsWith("/auth");
-  const isProtectedRoute = 
-    req.nextUrl.pathname.startsWith("/dashboard") || 
-    req.nextUrl.pathname.startsWith("/admin") ||
-    req.nextUrl.pathname.startsWith("/start") ||
-    req.nextUrl.pathname.startsWith("/start-app");
+  const isAdmin = req.auth?.user?.role === "ADMIN";
+  const path = req.nextUrl.pathname;
 
+  const isAuthRoute = path.startsWith("/auth");
+  const isDashboardRoute = path.startsWith("/dashboard");
+  const isAdminRoute = path.startsWith("/admin");
+  const isProtectedRoute = 
+    isDashboardRoute || 
+    isAdminRoute ||
+    path.startsWith("/start") ||
+    path.startsWith("/start-app");
+
+  // Handle Authentication Routes (Login/Signup)
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(new URL("/dashboard", req.nextUrl));
+      // Send Admins to CRM, Users to Dashboard
+      return Response.redirect(new URL(isAdmin ? "/admin" : "/dashboard", req.nextUrl));
     }
     return;
   }
 
+  // Handle Unauthenticated access to Protected Routes
   if (isProtectedRoute && !isLoggedIn) {
-    // Redirect to login with a callbackUrl parameter so they can be sent back to the form
-    const callbackUrl = encodeURIComponent(req.nextUrl.pathname);
+    const callbackUrl = encodeURIComponent(path);
     return Response.redirect(new URL(`/auth/login?callbackUrl=${callbackUrl}`, req.nextUrl));
   }
 
-  // Basic admin protection
-  if (req.nextUrl.pathname.startsWith("/admin")) {
-    if (req.auth?.user?.role !== "ADMIN") {
-      return new NextResponse(
-        JSON.stringify({ error: "403 Forbidden - Admin Access Required" }),
-        { status: 403, headers: { "content-type": "application/json" } }
-      );
+  // Strict Admin Routing Enforcement
+  if (isLoggedIn) {
+    if (isAdmin) {
+      // Admins are FORBIDDEN from accessing the User Dashboard to prevent role confusion
+      if (isDashboardRoute || path.startsWith("/start")) {
+        return Response.redirect(new URL("/admin", req.nextUrl));
+      }
+    } else {
+      // Standard Users are FORBIDDEN from accessing the Admin CRM
+      if (isAdminRoute) {
+        return Response.redirect(new URL("/dashboard", req.nextUrl));
+      }
     }
   }
 
