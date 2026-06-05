@@ -66,20 +66,30 @@ export default function AdminRequestsPage({ params }: { params: { type: string }
       <div className="bg-card border border-border rounded-lg overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="bg-muted/50 text-muted-foreground font-medium border-b border-border">
+            <thead className="bg-muted/50 text-muted-foreground font-medium border-b border-border whitespace-nowrap">
               <tr>
                 <th className="px-6 py-4">ID / Date</th>
-                <th className="px-6 py-4">User Details</th>
+                <th className="px-6 py-4">Client Details</th>
+                {type === "website" && <th className="px-6 py-4">Quote / Timeline</th>}
                 <th className="px-6 py-4">Status</th>
-                <th className="px-6 py-4">Details</th>
+                <th className="px-6 py-4">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
               {requests.map((req) => {
-                // Handle ContactLead which doesn't have a structured user object directly in the same way if anonymous
-                const name = req.name || req.user?.name || "Guest";
-                const email = req.email || req.user?.email || "N/A";
-                const phone = req.phone || req.user?.phone || "N/A";
+                let parsedData: any = {};
+                try {
+                  parsedData = req.data ? JSON.parse(req.data) : {};
+                } catch (e) {}
+
+                const name = req.name || req.user?.name || parsedData.businessInfo?.name || parsedData.name || "Guest";
+                const email = req.email || req.user?.email || parsedData.businessInfo?.email || parsedData.email || "N/A";
+                const phone = req.phone || req.user?.phone || parsedData.businessInfo?.phone || parsedData.phone || "N/A";
+                const businessName = parsedData.businessInfo?.name || parsedData.company || "N/A";
+
+                const formatPrice = (price: number) => {
+                  return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(price);
+                };
 
                 return (
                   <tr key={req.id} className="hover:bg-accent/5 transition-colors">
@@ -89,9 +99,24 @@ export default function AdminRequestsPage({ params }: { params: { type: string }
                     </td>
                     <td className="px-6 py-4">
                       <div className="font-semibold">{name}</div>
+                      {businessName !== "N/A" && businessName !== name && (
+                        <div className="text-xs text-accent font-medium mb-1">{businessName}</div>
+                      )}
                       <div className="text-muted-foreground text-xs">{email}</div>
                       <div className="text-muted-foreground text-xs">{phone}</div>
                     </td>
+                    {type === "website" && (
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {req.calculatedQuote ? (
+                          <>
+                            <div className="font-bold text-foreground">{formatPrice(req.calculatedQuote)}</div>
+                            <div className="text-xs text-muted-foreground">{req.calculatedTimeline} Days Max</div>
+                          </>
+                        ) : (
+                          <div className="text-xs text-muted-foreground">N/A</div>
+                        )}
+                      </td>
+                    )}
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <select
@@ -118,7 +143,7 @@ export default function AdminRequestsPage({ params }: { params: { type: string }
               })}
               {requests.length === 0 && (
                 <tr>
-                  <td colSpan={4} className="px-6 py-8 text-center text-muted-foreground">
+                  <td colSpan={type === "website" ? 5 : 4} className="px-6 py-8 text-center text-muted-foreground">
                     No requests found.
                   </td>
                 </tr>

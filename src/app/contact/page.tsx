@@ -240,7 +240,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <span className="block text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-1">Phone</span>
-                    <a href="tel:+917738017142" className="text-lg text-foreground hover:text-accent transition-colors">+91 7738017142</a>
+                    <a href="tel:+918369877139" className="text-lg text-foreground hover:text-accent transition-colors">+91 8369877139</a>
                   </div>
                 </li>
                 <li className="flex items-start gap-4">

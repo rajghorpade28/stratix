@@ -23,10 +23,10 @@ export function RequestDetailsModal({ isOpen, onClose, request, type }: RequestD
     } catch (e) {}
   }
 
-  const name = request.name || request.user?.name || dataObj.businessInfo?.name || "Guest";
-  const email = request.email || request.user?.email || dataObj.businessInfo?.email || "N/A";
-  const phone = request.phone || request.user?.phone || dataObj.businessInfo?.phone || "N/A";
-  const businessName = dataObj.businessInfo?.name || "N/A";
+  const name = request.name || request.user?.name || dataObj.businessInfo?.name || dataObj.name || "Guest";
+  const email = request.email || request.user?.email || dataObj.businessInfo?.email || dataObj.email || "N/A";
+  const phone = request.phone || request.user?.phone || dataObj.businessInfo?.phone || dataObj.phone || "N/A";
+  const businessName = dataObj.businessInfo?.name || dataObj.company || "N/A";
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(price);

@@ -8,7 +8,25 @@ import { calculateInternalQuotation } from "./calculateQuotation";
 export async function submitWebsiteRequest(data: any) {
   try {
     const session = await auth();
-    const userId = session?.user?.id;
+    let userId = session?.user?.id;
+
+    if (!userId && data.businessInfo?.email) {
+      const email = data.businessInfo.email;
+      let existingUser = await prisma.user.findUnique({ where: { email } });
+      
+      if (existingUser) {
+        userId = existingUser.id;
+      } else {
+        existingUser = await prisma.user.create({
+          data: {
+            email,
+            name: data.businessInfo.name || "Client",
+            phone: data.businessInfo.phone || null,
+          }
+        });
+        userId = existingUser.id;
+      }
+    }
 
     // Calculate internal quotation before saving
     const breakdown = calculateInternalQuotation(data);
@@ -34,7 +52,25 @@ export async function submitWebsiteRequest(data: any) {
 export async function submitAppRequest(data: any) {
   try {
     const session = await auth();
-    const userId = session?.user?.id;
+    let userId = session?.user?.id;
+
+    if (!userId && data.businessInfo?.email) {
+      const email = data.businessInfo.email;
+      let existingUser = await prisma.user.findUnique({ where: { email } });
+      
+      if (existingUser) {
+        userId = existingUser.id;
+      } else {
+        existingUser = await prisma.user.create({
+          data: {
+            email,
+            name: data.businessInfo.name || "Client",
+            phone: data.businessInfo.phone || null,
+          }
+        });
+        userId = existingUser.id;
+      }
+    }
 
     await prisma.appRequest.create({
       data: {
