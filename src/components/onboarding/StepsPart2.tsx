@@ -8,7 +8,6 @@ import { YesNoSelector } from "./ui/YesNoSelector";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { QuotationResult } from "@/actions/calculateQuotation";
 
 interface StepProps {
   data: OnboardingData;
@@ -317,17 +316,15 @@ export function Step9Summary({ data }: { data: OnboardingData }) {
 
 import { motion } from "framer-motion";
 
-export function StepSuccess({ quotation }: { quotation: QuotationResult }) {
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(price);
-  };
+import Link from "next/link";
 
+export function StepSuccess() {
   return (
     <motion.div 
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="flex flex-col items-center justify-center text-center space-y-8 py-12 md:py-16 w-full max-w-3xl mx-auto"
+      className="flex flex-col items-center justify-center text-center space-y-8 py-12 md:py-16 w-full max-w-2xl mx-auto"
     >
       <div className="w-24 h-24 relative mb-4">
         <motion.svg
@@ -367,7 +364,7 @@ export function StepSuccess({ quotation }: { quotation: QuotationResult }) {
           transition={{ delay: 0.8 }}
           className="text-3xl md:text-5xl font-heading font-bold text-foreground"
         >
-          Requirements Received
+          Your project request has been submitted successfully.
         </motion.h2>
         <motion.p 
           initial={{ opacity: 0, y: 10 }}
@@ -375,7 +372,7 @@ export function StepSuccess({ quotation }: { quotation: QuotationResult }) {
           transition={{ delay: 1 }}
           className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed"
         >
-          Thank you for sharing your vision with us. Based on your specific requirements, our intelligent engine has generated your estimated project investment.
+          We will review your requirements and contact you with a detailed proposal.
         </motion.p>
       </div>
 
@@ -383,39 +380,21 @@ export function StepSuccess({ quotation }: { quotation: QuotationResult }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.6 }}
-        className="w-full bg-card border border-border/50 rounded-2xl p-8 md:p-12 mt-8 shadow-[0_20px_50px_rgba(94,43,151,0.08)] relative overflow-hidden group hover:border-accent/30 transition-colors"
+        className="flex flex-col sm:flex-row gap-4 mt-8"
       >
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-50" />
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 divide-y md:divide-y-0 md:divide-x divide-border/50">
-          
-          <div className="flex flex-col items-center justify-center space-y-3 pt-4 md:pt-0">
-            <span className="text-xs font-bold text-accent uppercase tracking-widest">Estimated Investment</span>
-            <div className="text-4xl md:text-5xl font-heading font-bold text-foreground tracking-tight">
-              {formatPrice(quotation.price)}
-            </div>
-            <span className="text-xs text-muted-foreground font-medium">Includes 15% project buffer</span>
-          </div>
-
-          <div className="flex flex-col items-center justify-center space-y-3 pt-8 md:pt-0">
-            <span className="text-xs font-bold text-accent uppercase tracking-widest">Estimated Timeline</span>
-            <div className="text-4xl md:text-5xl font-heading font-bold text-foreground tracking-tight">
-              {quotation.minDays} - {quotation.maxDays}
-            </div>
-            <span className="text-xs text-muted-foreground font-medium">Business Days Delivery</span>
-          </div>
-
-        </div>
+        <Link 
+          href="/"
+          className="px-8 py-4 rounded-md font-bold transition-colors bg-secondary text-secondary-foreground hover:bg-secondary/80 text-center"
+        >
+          Back to Home
+        </Link>
+        <Link 
+          href="/dashboard"
+          className="px-8 py-4 rounded-md font-bold transition-colors bg-accent text-accent-foreground hover:bg-accent/90 text-center shadow-lg shadow-accent/20"
+        >
+          View Dashboard
+        </Link>
       </motion.div>
-
-      <motion.p 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="text-sm text-muted-foreground mt-8 max-w-lg mx-auto"
-      >
-        Our team will review these exact details and contact you shortly to finalize the proposal and begin building your premium digital experience.
-      </motion.p>
     </motion.div>
   );
 }

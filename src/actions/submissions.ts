@@ -3,15 +3,24 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
+import { calculateInternalQuotation } from "./calculateQuotation";
+
 export async function submitWebsiteRequest(data: any) {
   try {
     const session = await auth();
     const userId = session?.user?.id;
 
+    // Calculate internal quotation before saving
+    const breakdown = calculateInternalQuotation(data);
+
     await prisma.websiteRequest.create({
       data: {
         userId: userId || null,
         data: JSON.stringify(data),
+        calculatedQuote: breakdown.finalQuote,
+        calculatedTimeline: breakdown.finalMaxDays,
+        quoteBreakdown: JSON.stringify(breakdown),
+        calculationVersion: 1.0,
       },
     });
 

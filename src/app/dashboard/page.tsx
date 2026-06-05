@@ -137,13 +137,16 @@ export default async function DashboardPage() {
                       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
                       .map((req: any) => {
                         const isApp = 'appType' in req;
+                        const isPending = ['NEW', 'UNDER_REVIEW', 'CONTACTED'].includes(req.status);
+                        const isInProgress = ['PROPOSAL_SENT', 'APPROVED', 'IN_PROGRESS'].includes(req.status);
+                        
                         const statusColor = 
-                          req.status === 'PENDING' ? 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30' :
-                          req.status === 'IN_PROGRESS' ? 'bg-blue-500/20 text-blue-500 border-blue-500/30' :
+                          isPending ? 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30' :
+                          isInProgress ? 'bg-blue-500/20 text-blue-500 border-blue-500/30' :
                           'bg-green-500/20 text-green-500 border-green-500/30';
                         const dotColor = 
-                          req.status === 'PENDING' ? 'bg-yellow-500' :
-                          req.status === 'IN_PROGRESS' ? 'bg-blue-500' :
+                          isPending ? 'bg-yellow-500' :
+                          isInProgress ? 'bg-blue-500' :
                           'bg-green-500';
 
                         return (
@@ -165,7 +168,7 @@ export default async function DashboardPage() {
                             <div className="flex items-center">
                               <span className={cn("px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider flex items-center gap-2 border", statusColor)}>
                                 <span className="relative flex h-2 w-2">
-                                  {(req.status === 'PENDING' || req.status === 'IN_PROGRESS') && (
+                                  {(isPending || isInProgress) && (
                                     <span className={cn("animate-ping absolute inline-flex h-full w-full rounded-full opacity-75", dotColor)}></span>
                                   )}
                                   <span className={cn("relative inline-flex rounded-full h-2 w-2", dotColor)}></span>

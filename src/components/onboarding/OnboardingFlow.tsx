@@ -8,7 +8,7 @@ import { submitWebsiteRequest } from "@/actions/submissions";
 import { Step1WebsiteType, Step2Goal, Step3Pages, Step4Design } from "./StepsPart1";
 import { Step5Features, Step6Storage, Step7BusinessInfo, Step8Content, Step9Summary, StepSuccess } from "./StepsPart2";
 import { ArrowLeft, ArrowRight, CheckCircle, Loader2 } from "lucide-react";
-import { calculateQuotation, QuotationResult } from "@/actions/calculateQuotation";
+
 import { cn } from "@/lib/utils";
 
 const TOTAL_STEPS = 8;
@@ -29,8 +29,7 @@ export function OnboardingFlow() {
   const [direction, setDirection] = useState(1);
   const [data, setData] = useState<OnboardingData>(initialOnboardingData);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isCalculating, setIsCalculating] = useState(false);
-  const [quotation, setQuotation] = useState<QuotationResult | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const updateData = (updates: Partial<OnboardingData>) => {
     setData((prev) => ({ ...prev, ...updates }));
@@ -53,18 +52,16 @@ export function OnboardingFlow() {
   };
 
   const handleSubmit = async () => {
-    setIsCalculating(true);
+    setIsSubmitting(true);
     try {
       await submitWebsiteRequest(data);
-      const result = await calculateQuotation(data);
-      setQuotation(result);
       setIsSubmitted(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {
       console.error(error);
       setIsSubmitted(true);
     } finally {
-      setIsCalculating(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -88,10 +85,10 @@ export function OnboardingFlow() {
     })
   };
 
-  if (isSubmitted && quotation) {
+  if (isSubmitted) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center pt-24 px-6">
-        <StepSuccess quotation={quotation} />
+        <StepSuccess />
       </div>
     );
   }
@@ -182,12 +179,12 @@ export function OnboardingFlow() {
           ) : (
             <button
               onClick={handleSubmit}
-              disabled={isCalculating}
+              disabled={isSubmitting}
               className="flex items-center justify-center gap-2 px-8 py-4 rounded-md font-bold transition-colors bg-accent text-accent-foreground hover:bg-accent/90 w-full sm:w-auto shadow-lg shadow-accent/20 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {isCalculating ? (
+              {isSubmitting ? (
                 <>
-                  Calculating Proposal...
+                  Submitting Project...
                   <Loader2 size={20} className="animate-spin" />
                 </>
               ) : (

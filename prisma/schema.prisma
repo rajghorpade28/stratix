@@ -42,6 +42,12 @@ model WebsiteRequest {
   
   data                 String
   
+  calculatedQuote      Int?
+  calculatedTimeline   Int?
+  quoteBreakdown       String?
+  calculationVersion   Float?   @default(1.0)
+  statusHistory        String?
+  
   status               String   @default("NEW")
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt

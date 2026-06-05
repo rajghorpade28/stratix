@@ -5,13 +5,15 @@ import { getRequestsByType, updateRequestStatus } from "@/actions/admin";
 import { format } from "date-fns";
 import Link from "next/link";
 import { Loader2 } from "lucide-react";
+import { RequestDetailsModal } from "@/components/admin/RequestDetailsModal";
 
-const statuses = ["NEW", "CONTACTED", "IN_PROGRESS", "COMPLETED", "CLOSED"];
+const statuses = ["NEW", "UNDER_REVIEW", "CONTACTED", "PROPOSAL_SENT", "APPROVED", "IN_PROGRESS", "COMPLETED", "CLOSED"];
 
 export default function AdminRequestsPage({ params }: { params: { type: string } }) {
   const [requests, setRequests] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<string | null>(null);
+  const [selectedRequest, setSelectedRequest] = useState<any | null>(null);
 
   const type = params.type as "website" | "app" | "graphics" | "automation" | "contact";
   
@@ -104,12 +106,11 @@ export default function AdminRequestsPage({ params }: { params: { type: string }
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      {/* For a full production app, this would open a modal with the JSON data. For now we show a button that could do it. */}
                       <button 
                         className="text-primary hover:underline font-medium text-xs"
-                        onClick={() => alert(req.data ? JSON.stringify(JSON.parse(req.data), null, 2) : req.message || "No specific details.")}
+                        onClick={() => setSelectedRequest(req)}
                       >
-                        View Payload
+                        View Details
                       </button>
                     </td>
                   </tr>
@@ -126,6 +127,13 @@ export default function AdminRequestsPage({ params }: { params: { type: string }
           </table>
         </div>
       </div>
+
+      <RequestDetailsModal 
+        isOpen={!!selectedRequest}
+        onClose={() => setSelectedRequest(null)}
+        request={selectedRequest}
+        type={type}
+      />
     </div>
   );
 }
