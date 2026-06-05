@@ -36,7 +36,7 @@ const buildServices = [
   }
 ];
 
-const growthSolutions = [
+const marketingServices = [
   {
     icon: Share2,
     name: "Social Media Marketing",
@@ -179,14 +179,14 @@ export function ServicesPreview() {
           </div>
         </div>
 
-        {/* GROWTH SOLUTIONS CATEGORY */}
+        {/* MARKETING SERVICES CATEGORY */}
         <div>
           <div className="mb-8 border-b border-border/40 pb-4">
-            <h3 className="text-2xl font-heading font-bold text-foreground">Growth Solutions</h3>
+            <h3 className="text-2xl font-heading font-bold text-foreground">Marketing Services</h3>
             <p className="text-muted-foreground mt-2 text-sm md:text-base">Activities and campaigns focused on customer acquisition and business growth.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {growthSolutions.map((service, idx) => (
+            {marketingServices.map((service, idx) => (
               <motion.div 
                 key={idx}
                 initial={{ opacity: 0, y: 30 }}
