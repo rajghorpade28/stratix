@@ -32,16 +32,16 @@ export function WhatWeDo() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full lg:w-1/2 aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/5] bg-card rounded overflow-hidden shadow-md"
+            className="group relative w-full lg:w-1/2 aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/5] bg-card rounded overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-500"
           >
             <Image 
               src="/images/stratix_strategic_planning_1779964919486.png"
               alt="Strategic marketing investment"
               fill
-              className="object-cover"
+              className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
             />
-            <div className="absolute inset-0 bg-background/20 mix-blend-overlay" />
-            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 border-t border-white/10 backdrop-blur-md bg-black/40">
+            <div className="absolute inset-0 bg-background/20 mix-blend-overlay group-hover:bg-background/10 transition-colors duration-500" />
+            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 border-t border-white/10 backdrop-blur-md bg-black/40 group-hover:bg-black/50 transition-colors duration-500">
               <span className="text-sm font-semibold tracking-[0.1em] text-white uppercase drop-shadow-sm">Strategic Growth</span>
             </div>
           </motion.div>

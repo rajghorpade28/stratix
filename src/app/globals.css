@@ -80,8 +80,16 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
-    @apply bg-background text-foreground antialiased selection:bg-accent selection:text-accent-foreground;
+    @apply text-foreground antialiased selection:bg-accent selection:text-accent-foreground;
+    background-color: var(--background);
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(94, 43, 151, 0.03) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(94, 43, 151, 0.03) 0px, transparent 50%);
+    background-attachment: fixed;
   }
   
   h1, h2, h3, h4, h5, h6 {

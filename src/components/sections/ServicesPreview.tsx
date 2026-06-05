@@ -154,23 +154,22 @@ export function ServicesPreview() {
               return (
                 <motion.div 
                   key={idx}
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
                   className="h-full"
                 >
                   {service.href ? (
                     <Link 
                       href={service.href}
                       onClick={(e) => handleServiceClick(e, service.href!)}
-                      className="block h-full group p-6 bg-card border border-border/50 rounded-lg hover:border-accent/50 hover:shadow-[0_8px_30px_rgba(204,255,0,0.08)] transition-colors"
+                      className="block h-full group p-6 bg-card border border-border/50 rounded-lg hover:border-primary/40 hover:shadow-[0_12px_40px_rgba(94,43,151,0.12)] hover:-translate-y-1 transition-all duration-300"
                     >
                       {CardInner}
                     </Link>
                   ) : (
-                    <div className="block h-full group p-6 bg-card border border-border/50 rounded-lg hover:border-accent/50 hover:shadow-[0_8px_30px_rgba(204,255,0,0.08)] transition-colors cursor-default">
+                    <div className="block h-full group p-6 bg-card border border-border/50 rounded-lg hover:border-primary/40 hover:shadow-[0_12px_40px_rgba(94,43,151,0.12)] hover:-translate-y-1 transition-all duration-300 cursor-default">
                       {CardInner}
                     </div>
                   )}
@@ -190,12 +189,11 @@ export function ServicesPreview() {
             {growthSolutions.map((service, idx) => (
               <motion.div 
                 key={idx}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                whileHover={{ y: -5, scale: 1.02 }}
-                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="group p-6 bg-card border border-border/50 rounded-lg hover:border-accent/50 hover:shadow-[0_8px_30px_rgba(204,255,0,0.08)] transition-colors cursor-default"
+                transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="group p-6 bg-card border border-border/50 rounded-lg hover:border-primary/40 hover:shadow-[0_12px_40px_rgba(94,43,151,0.12)] hover:-translate-y-1 transition-all duration-300 cursor-default"
               >
                 <motion.div 
                   whileHover={{ rotate: 5, scale: 1.1 }}

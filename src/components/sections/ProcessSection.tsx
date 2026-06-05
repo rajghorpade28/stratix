@@ -53,9 +53,9 @@ export function ProcessSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-background border border-border/50 rounded-xl p-8 flex flex-col hover:border-accent/50 transition-colors shadow-sm"
+              className="group bg-background border border-border/50 rounded-xl p-8 flex flex-col hover:border-primary/40 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(94,43,151,0.12)] transition-all duration-300"
             >
-              <div className="w-12 h-12 rounded-full bg-accent/10 text-accent flex items-center justify-center font-bold text-xl mb-8">
+              <div className="w-12 h-12 rounded-full bg-accent/5 border border-accent/20 text-accent flex items-center justify-center font-bold text-xl mb-8 group-hover:bg-accent/15 group-hover:scale-110 transition-all duration-300">
                 {step.number}
               </div>
               <h4 className="text-xl font-heading font-bold text-foreground mb-4">{step.title}</h4>

@@ -1,17 +1,30 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
 const headlineWords = "We help your business get more visibility and leads online.".split(" ");
 
 export function HeroSection() {
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const opacityFade = useTransform(scrollYProgress, [0, 1], [1, 0]);
+
   return (
-    <section className="relative min-h-[90vh] flex flex-col justify-start pt-[140px] sm:pt-[160px] md:pt-[180px] pb-16 overflow-hidden bg-background">
+    <section ref={containerRef} className="relative min-h-[90vh] flex flex-col justify-start pt-[140px] sm:pt-[160px] md:pt-[180px] pb-16 overflow-hidden bg-background">
       
       {/* Background Image */}
-      <div className="absolute inset-0 z-0 opacity-[0.25] mix-blend-overlay">
+      <motion.div 
+        style={{ y: backgroundY, opacity: opacityFade }}
+        className="absolute inset-0 z-0 opacity-[0.25] mix-blend-overlay"
+      >
         <Image 
           src="/images/stratix_studio_workspace_1779964905457.png"
           alt="STRATIX Studio"
@@ -19,7 +32,7 @@ export function HeroSection() {
           className="object-cover object-center scale-105"
           priority
         />
-      </div>
+      </motion.div>
       
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-background/90 via-background/95 to-background" />
       
@@ -32,8 +45,18 @@ export function HeroSection() {
 
             <motion.div 
               initial={{ opacity: 0, x: -50, rotate: 5 }}
-              animate={{ opacity: 1, x: 0, rotate: 0 }}
-              transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              animate={{ 
+                opacity: 1, 
+                x: 0, 
+                rotate: 0,
+                y: [0, -10, 0] // continuous float
+              }}
+              transition={{ 
+                opacity: { duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] },
+                x: { duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] },
+                rotate: { duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] },
+                y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.2 }
+              }}
               className="w-full relative aspect-square lg:aspect-auto lg:h-[380px] flex items-center justify-center lg:justify-start"
             >
               {/* Subtle Megaphone Projection Glow */}
@@ -102,16 +125,16 @@ export function HeroSection() {
                 className="flex flex-col sm:flex-row justify-start gap-4 mt-2 pointer-events-auto"
               >
                 <motion.div
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: "spring", stiffness: 400, damping: 15 }}
                 >
                   <Link 
                     href="/start"
-                    className="group relative inline-flex items-center justify-center gap-4 overflow-hidden rounded-md bg-accent text-accent-foreground px-8 py-4 transition-all shadow-md font-semibold text-[15px] w-full sm:w-auto"
+                    className="group relative inline-flex items-center justify-center gap-4 overflow-hidden rounded-md bg-accent text-accent-foreground px-8 py-4 transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-accent/30 font-semibold text-[15px] w-full sm:w-auto"
                   >
                     <span className="relative z-10">Want to Build a Website?</span>
-                    <div className="absolute inset-0 bg-white/20 translate-y-[100%] group-hover:translate-y-[0%] transition-transform duration-300" />
+                    <div className="absolute inset-0 bg-white/20 translate-y-[100%] group-hover:translate-y-[0%] transition-transform duration-300 ease-out" />
                   </Link>
                 </motion.div>
               </motion.div>

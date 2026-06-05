@@ -45,33 +45,35 @@ export function Navbar() {
               <SharedLogo />
             </div>
 
-            <div className="hidden md:flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-8">
               <Link 
                 href="/contact"
-                className="text-[13px] uppercase tracking-[0.1em] font-medium text-primary border-b border-primary/30 pb-1 hover:text-[var(--primary-hover)] hover:border-[var(--primary-hover)] transition-all"
+                className="relative text-[13px] uppercase tracking-[0.1em] font-bold text-primary py-1 group overflow-hidden"
               >
-                Contact Us
+                <span className="relative z-10 transition-colors duration-300 group-hover:text-[var(--primary-hover)]">Contact Us</span>
+                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[var(--primary-hover)] origin-bottom-right scale-x-0 transition-transform duration-300 ease-out group-hover:origin-bottom-left group-hover:scale-x-100" />
               </Link>
 
               {status !== "loading" && (
                 session ? (
                   <Link 
                     href="/dashboard"
-                    className="flex items-center gap-2 text-[13px] uppercase tracking-[0.1em] font-medium bg-primary text-primary-foreground px-6 py-2.5 rounded-md hover:bg-primary/90 transition-all shadow-sm"
+                    className="flex items-center gap-2 text-[13px] uppercase tracking-[0.1em] font-bold bg-primary text-primary-foreground px-6 py-2.5 rounded-md hover:bg-[var(--primary-hover)] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 shadow-sm"
                   >
                     <UserIcon size={16} /> Dashboard
                   </Link>
                 ) : (
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-6">
                     <Link 
                       href="/auth/login"
-                      className="text-[13px] uppercase tracking-[0.1em] font-bold text-foreground hover:text-accent transition-all"
+                      className="relative text-[13px] uppercase tracking-[0.1em] font-bold text-foreground py-1 group overflow-hidden"
                     >
-                      Log In
+                      <span className="relative z-10 transition-colors duration-300 group-hover:text-accent">Log In</span>
+                      <span className="absolute bottom-0 left-0 w-full h-[2px] bg-accent origin-bottom-right scale-x-0 transition-transform duration-300 ease-out group-hover:origin-bottom-left group-hover:scale-x-100" />
                     </Link>
                     <Link 
                       href="/auth/signup"
-                      className="text-[13px] uppercase tracking-[0.1em] font-bold bg-primary text-primary-foreground px-6 py-2.5 rounded-md hover:bg-primary/90 transition-all shadow-sm"
+                      className="text-[13px] uppercase tracking-[0.1em] font-bold bg-primary text-primary-foreground px-6 py-2.5 rounded-md hover:bg-[var(--primary-hover)] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 shadow-sm"
                     >
                       Sign Up
                     </Link>

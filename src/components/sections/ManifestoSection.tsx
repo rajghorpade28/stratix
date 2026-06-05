@@ -48,15 +48,15 @@ export function ManifestoSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="relative flex flex-col pt-8 border-t border-border/50"
+              className="group relative flex flex-col pt-8 border-t border-border/50 hover:border-primary/50 transition-colors duration-500"
             >
               <div className="flex items-center gap-4 mb-4">
-                <span className="w-8 h-8 rounded-full bg-accent/10 text-accent flex items-center justify-center font-bold text-sm">
+                <span className="w-8 h-8 rounded-full bg-accent/10 text-accent flex items-center justify-center font-bold text-sm group-hover:bg-accent group-hover:text-primary-foreground group-hover:scale-110 transition-all duration-300">
                   {idx + 1}
                 </span>
-                <h4 className="text-2xl font-heading font-bold text-foreground tracking-tight">{point.title}</h4>
+                <h4 className="text-2xl font-heading font-bold text-foreground tracking-tight group-hover:text-accent transition-colors duration-300">{point.title}</h4>
               </div>
-              <p className="text-muted-foreground leading-relaxed text-[15px] pl-12">
+              <p className="text-muted-foreground leading-relaxed text-[15px] pl-12 group-hover:text-foreground/80 transition-colors duration-300">
                 {point.description}
               </p>
             </motion.div>
