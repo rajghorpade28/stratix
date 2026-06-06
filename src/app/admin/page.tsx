@@ -23,11 +23,11 @@ export default async function AdminDashboard() {
       {/* KPIs */}
       <section>
         <h2 className="text-xl font-heading font-bold mb-6">Overview</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-in fade-in duration-700 slide-in-from-bottom-2">
           {kpis.map((kpi, idx) => {
             const Icon = kpi.icon;
             return (
-              <div key={idx} className="bg-card border border-border p-6 rounded-lg shadow-sm flex items-center gap-4">
+              <div key={idx} className="bg-card border border-border p-6 rounded-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex items-center gap-4">
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${kpi.bg}`}>
                   <Icon className={`w-6 h-6 ${kpi.color}`} />
                 </div>
@@ -44,7 +44,7 @@ export default async function AdminDashboard() {
       {/* Recent Activity */}
       <section>
         <h2 className="text-xl font-heading font-bold mb-6">Recent Activity</h2>
-        <div className="bg-card border border-border rounded-lg overflow-hidden">
+        <div className="bg-card border border-border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden animate-in fade-in duration-700 slide-in-from-bottom-2 delay-150 fill-mode-both">
           <div className="divide-y divide-border">
             {recentActivity.length === 0 ? (
               <div className="p-8 text-center text-muted-foreground">No recent activity.</div>

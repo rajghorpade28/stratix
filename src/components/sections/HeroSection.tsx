@@ -44,18 +44,13 @@ export function HeroSection() {
           <div className="w-full sm:w-2/3 lg:w-[45%] flex flex-col items-center lg:items-start relative z-10 pointer-events-none mt-4 lg:mt-0">
 
             <motion.div 
-              initial={{ opacity: 0, x: -50, rotate: 5 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ 
                 opacity: 1, 
-                x: 0, 
-                rotate: 0,
-                y: [0, -10, 0] // continuous float
+                y: 0 
               }}
               transition={{ 
-                opacity: { duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] },
-                x: { duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] },
-                rotate: { duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] },
-                y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.2 }
+                duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] 
               }}
               className="w-full relative aspect-square lg:aspect-auto lg:h-[380px] flex items-center justify-center lg:justify-start"
             >
@@ -89,12 +84,11 @@ export function HeroSection() {
               {headlineWords.map((word, idx) => (
                 <motion.span
                   key={idx}
-                  initial={{ opacity: 0, x: -30, scale: 0.95 }}
-                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   transition={{ 
-                    duration: 0.7, 
-                    delay: 0.3 + (idx * 0.08), 
-                    ease: [0.16, 1, 0.3, 1] 
+                    duration: 0.5, 
+                    delay: 0.2 + (idx * 0.05)
                   }}
                   className="inline-block mr-[0.25em]"
                 >
@@ -125,9 +119,9 @@ export function HeroSection() {
                 className="flex flex-col sm:flex-row justify-start gap-4 mt-2 pointer-events-auto"
               >
                 <motion.div
-                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                  transition={{ duration: 0.2 }}
                 >
                   <Link 
                     href="/start"

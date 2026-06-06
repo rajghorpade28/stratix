@@ -25,7 +25,7 @@ export function RequestsTableClient({ initialRequests, type }: { initialRequests
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg overflow-hidden shadow-sm">
+    <div className="bg-card border border-border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 animate-in fade-in duration-700 slide-in-from-bottom-2">
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
           <thead className="bg-muted/50 text-muted-foreground font-medium border-b border-border whitespace-nowrap">
