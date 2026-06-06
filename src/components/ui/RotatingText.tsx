@@ -20,16 +20,16 @@ export function RotatingText({ words, interval = 3000, className = "" }: Rotatin
   }, [words.length, interval]);
 
   return (
-    <div className={`relative inline-grid items-center ${className}`} style={{ justifyItems: 'start' }}>
-      <AnimatePresence mode="wait">
+    <div className={`relative inline-grid items-center overflow-hidden py-1 ${className}`} style={{ justifyItems: 'start' }}>
+      <AnimatePresence mode="sync">
         <motion.span
           key={index}
-          initial={{ y: "100%", opacity: 0 }}
-          animate={{ y: "0%", opacity: 1 }}
-          exit={{ y: "-100%", opacity: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ y: "100%" }}
+          animate={{ y: "0%" }}
+          exit={{ y: "-100%" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="col-start-1 row-start-1 inline-block"
-          style={{ willChange: "transform, opacity" }}
+          style={{ willChange: "transform" }}
         >
           {words[index]}
         </motion.span>

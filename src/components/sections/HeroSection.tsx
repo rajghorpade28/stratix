@@ -2,13 +2,14 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { WordReveal } from "@/components/ui/WordReveal";
+import { LineReveal } from "@/components/ui/LineReveal";
+import { RotatingText } from "@/components/ui/RotatingText";
 import Link from "next/link";
 import Image from "next/image";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { WordReveal } from "@/components/ui/WordReveal";
-import { LineReveal } from "@/components/ui/LineReveal";
 
-const headlineWords = "We help your business get more visibility and leads online.".split(" ");
+const headlineStart = "We Help Businesses".split(" ");
 
 export function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -97,9 +98,9 @@ export function HeroSection() {
           {/* Right Column: Text & CTA */}
           <div className="w-full lg:w-[55%] flex flex-col justify-start relative z-20">
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.8rem] font-heading font-bold tracking-tight leading-[1.1] mb-8 text-foreground flex flex-wrap">
-              {headlineWords.map((word, idx) => (
-                <div key={idx} className="overflow-hidden inline-block mr-[0.25em]">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.8rem] font-heading font-bold tracking-tight leading-[1.1] mb-8 text-foreground flex flex-wrap items-baseline gap-y-2">
+              {headlineStart.map((word, idx) => (
+                <div key={idx} className="overflow-hidden inline-block mr-[0.25em] pb-2">
                   <motion.span
                     initial={{ y: "120%", opacity: 0, rotateZ: 5 }}
                     animate={{ y: "0%", opacity: 1, rotateZ: 0 }}
@@ -111,14 +112,16 @@ export function HeroSection() {
                     className="inline-block origin-bottom-left"
                     style={{ willChange: "transform, opacity" }}
                   >
-                    {word === "visibility" ? (
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-[#06B6D4] italic font-serif font-medium">{word}</span>
-                    ) : (
-                      word
-                    )}
+                    {word}
                   </motion.span>
                 </div>
               ))}
+              <div className="overflow-hidden inline-block ml-[0.1em] pb-2">
+                <RotatingText 
+                  words={["Grow", "Scale", "Automate", "Convert", "Expand"]} 
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-[#06B6D4] italic font-serif font-medium drop-shadow-sm min-w-[5em]" 
+                />
+              </div>
             </h1>
 
             <div className="flex flex-col gap-8">

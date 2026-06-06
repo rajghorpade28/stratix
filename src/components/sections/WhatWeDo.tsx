@@ -30,17 +30,11 @@ export function WhatWeDo() {
             >
               What We Do
             </motion.div>
-            <h2 className="text-3xl md:text-5xl font-heading font-bold leading-[1.1] tracking-tight mb-6 md:mb-8 text-foreground flex flex-wrap items-baseline gap-y-2">
-              <WordReveal 
-                text="We Help Businesses" 
-                className="inline-flex mr-2" 
-                delayOffset={0.2}
-              />
-              <RotatingText 
-                words={["Grow", "Scale", "Automate", "Convert", "Expand"]} 
-                className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-[#06B6D4] italic font-serif font-medium drop-shadow-sm min-w-[4em]" 
-              />
-            </h2>
+            <WordReveal 
+              text="We help businesses improve their online presence." 
+              className="text-3xl md:text-5xl font-heading font-bold leading-[1.1] tracking-tight mb-6 md:mb-8 text-foreground" 
+              delayOffset={0.2}
+            />
             <LineReveal 
               text={"We manage your content, advertising, and digital\nmarketing so you can focus on running your business."} 
               className="text-base md:text-lg text-muted-foreground leading-relaxed font-sans max-w-xl mb-6" 
