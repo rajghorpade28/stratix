@@ -6,8 +6,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { RotatingText } from "@/components/ui/RotatingText";
+import { LineReveal } from "@/components/ui/LineReveal";
 
-const headlineStart = "We help your business get more".split(" ");
+const headlineStart = "We Help Businesses".split(" ");
 
 export function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -124,39 +125,22 @@ export function HeroSection() {
                   </motion.span>
                 </div>
               ))}
-              <div className="overflow-hidden inline-block mr-[0.25em]">
+              <div className="overflow-hidden inline-block ml-[0.25em]">
                 <RotatingText 
-                  words={["visibility", "growth", "scale", "impact", "customers"]} 
-                  className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-[#06B6D4] italic font-serif font-medium drop-shadow-sm min-w-[3em]" 
+                  words={["Grow", "Scale", "Automate", "Convert", "Expand"]} 
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-[#06B6D4] italic font-serif font-medium drop-shadow-sm min-w-[4em]" 
                 />
-              </div>
-              <div className="overflow-hidden inline-block">
-                <motion.span
-                  initial={{ y: "120%", opacity: 0, rotate: 3 }}
-                  animate={{ y: "0%", opacity: 1, rotate: 0 }}
-                  transition={{ 
-                    duration: 1.2, 
-                    delay: 0.15 + (headlineStart.length * 0.08),
-                    ease: [0.22, 1, 0.36, 1]
-                  }}
-                  className="inline-block origin-bottom-left"
-                >
-                  online.
-                </motion.span>
               </div>
             </h1>
 
             <div className="flex flex-col gap-8">
-              <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="max-w-md"
-              >
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-sans font-medium">
-                  We partner with local businesses and growing brands to reach more customers through premium advertising and content creation.
-                </p>
-              </motion.div>
+              <div className="max-w-md">
+                <LineReveal 
+                  text={"We partner with local businesses and\ngrowing brands to reach more customers\nthrough premium advertising and content creation."} 
+                  className="text-lg md:text-xl text-muted-foreground leading-relaxed font-sans font-medium"
+                  delayOffset={0.8}
+                />
+              </div>
               
               <motion.div
                 initial={{ opacity: 0, y: 30 }}

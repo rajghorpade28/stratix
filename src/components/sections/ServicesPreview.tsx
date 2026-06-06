@@ -2,13 +2,15 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ArrowRight, Share2, Target, PenTool, Search, MessageCircle, Magnet, MapPin, Layout, Cpu, Palette, AppWindow } from "lucide-react";
+import { ArrowRight, Monitor, LayoutDashboard, Search, PenTool, TrendingUp, BarChart3, AppWindow, Cpu, Palette } from "lucide-react";
+import { WordReveal } from "@/components/ui/WordReveal";
+import { LineReveal } from "@/components/ui/LineReveal";
 import Link from "next/link";
 import { AuthGateModal } from "@/components/auth/AuthGateModal";
 import { useRouter } from "next/navigation";
 
 const buildServices = [
-  { icon: Layout, name: "Website Development", desc: "Custom, high-performance websites that drive conversions.", href: "/start", ctaText: "Start Website Project" },
+  { icon: LayoutDashboard, name: "Website Development", desc: "Custom, high-performance websites that drive conversions.", href: "/start", ctaText: "Start Website Project" },
   { icon: AppWindow, name: "App Development", desc: "Premium iOS, Android, and Web applications tailored to your business.", href: "/start-app", ctaText: "Start App Project" },
   { icon: Cpu, name: "Business Automation", desc: "Streamline operations and save time with automated workflows." },
   { icon: Palette, name: "Graphic Design", desc: "Premium visual assets, branding, and creative direction.", href: "/graphics", ctaText: "View Pricing" },
@@ -16,11 +18,9 @@ const buildServices = [
 
 const marketingServices = [
   { icon: Search, name: "Search Engine Optimization", desc: "Dominate search rankings and attract high-intent organic traffic." },
-  { icon: Target, name: "Performance Marketing", desc: "Targeted advertising designed to maximize your return on ad spend." },
-  { icon: MessageCircle, name: "Social Media Management", desc: "Engaging content and community management that builds brand loyalty." },
+  { icon: TrendingUp, name: "Performance Marketing", desc: "Targeted advertising designed to maximize your return on ad spend." },
+  { icon: BarChart3, name: "Social Media Management", desc: "Engaging content and community management that builds brand loyalty." },
   { icon: PenTool, name: "Content Marketing", desc: "Strategic content creation that positions you as an industry authority." },
-  { icon: Magnet, name: "Lead Generation", desc: "Automated systems designed to capture and qualify high-value leads." },
-  { icon: MapPin, name: "Local SEO", desc: "Optimize your local presence to capture customers in your service area." }
 ];
 
 function TiltCard({ children, href, onClick }: { children: React.ReactNode, href?: string, onClick?: (e: any) => void }) {
@@ -115,9 +115,17 @@ export function ServicesPreview() {
         >
           <div className="max-w-2xl">
             <h2 className="text-sm font-medium tracking-[0.1em] text-accent uppercase mb-4 animate-pulse">Our Expertise</h2>
-            <h3 className="text-2xl sm:text-3xl md:text-5xl font-heading font-bold tracking-tight text-foreground leading-tight">
-              Everything you need for a <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-[#06B6D4]">stronger digital presence.</span>
-            </h3>
+            <WordReveal 
+              text="Premium Solutions for Growth" 
+              className="text-2xl sm:text-3xl md:text-5xl font-heading font-bold tracking-tight text-foreground leading-tight" 
+            />
+            <div className="mt-4 max-w-lg">
+              <LineReveal 
+                text={"We provide end-to-end services designed to\nelevate your brand and dominate your market."} 
+                className="text-muted-foreground text-sm sm:text-base leading-relaxed" 
+                delayOffset={0.4}
+              />
+            </div>
           </div>
           <div className="pb-2">
             <Link 
@@ -167,10 +175,10 @@ export function ServicesPreview() {
               return (
                 <motion.div 
                   key={idx}
-                  initial={{ opacity: 0, scale: 0.9, y: 40 }}
+                  initial={{ opacity: 0, scale: 0.85, y: 60 }}
                   whileInView={{ opacity: 1, scale: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.8, delay: 0.2 + (idx * 0.25), ease: [0.22, 1, 0.36, 1] }}
                   className="h-full perspective-1000"
                 >
                   <TiltCard 
@@ -195,10 +203,10 @@ export function ServicesPreview() {
             {marketingServices.map((service, idx) => (
               <motion.div 
                 key={idx}
-                initial={{ opacity: 0, scale: 0.9, y: 40 }}
+                initial={{ opacity: 0, scale: 0.85, y: 60 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.8, delay: 0.2 + (idx * 0.25), ease: [0.22, 1, 0.36, 1] }}
                 className="perspective-1000"
               >
                 <TiltCard>

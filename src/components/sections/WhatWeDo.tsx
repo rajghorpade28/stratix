@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { WordReveal } from "@/components/ui/WordReveal";
+import { LineReveal } from "@/components/ui/LineReveal";
 
 export function WhatWeDo() {
   return (
@@ -20,27 +22,23 @@ export function WhatWeDo() {
             }}
             className="flex flex-col max-w-2xl lg:sticky lg:top-40"
           >
-            <motion.h2 
+            <motion.div 
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
               className="text-sm font-medium tracking-[0.1em] text-accent uppercase mb-6 md:mb-8"
             >
               What We Do
-            </motion.h2>
-            <motion.h3 
-              variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
-              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-3xl md:text-5xl font-heading font-bold leading-[1.1] tracking-tight mb-6 md:mb-8 text-foreground"
-            >
-              We help businesses improve their online presence.
-            </motion.h3>
-            <motion.p 
-              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-base md:text-lg text-muted-foreground leading-relaxed font-sans max-w-xl mb-6"
-            >
-              We manage your content, advertising, and digital marketing so you can focus on running your business.
-            </motion.p>
+            </motion.div>
+            <WordReveal 
+              text="We help businesses improve their online presence." 
+              className="text-3xl md:text-5xl font-heading font-bold leading-[1.1] tracking-tight mb-6 md:mb-8 text-foreground" 
+              delayOffset={0.2}
+            />
+            <LineReveal 
+              text={"We manage your content, advertising, and digital\nmarketing so you can focus on running your business."} 
+              className="text-base md:text-lg text-muted-foreground leading-relaxed font-sans max-w-xl mb-6" 
+              delayOffset={0.5}
+            />
           </motion.div>
 
           {/* Right Column: Editorial Image Composition */}
