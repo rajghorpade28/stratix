@@ -35,7 +35,7 @@ export function ProgressTracker({ currentStep, totalSteps, stepName }: ProgressT
           const isCompleted = i < currentStep - 1;
           
           return (
-            <div key={i} className="h-full flex-1 relative rounded-full overflow-hidden bg-white/5">
+            <div key={i} className="h-full flex-1 relative rounded-full overflow-hidden bg-black/5 shadow-inner">
               {(isCompleted || isActive) && (
                 <motion.div
                   initial={{ x: "-100%" }}

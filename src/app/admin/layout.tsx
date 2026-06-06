@@ -31,15 +31,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className="min-h-screen flex bg-background relative overflow-hidden">
       {/* Background ambient glow */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
-        <div className="absolute top-[10%] -left-[10%] w-[500px] h-[500px] rounded-full bg-primary/10 mix-blend-screen filter blur-[100px]" />
-        <div className="absolute bottom-[20%] right-[10%] w-[600px] h-[600px] rounded-full bg-accent/5 mix-blend-screen filter blur-[120px]" />
+        <div className="absolute top-[10%] -left-[10%] w-[500px] h-[500px] rounded-full bg-primary/10 mix-blend-normal filter blur-[100px]" />
+        <div className="absolute bottom-[20%] right-[10%] w-[600px] h-[600px] rounded-full bg-accent/5 mix-blend-normal filter blur-[120px]" />
       </div>
 
       {/* Sidebar */}
       <aside className="w-64 border-r border-border/40 bg-card/40 backdrop-blur-2xl fixed h-full flex flex-col z-20 shadow-[4px_0_24px_rgba(0,0,0,0.2)]">
         <div className="h-20 flex items-center px-8 border-b border-border/40">
-          <span className="text-xl font-heading font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent tracking-widest drop-shadow-md">
-            STRATIX<span className="text-white ml-2 text-xs font-bold tracking-widest opacity-80">ADMIN</span>
+          <span className="text-xl font-heading font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent tracking-widest drop-shadow-sm">
+            STRATIX<span className="text-foreground ml-2 text-xs font-bold tracking-widest opacity-80">ADMIN</span>
           </span>
         </div>
         
@@ -54,8 +54,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 href={item.href}
                 className={`group relative flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-300 overflow-hidden ${
                   isActive 
-                    ? "bg-accent/10 text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] border border-accent/20" 
-                    : "text-muted-foreground hover:bg-white/5 hover:text-foreground border border-transparent"
+                    ? "bg-accent/10 text-accent shadow-[inset_0_1px_1px_rgba(0,0,0,0.05)] border border-accent/20" 
+                    : "text-muted-foreground hover:bg-black/5 hover:text-foreground border border-transparent"
                 }`}
               >
                 {isActive && (

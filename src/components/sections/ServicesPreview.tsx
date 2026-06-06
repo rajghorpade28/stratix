@@ -95,7 +95,7 @@ export function ServicesPreview() {
   return (
     <section className="py-20 md:py-28 bg-background relative border-t border-border overflow-hidden">
       <div className="absolute top-0 right-0 w-full h-full pointer-events-none z-0">
-        <div className="absolute top-[20%] -right-[10%] w-[600px] h-[600px] rounded-full bg-accent/5 mix-blend-screen filter blur-[150px]" />
+        <div className="absolute top-[20%] -right-[10%] w-[600px] h-[600px] rounded-full bg-accent/5 mix-blend-normal filter blur-[150px]" />
       </div>
 
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
@@ -137,7 +137,7 @@ export function ServicesPreview() {
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
                   <motion.div 
-                    className="w-14 h-14 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center mb-6 relative z-10 group-hover:border-accent/50 group-hover:shadow-[0_0_20px_rgba(217,70,239,0.3)] transition-all duration-500"
+                    className="w-14 h-14 rounded-xl bg-white/60 border border-white/80 shadow-sm flex items-center justify-center mb-6 relative z-10 group-hover:border-accent/50 group-hover:bg-white group-hover:shadow-[0_0_20px_rgba(217,70,239,0.15)] transition-all duration-500"
                   >
                     <service.icon className="w-6 h-6 text-foreground group-hover:text-accent transition-colors duration-500" />
                   </motion.div>
@@ -200,7 +200,7 @@ export function ServicesPreview() {
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     
                     <motion.div 
-                      className="w-14 h-14 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center mb-6 relative z-10 group-hover:border-accent/50 group-hover:shadow-[0_0_20px_rgba(217,70,239,0.3)] transition-all duration-500"
+                      className="w-14 h-14 rounded-xl bg-white/60 border border-white/80 shadow-sm flex items-center justify-center mb-6 relative z-10 group-hover:border-accent/50 group-hover:bg-white group-hover:shadow-[0_0_20px_rgba(217,70,239,0.15)] transition-all duration-500"
                     >
                       <service.icon className="w-6 h-6 text-foreground group-hover:text-accent transition-colors duration-500" />
                     </motion.div>

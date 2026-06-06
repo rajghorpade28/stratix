@@ -26,17 +26,17 @@ export function HeroSection() {
         <motion.div 
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3], rotate: [0, 90, 0] }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-[20%] -left-[10%] w-[800px] h-[800px] rounded-full bg-primary/20 mix-blend-screen filter blur-[150px]"
+          className="absolute -top-[20%] -left-[10%] w-[800px] h-[800px] rounded-full bg-primary/20 mix-blend-normal filter blur-[150px]"
         />
         <motion.div 
           animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2], rotate: [0, -90, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute top-[30%] -right-[20%] w-[900px] h-[900px] rounded-full bg-[#06B6D4]/10 mix-blend-screen filter blur-[180px]"
+          className="absolute top-[30%] -right-[20%] w-[900px] h-[900px] rounded-full bg-[#06B6D4]/10 mix-blend-normal filter blur-[180px]"
         />
         <motion.div 
           animate={{ opacity: [0.1, 0.3, 0.1] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-0 left-[20%] w-[600px] h-[400px] rounded-full bg-accent/20 mix-blend-screen filter blur-[150px]"
+          className="absolute bottom-0 left-[20%] w-[600px] h-[400px] rounded-full bg-accent/20 mix-blend-normal filter blur-[150px]"
         />
       </div>
 

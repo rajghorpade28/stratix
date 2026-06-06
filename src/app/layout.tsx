@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakartaSans.variable} ${outfit.variable} dark antialiased`}
+      className={`${plusJakartaSans.variable} ${outfit.variable} antialiased`}
     >
       <body className="min-h-screen flex flex-col bg-background text-foreground font-sans selection:bg-foreground selection:text-background">
         <NextAuthProvider>

@@ -24,7 +24,7 @@ export function RadioCard({ title, description, selected, onClick, className, ic
         "relative w-full p-5 rounded-2xl text-left transition-all duration-300 overflow-hidden",
         selected 
           ? "glass shadow-[0_0_30px_rgba(217,70,239,0.2)] ring-2 ring-accent" 
-          : "bg-white/[0.02] backdrop-blur-md border border-white/10 hover:border-accent/40 hover:bg-white/[0.04]",
+          : "bg-white/50 backdrop-blur-md border border-black/5 hover:border-accent/40 hover:bg-white/80 shadow-sm",
         className
       )}
     >
@@ -41,7 +41,7 @@ export function RadioCard({ title, description, selected, onClick, className, ic
       <div className="relative z-10 flex items-start gap-4">
         <div className={cn(
           "mt-0.5 flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full border-2 transition-all duration-300",
-          selected ? "border-accent bg-accent text-primary-foreground shadow-[0_0_15px_rgba(217,70,239,0.5)] scale-110" : "border-white/20"
+          selected ? "border-accent bg-accent text-primary-foreground shadow-[0_0_15px_rgba(217,70,239,0.5)] scale-110" : "border-black/10 bg-white"
         )}>
           {selected && <Check size={14} strokeWidth={3} className="animate-in zoom-in duration-200" />}
         </div>

@@ -34,40 +34,40 @@
 }
 
 :root {
-  /* Premium Dark Futuristic Brand Experience */
+  /* Premium Light Futuristic Brand Experience */
   
-  /* Primary Background: Dark Graphite / Deep Indigo */
-  --background: #09090B;
-  /* Foreground: Warm White */
-  --foreground: #FAFAFA;
+  /* Primary Background: Soft Warm White */
+  --background: #FAFAFC;
+  /* Foreground: Dark Graphite */
+  --foreground: #09090B;
   
-  /* Cards: Rich Indigo / Dark Glass */
-  --card: #110C1D;
-  --card-foreground: #FAFAFA;
+  /* Cards: Pure White */
+  --card: #FFFFFF;
+  --card-foreground: #09090B;
   
-  --popover: #110C1D;
-  --popover-foreground: #FAFAFA;
+  --popover: #FFFFFF;
+  --popover-foreground: #09090B;
   
   /* Primary: Neon Violet */
   --primary: #8B5CF6;
-  --primary-hover: #A78BFA;
+  --primary-hover: #7C3AED;
   --primary-foreground: #FFFFFF; 
   
-  /* Secondary: Soft Lavender / Graphite */
-  --secondary: #1E1B4B;
-  --secondary-foreground: #E0E7FF;
+  /* Secondary: Soft Lavender */
+  --secondary: #F3F0FF;
+  --secondary-foreground: #4C1D95;
   
   /* Muted Sections */
-  --muted: #18181B;
-  --muted-foreground: #A1A1AA;
+  --muted: #F4F4F5;
+  --muted-foreground: #71717A;
   
   /* Accent: Magenta Glow / Electric Violet */
   --accent: #D946EF;
   --accent-foreground: #FFFFFF;
   
-  /* Borders: Subtle white overlay */
-  --border: #27272A;
-  --input: #27272A;
+  /* Borders: Subtle gray */
+  --border: #E4E4E7;
+  --input: #E4E4E7;
   --ring: #8B5CF6;
   
   /* Subtle rounded corners */
@@ -80,10 +80,10 @@
   }
   html {
     scroll-behavior: smooth;
-    color-scheme: dark;
+    color-scheme: light;
   }
   body {
-    @apply text-foreground antialiased selection:bg-primary/30 selection:text-primary-foreground;
+    @apply text-foreground antialiased selection:bg-primary/20 selection:text-primary;
     background-color: var(--background);
   }
   
@@ -94,11 +94,11 @@
 
 @layer utilities {
   .editorial-panel {
-    @apply bg-card border border-border shadow-md relative overflow-hidden rounded;
+    @apply bg-card border border-border shadow-sm relative overflow-hidden rounded;
   }
   
   .glass {
-    @apply bg-white/[0.03] backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)];
+    @apply bg-white/70 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.05)];
   }
   
   .text-gradient {
@@ -106,6 +106,6 @@
   }
   
   .glow-orb {
-    @apply absolute rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-pulse;
+    @apply absolute rounded-full mix-blend-normal filter blur-[120px] opacity-30 animate-pulse;
   }
 }

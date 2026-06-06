@@ -22,7 +22,7 @@ export function CheckboxCard({ label, selected, onClick, className }: CheckboxCa
         "relative w-full p-4 rounded-xl border-2 text-left transition-all duration-300 flex items-center gap-3 overflow-hidden",
         selected 
           ? "glass shadow-[0_0_25px_rgba(217,70,239,0.2)] ring-1 ring-accent" 
-          : "bg-white/[0.02] backdrop-blur-md border border-white/10 hover:border-accent/40 hover:bg-white/[0.04]",
+          : "bg-white/50 backdrop-blur-md border border-black/5 hover:border-accent/40 hover:bg-white/80 shadow-sm",
         className
       )}
     >
@@ -38,7 +38,7 @@ export function CheckboxCard({ label, selected, onClick, className }: CheckboxCa
       
       <div className={cn(
         "relative z-10 flex-shrink-0 flex items-center justify-center w-5 h-5 rounded-md border-2 transition-all duration-300",
-        selected ? "border-accent bg-accent text-primary-foreground shadow-[0_0_15px_rgba(217,70,239,0.4)] scale-110" : "border-white/20 bg-transparent"
+        selected ? "border-accent bg-accent text-primary-foreground shadow-[0_0_15px_rgba(217,70,239,0.4)] scale-110" : "border-black/10 bg-white"
       )}>
         {selected && <Check size={12} strokeWidth={3} className="animate-in zoom-in duration-200" />}
       </div>
