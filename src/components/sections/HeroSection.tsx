@@ -5,8 +5,9 @@ import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { RotatingText } from "@/components/ui/RotatingText";
 
-const headlineWords = "We help your business get more visibility and leads online.".split(" ");
+const headlineStart = "We help your business get more".split(" ");
 
 export function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -82,13 +83,19 @@ export function HeroSection() {
                 className="absolute top-[40%] right-0 w-64 h-64 bg-accent/30 rounded-full blur-[80px] translate-x-1/4 -translate-y-1/2"
               />
               
-              <Image 
-                src="/images/cat_megaphone.png"
-                alt="STRATIX Mascot"
-                fill
-                className="object-contain object-center lg:object-left-bottom scale-[1.1] origin-bottom-left drop-shadow-[0_0_30px_rgba(217,70,239,0.4)]"
-                priority
-              />
+              <motion.div 
+                animate={{ y: [-15, 15, -15], rotate: [-2, 2, -2] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="w-full h-full relative"
+              >
+                <Image 
+                  src="/images/cat_megaphone.png"
+                  alt="STRATIX Mascot"
+                  fill
+                  className="object-contain object-center lg:object-left-bottom scale-[1.1] origin-bottom-left drop-shadow-[0_0_30px_rgba(217,70,239,0.4)]"
+                  priority
+                />
+              </motion.div>
             </motion.div>
             
             <div
@@ -100,8 +107,8 @@ export function HeroSection() {
           {/* Right Column: Text & CTA */}
           <div className="w-full lg:w-[55%] flex flex-col justify-start relative z-20">
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.8rem] font-heading font-bold tracking-tight leading-[1.1] mb-8 text-foreground flex flex-wrap">
-              {headlineWords.map((word, idx) => (
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.8rem] font-heading font-bold tracking-tight leading-[1.1] mb-8 text-foreground flex flex-wrap items-baseline gap-y-2">
+              {headlineStart.map((word, idx) => (
                 <div key={idx} className="overflow-hidden inline-block mr-[0.25em]">
                   <motion.span
                     initial={{ y: "120%", opacity: 0, rotate: 3 }}
@@ -113,14 +120,30 @@ export function HeroSection() {
                     }}
                     className="inline-block origin-bottom-left"
                   >
-                    {word === "visibility" ? (
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-[#06B6D4] italic font-serif font-medium drop-shadow-sm">{word}</span>
-                    ) : (
-                      word
-                    )}
+                    {word}
                   </motion.span>
                 </div>
               ))}
+              <div className="overflow-hidden inline-block mr-[0.25em]">
+                <RotatingText 
+                  words={["visibility", "growth", "scale", "impact", "customers"]} 
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-[#06B6D4] italic font-serif font-medium drop-shadow-sm min-w-[3em]" 
+                />
+              </div>
+              <div className="overflow-hidden inline-block">
+                <motion.span
+                  initial={{ y: "120%", opacity: 0, rotate: 3 }}
+                  animate={{ y: "0%", opacity: 1, rotate: 0 }}
+                  transition={{ 
+                    duration: 1.2, 
+                    delay: 0.15 + (headlineStart.length * 0.08),
+                    ease: [0.22, 1, 0.36, 1]
+                  }}
+                  className="inline-block origin-bottom-left"
+                >
+                  online.
+                </motion.span>
+              </div>
             </h1>
 
             <div className="flex flex-col gap-8">

@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { NextAuthProvider } from "@/components/providers/SessionProvider";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { CustomCursor } from "@/components/ui/CustomCursor";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -31,7 +32,8 @@ export default function RootLayout({
       lang="en"
       className={`${plusJakartaSans.variable} ${outfit.variable} antialiased`}
     >
-      <body className="min-h-screen flex flex-col bg-background text-foreground font-sans selection:bg-foreground selection:text-background">
+      <body className="min-h-screen flex flex-col bg-background text-foreground font-sans selection:bg-foreground selection:text-background cursor-auto md:cursor-none">
+        <CustomCursor />
         <NextAuthProvider>
           <ScrollProgress />
           <Navbar />
