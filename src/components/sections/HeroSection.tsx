@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 
-const headlineWords = "Future-Proof Your Brand".split(" ");
+const headlineWords = "We help your business get more visibility and leads online.".split(" ");
 
 export function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -15,13 +15,11 @@ export function HeroSection() {
     offset: ["start start", "end start"]
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "200px"]);
-  const opacityFade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const scaleImage = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const opacityFade = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   return (
-    <section ref={containerRef} className="relative min-h-[100vh] flex flex-col justify-center overflow-hidden bg-background">
+    <section ref={containerRef} className="relative min-h-[90vh] flex flex-col justify-start pt-[140px] sm:pt-[160px] md:pt-[180px] pb-16 overflow-hidden bg-background">
       
       {/* Deep Atmospheric Glows */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
@@ -42,98 +40,134 @@ export function HeroSection() {
         />
       </div>
 
-      {/* Massive Background Typography Mask */}
+      {/* Background Image */}
       <motion.div 
-        style={{ y: textY, opacity: opacityFade }}
-        className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden select-none"
+        style={{ y: backgroundY, opacity: opacityFade }}
+        className="absolute inset-0 z-0 opacity-[0.15] mix-blend-overlay"
       >
-        <h1 className="text-[25vw] font-heading font-black text-transparent whitespace-nowrap opacity-5"
-            style={{ WebkitTextStroke: "1px rgba(255,255,255,0.2)" }}>
-          STRATIX
-        </h1>
+        <Image 
+          src="/images/stratix_studio_workspace_1779964905457.png"
+          alt="STRATIX Studio"
+          fill
+          className="object-cover object-center scale-105"
+          priority
+        />
       </motion.div>
-
-      {/* Central Content */}
-      <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10 flex flex-col items-center text-center mt-12">
+      
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-background/80 via-background/95 to-background" />
+      
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
         
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8, filter: "blur(20px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-8 relative"
-        >
-          <div className="absolute inset-0 bg-accent/40 blur-3xl rounded-full" />
-          <Image 
-            src="/images/cat_megaphone.png"
-            alt="STRATIX Mascot"
-            width={180}
-            height={180}
-            className="relative z-10 drop-shadow-[0_0_30px_rgba(217,70,239,0.4)]"
-            priority
-          />
-        </motion.div>
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-6">
+          
+          {/* Left Column: Logo Target & Cat Mascot */}
+          <div className="w-full sm:w-2/3 lg:w-[45%] flex flex-col items-center lg:items-start relative z-10 pointer-events-none mt-4 lg:mt-0">
 
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] font-heading font-black tracking-tighter leading-[1.05] mb-8 text-foreground max-w-5xl">
-          {headlineWords.map((word, idx) => (
-            <div key={idx} className="overflow-hidden inline-block mr-[0.25em]">
-              <motion.span
-                initial={{ y: "120%", rotateZ: 5, opacity: 0 }}
-                animate={{ y: "0%", rotateZ: 0, opacity: 1 }}
-                transition={{ 
-                  duration: 1.2, 
-                  delay: 0.2 + (idx * 0.1),
-                  ease: [0.16, 1, 0.3, 1]
-                }}
-                className="inline-block"
-              >
-                {word === "Brand" ? (
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-[#06B6D4] italic font-serif font-medium drop-shadow-lg">{word}</span>
-                ) : (
-                  word
-                )}
-              </motion.span>
-            </div>
-          ))}
-        </h1>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-2xl mx-auto mb-12"
-        >
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-sans font-light tracking-wide">
-            We partner with elite businesses to engineer high-performance digital experiences, immersive branding, and scalable growth systems.
-          </p>
-        </motion.div>
-        
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="pointer-events-auto"
-        >
-          <MagneticButton>
-            <Link 
-              href="/start"
-              className="group relative flex items-center justify-center gap-4 px-10 py-5 rounded-full bg-foreground text-background font-bold text-[16px] uppercase tracking-widest overflow-hidden"
+            <motion.div 
+              initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+              animate={{ 
+                opacity: 1, 
+                y: 0,
+                filter: "blur(0px)"
+              }}
+              transition={{ 
+                duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] 
+              }}
+              className="w-full relative aspect-square lg:aspect-auto lg:h-[420px] flex items-center justify-center lg:justify-start"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-[#06B6D4] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <span className="relative z-10 group-hover:text-white transition-colors duration-300">Launch Project</span>
-              <motion.span
-                className="relative z-10 group-hover:text-white"
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              {/* Subtle Megaphone Projection Glow */}
+              <motion.div 
+                animate={{ opacity: [0.4, 0.8, 0.4], scale: [0.95, 1.1, 0.95] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-[40%] right-0 w-64 h-64 bg-accent/30 rounded-full blur-[80px] translate-x-1/4 -translate-y-1/2"
+              />
+              
+              <Image 
+                src="/images/cat_megaphone.png"
+                alt="STRATIX Mascot"
+                fill
+                className="object-contain object-center lg:object-left-bottom scale-[1.1] origin-bottom-left drop-shadow-[0_0_30px_rgba(217,70,239,0.4)]"
+                priority
+              />
+            </motion.div>
+            
+            <div
+              id="hero-logo-target"
+              className="absolute -bottom-16 left-0 h-[64px] md:h-[90px] lg:h-[120px] w-full flex items-center origin-left"
+            />
+          </div>
+
+          {/* Right Column: Text & CTA */}
+          <div className="w-full lg:w-[55%] flex flex-col justify-start relative z-20">
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.8rem] font-heading font-bold tracking-tight leading-[1.1] mb-8 text-foreground flex flex-wrap">
+              {headlineWords.map((word, idx) => (
+                <div key={idx} className="overflow-hidden inline-block mr-[0.25em]">
+                  <motion.span
+                    initial={{ y: "100%", opacity: 0 }}
+                    animate={{ y: "0%", opacity: 1 }}
+                    transition={{ 
+                      duration: 0.8, 
+                      delay: 0.1 + (idx * 0.05),
+                      ease: [0.16, 1, 0.3, 1]
+                    }}
+                    className="inline-block"
+                  >
+                    {word === "visibility" ? (
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-[#06B6D4] italic font-serif font-medium drop-shadow-sm">{word}</span>
+                    ) : (
+                      word
+                    )}
+                  </motion.span>
+                </div>
+              ))}
+            </h1>
+
+            <div className="flex flex-col gap-8">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="max-w-md"
               >
-                →
-              </motion.span>
-            </Link>
-          </MagneticButton>
-        </motion.div>
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-sans font-medium">
+                  We partner with local businesses and growing brands to reach more customers through premium advertising and content creation.
+                </p>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col sm:flex-row justify-start gap-4 mt-4 pointer-events-auto"
+              >
+                <MagneticButton className="w-full sm:w-auto">
+                  <div className="relative group">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-primary via-accent to-[#06B6D4] rounded-lg blur opacity-40 group-hover:opacity-75 transition duration-500 group-hover:duration-200" />
+                    <Link 
+                      href="/start"
+                      className="relative inline-flex items-center justify-center gap-4 overflow-hidden rounded-md bg-foreground text-background px-8 py-4 transition-all font-semibold text-[15px] w-full sm:w-auto"
+                    >
+                      <span className="relative z-10 flex items-center gap-2 group-hover:text-white transition-colors duration-300">
+                        Want to Build a Website?
+                        <motion.span
+                          animate={{ x: [0, 5, 0] }}
+                          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                        >
+                          →
+                        </motion.span>
+                      </span>
+                      <div className="absolute inset-0 bg-white/20 translate-y-[100%] group-hover:translate-y-[0%] transition-transform duration-300 ease-out" />
+                    </Link>
+                  </div>
+                </MagneticButton>
+              </motion.div>
+            </div>
+          </div>
+
+        </div>
       </div>
       
-      {/* Subtle overlay noise or texture could go here */}
-      <div className="absolute inset-0 z-20 pointer-events-none opacity-[0.015] mix-blend-overlay bg-[url('/noise.png')]"></div>
     </section>
   );
 }
