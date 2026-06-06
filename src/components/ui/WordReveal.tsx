@@ -17,7 +17,7 @@ export function WordReveal({ text, className = "", delayOffset = 0 }: WordReveal
   const words = text.split(" ");
 
   return (
-    <h2 ref={ref} className={`flex flex-wrap ${className}`}>
+    <div ref={ref} className={`flex flex-wrap ${className}`}>
       {words.map((word, idx) => (
         <span key={idx} className="overflow-hidden inline-block mr-[0.25em] pb-2">
           <motion.span
@@ -34,6 +34,6 @@ export function WordReveal({ text, className = "", delayOffset = 0 }: WordReveal
           </motion.span>
         </span>
       ))}
-    </h2>
+    </div>
   );
 }

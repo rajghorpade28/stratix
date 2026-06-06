@@ -5,10 +5,10 @@ import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { RotatingText } from "@/components/ui/RotatingText";
+import { WordReveal } from "@/components/ui/WordReveal";
 import { LineReveal } from "@/components/ui/LineReveal";
 
-const headlineStart = "We Help Businesses".split(" ");
+const headlineWords = "We help your business get more visibility and leads online.".split(" ");
 
 export function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -23,23 +23,11 @@ export function HeroSection() {
   return (
     <section ref={containerRef} className="relative min-h-[90vh] flex flex-col justify-start pt-[140px] sm:pt-[160px] md:pt-[180px] pb-16 overflow-hidden bg-background">
       
-      {/* Deep Atmospheric Glows */}
+      {/* Deep Atmospheric Glows - Static for Performance */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <motion.div 
-          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3], rotate: [0, 90, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-[20%] -left-[10%] w-[800px] h-[800px] rounded-full bg-primary/20 mix-blend-normal filter blur-[150px]"
-        />
-        <motion.div 
-          animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2], rotate: [0, -90, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute top-[30%] -right-[20%] w-[900px] h-[900px] rounded-full bg-[#06B6D4]/10 mix-blend-normal filter blur-[180px]"
-        />
-        <motion.div 
-          animate={{ opacity: [0.1, 0.3, 0.1] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-0 left-[20%] w-[600px] h-[400px] rounded-full bg-accent/20 mix-blend-normal filter blur-[150px]"
-        />
+        <div className="absolute -top-[20%] -left-[10%] w-[800px] h-[800px] rounded-full bg-primary/20 mix-blend-normal filter blur-[100px] opacity-40" />
+        <div className="absolute top-[30%] -right-[20%] w-[900px] h-[900px] rounded-full bg-[#06B6D4]/10 mix-blend-normal filter blur-[120px] opacity-30" />
+        <div className="absolute bottom-0 left-[20%] w-[600px] h-[400px] rounded-full bg-accent/20 mix-blend-normal filter blur-[100px] opacity-20" />
       </div>
 
       {/* Background Image */}
@@ -85,15 +73,16 @@ export function HeroSection() {
               />
               
               <motion.div 
-                animate={{ y: [-15, 15, -15], rotate: [-2, 2, -2] }}
+                animate={{ y: [-10, 10, -10] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                style={{ willChange: "transform" }}
                 className="w-full h-full relative"
               >
                 <Image 
                   src="/images/cat_megaphone.png"
                   alt="STRATIX Mascot"
                   fill
-                  className="object-contain object-center lg:object-left-bottom scale-[1.1] origin-bottom-left drop-shadow-[0_0_30px_rgba(217,70,239,0.4)]"
+                  className="object-contain object-center lg:object-left-bottom scale-[1.1] origin-bottom-left"
                   priority
                 />
               </motion.div>
@@ -108,29 +97,28 @@ export function HeroSection() {
           {/* Right Column: Text & CTA */}
           <div className="w-full lg:w-[55%] flex flex-col justify-start relative z-20">
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.8rem] font-heading font-bold tracking-tight leading-[1.1] mb-8 text-foreground flex flex-wrap items-baseline gap-y-2">
-              {headlineStart.map((word, idx) => (
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.8rem] font-heading font-bold tracking-tight leading-[1.1] mb-8 text-foreground flex flex-wrap">
+              {headlineWords.map((word, idx) => (
                 <div key={idx} className="overflow-hidden inline-block mr-[0.25em]">
                   <motion.span
-                    initial={{ y: "120%", opacity: 0, rotate: 3 }}
-                    animate={{ y: "0%", opacity: 1, rotate: 0 }}
+                    initial={{ y: "120%", opacity: 0, rotateZ: 5 }}
+                    animate={{ y: "0%", opacity: 1, rotateZ: 0 }}
                     transition={{ 
-                      duration: 1.2, 
-                      delay: 0.15 + (idx * 0.08),
+                      duration: 0.8, 
+                      delay: 0.15 + (idx * 0.1),
                       ease: [0.22, 1, 0.36, 1]
                     }}
                     className="inline-block origin-bottom-left"
+                    style={{ willChange: "transform, opacity" }}
                   >
-                    {word}
+                    {word === "visibility" ? (
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-[#06B6D4] italic font-serif font-medium">{word}</span>
+                    ) : (
+                      word
+                    )}
                   </motion.span>
                 </div>
               ))}
-              <div className="overflow-hidden inline-block ml-[0.25em]">
-                <RotatingText 
-                  words={["Grow", "Scale", "Automate", "Convert", "Expand"]} 
-                  className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-[#06B6D4] italic font-serif font-medium drop-shadow-sm min-w-[4em]" 
-                />
-              </div>
             </h1>
 
             <div className="flex flex-col gap-8">

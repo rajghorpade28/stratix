@@ -59,7 +59,7 @@ export function CustomCursor() {
       
       {/* Outer Ring / Glow */}
       <motion.div
-        className="fixed top-0 left-0 w-10 h-10 border border-primary/50 bg-primary/10 rounded-full pointer-events-none z-[9998] backdrop-blur-[2px]"
+        className="fixed top-0 left-0 w-10 h-10 border border-primary/50 bg-primary/10 rounded-full pointer-events-none z-[9998]"
         animate={{
           x: mousePosition.x - 20,
           y: mousePosition.y - 20,
@@ -68,6 +68,7 @@ export function CustomCursor() {
           borderColor: isHovering ? "rgba(139, 92, 246, 0.8)" : "rgba(139, 92, 246, 0.5)",
         }}
         transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
+        style={{ willChange: "transform, background-color, border-color" }}
       />
     </>
   );
