@@ -104,14 +104,14 @@ export function HeroSection() {
               {headlineWords.map((word, idx) => (
                 <div key={idx} className="overflow-hidden inline-block mr-[0.25em]">
                   <motion.span
-                    initial={{ y: "100%", opacity: 0 }}
-                    animate={{ y: "0%", opacity: 1 }}
+                    initial={{ y: "120%", opacity: 0, rotate: 3 }}
+                    animate={{ y: "0%", opacity: 1, rotate: 0 }}
                     transition={{ 
-                      duration: 0.8, 
-                      delay: 0.1 + (idx * 0.05),
-                      ease: [0.16, 1, 0.3, 1]
+                      duration: 1.2, 
+                      delay: 0.15 + (idx * 0.08),
+                      ease: [0.22, 1, 0.36, 1]
                     }}
-                    className="inline-block"
+                    className="inline-block origin-bottom-left"
                   >
                     {word === "visibility" ? (
                       <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-[#06B6D4] italic font-serif font-medium drop-shadow-sm">{word}</span>
@@ -125,9 +125,9 @@ export function HeroSection() {
 
             <div className="flex flex-col gap-8">
               <motion.div 
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 1.2, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
                 className="max-w-md"
               >
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-sans font-medium">
@@ -136,9 +136,9 @@ export function HeroSection() {
               </motion.div>
               
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 1.2, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
                 className="flex flex-col sm:flex-row justify-start gap-4 mt-4 pointer-events-auto"
               >
                 <MagneticButton className="w-full sm:w-auto">

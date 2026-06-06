@@ -106,7 +106,13 @@ export function ServicesPreview() {
           targetHref={pendingHref} 
         />
 
-        <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 md:gap-8 mb-12 md:mb-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col md:flex-row justify-between md:items-end gap-6 md:gap-8 mb-12 md:mb-16"
+        >
           <div className="max-w-2xl">
             <h2 className="text-sm font-medium tracking-[0.1em] text-accent uppercase mb-4 animate-pulse">Our Expertise</h2>
             <h3 className="text-2xl sm:text-3xl md:text-5xl font-heading font-bold tracking-tight text-foreground leading-tight">
@@ -122,7 +128,7 @@ export function ServicesPreview() {
               <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
-        </div>
+        </motion.div>
 
         {/* SERVICES CATEGORY */}
         <div className="mb-20">
@@ -161,10 +167,10 @@ export function ServicesPreview() {
               return (
                 <motion.div 
                   key={idx}
-                  initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                  initial={{ opacity: 0, scale: 0.9, y: 40 }}
                   whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
                   className="h-full perspective-1000"
                 >
                   <TiltCard 
@@ -189,10 +195,10 @@ export function ServicesPreview() {
             {marketingServices.map((service, idx) => (
               <motion.div 
                 key={idx}
-                initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                initial={{ opacity: 0, scale: 0.9, y: 40 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
                 className="perspective-1000"
               >
                 <TiltCard>

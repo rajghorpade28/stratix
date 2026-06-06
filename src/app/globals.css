@@ -98,7 +98,7 @@
   }
   
   .glass {
-    @apply bg-white/70 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.05)];
+    @apply bg-white/95 backdrop-blur-md border border-black/[0.04] shadow-[0_8px_30px_rgba(0,0,0,0.04)];
   }
   
   .text-gradient {

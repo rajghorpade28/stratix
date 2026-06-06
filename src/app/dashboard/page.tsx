@@ -58,22 +58,22 @@ export default async function DashboardOverviewPage() {
       <div>
         <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Start a New Project</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <Link href="/start" className="group flex flex-col p-4 bg-card border border-border/50 rounded-xl hover:border-primary/40 hover:-translate-y-1 hover:shadow-md transition-all duration-300">
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+          <Link href="/start" className="group flex flex-col p-4 bg-card border border-border/50 rounded-xl hover:border-primary/40 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(139,92,246,0.12)] transition-all duration-500 animate-in fade-in zoom-in-95 slide-in-from-bottom-4 duration-700 fill-mode-both" style={{ animationDelay: '100ms' }}>
+            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-500">
               <FileText className="w-5 h-5 text-primary" />
             </div>
             <span className="font-semibold text-foreground">New Website</span>
             <span className="text-xs text-muted-foreground mt-1">Start a web project</span>
           </Link>
-          <Link href="/start-app" className="group flex flex-col p-4 bg-card border border-border/50 rounded-xl hover:border-accent/40 hover:-translate-y-1 hover:shadow-md transition-all duration-300">
-            <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+          <Link href="/start-app" className="group flex flex-col p-4 bg-card border border-border/50 rounded-xl hover:border-accent/40 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(217,70,239,0.12)] transition-all duration-500 animate-in fade-in zoom-in-95 slide-in-from-bottom-4 duration-700 fill-mode-both" style={{ animationDelay: '200ms' }}>
+            <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-500">
               <LayoutDashboard className="w-5 h-5 text-accent" />
             </div>
             <span className="font-semibold text-foreground">New App</span>
             <span className="text-xs text-muted-foreground mt-1">Start an app project</span>
           </Link>
-          <Link href="/contact" className="group flex flex-col p-4 bg-card border border-border/50 rounded-xl hover:border-blue-500/40 hover:-translate-y-1 hover:shadow-md transition-all duration-300">
-            <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+          <Link href="/contact" className="group flex flex-col p-4 bg-card border border-border/50 rounded-xl hover:border-blue-500/40 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(59,130,246,0.12)] transition-all duration-500 animate-in fade-in zoom-in-95 slide-in-from-bottom-4 duration-700 fill-mode-both" style={{ animationDelay: '300ms' }}>
+            <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-500">
               <UserIcon className="w-5 h-5 text-blue-500" />
             </div>
             <span className="font-semibold text-foreground">Book Call</span>
@@ -86,19 +86,19 @@ export default async function DashboardOverviewPage() {
       <div>
         <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Account Overview</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-card border border-border/50 rounded-xl p-5 shadow-sm">
+          <div className="bg-card border border-border/50 rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-500 animate-in fade-in zoom-in-[0.98] slide-in-from-bottom-4 duration-700 fill-mode-both" style={{ animationDelay: '400ms' }}>
             <h3 className="text-xs font-medium text-muted-foreground mb-1 uppercase tracking-wider">Total Submitted</h3>
             <p className="text-3xl font-heading font-bold">{totalRequests}</p>
           </div>
-          <div className="bg-card border border-border/50 rounded-xl p-5 shadow-sm">
+          <div className="bg-card border border-border/50 rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-500 animate-in fade-in zoom-in-[0.98] slide-in-from-bottom-4 duration-700 fill-mode-both" style={{ animationDelay: '500ms' }}>
             <h3 className="text-xs font-medium text-muted-foreground mb-1 uppercase tracking-wider">Active Projects</h3>
             <p className="text-3xl font-heading font-bold text-accent">{activeRequests}</p>
           </div>
-          <div className="bg-card border border-border/50 rounded-xl p-5 shadow-sm">
+          <div className="bg-card border border-border/50 rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-500 animate-in fade-in zoom-in-[0.98] slide-in-from-bottom-4 duration-700 fill-mode-both" style={{ animationDelay: '600ms' }}>
             <h3 className="text-xs font-medium text-muted-foreground mb-1 uppercase tracking-wider">Completed</h3>
             <p className="text-3xl font-heading font-bold text-green-500">{completedRequests}</p>
           </div>
-          <div className="bg-card border border-border/50 rounded-xl p-5 shadow-sm">
+          <div className="bg-card border border-border/50 rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-500 animate-in fade-in zoom-in-[0.98] slide-in-from-bottom-4 duration-700 fill-mode-both" style={{ animationDelay: '700ms' }}>
             <h3 className="text-xs font-medium text-muted-foreground mb-1 uppercase tracking-wider">Last Activity</h3>
             <p className="text-xl font-medium mt-2">{lastSubmissionDate}</p>
           </div>

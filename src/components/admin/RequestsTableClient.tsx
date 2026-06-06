@@ -25,7 +25,7 @@ export function RequestsTableClient({ initialRequests, type }: { initialRequests
   };
 
   return (
-    <div className="bg-card border border-border/60 rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(124,58,237,0.08)] transition-all duration-300 animate-in fade-in duration-700 slide-in-from-bottom-2">
+    <div className="bg-card border border-border/60 rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(217,70,239,0.08)] transition-all duration-500 animate-in fade-in duration-700">
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
           <thead className="bg-muted/30 text-muted-foreground font-medium border-b border-border/60 whitespace-nowrap">
@@ -38,7 +38,7 @@ export function RequestsTableClient({ initialRequests, type }: { initialRequests
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {requests.map((req) => {
+            {requests.map((req, idx) => {
               let parsedData: any = {};
               try {
                 parsedData = req.data ? JSON.parse(req.data) : {};
@@ -54,7 +54,7 @@ export function RequestsTableClient({ initialRequests, type }: { initialRequests
               };
 
               return (
-                <tr key={req.id} className="hover:bg-accent/5 transition-colors">
+                <tr key={req.id} className="hover:bg-accent/5 transition-colors animate-in fade-in slide-in-from-bottom-4 fill-mode-both" style={{ animationDuration: '600ms', animationDelay: `${idx * 50}ms` }}>
                   <td className="px-6 py-4">
                     <div className="font-mono text-xs text-muted-foreground mb-1">{req.id.substring(0,8)}...</div>
                     <div className="font-medium">{format(new Date(req.createdAt), "MMM d, yyyy")}</div>

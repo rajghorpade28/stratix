@@ -23,11 +23,11 @@ export default async function AdminDashboard() {
       {/* KPIs */}
       <section>
         <h2 className="text-xl font-heading font-bold mb-6">Overview</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-in fade-in duration-700 slide-in-from-bottom-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {kpis.map((kpi, idx) => {
             const Icon = kpi.icon;
             return (
-              <div key={idx} className="bg-card border border-border/60 p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(124,58,237,0.08)] hover:-translate-y-1 transition-all duration-300 flex items-center gap-5 relative overflow-hidden group">
+              <div key={idx} className="bg-card border border-border/60 p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(217,70,239,0.08)] hover:-translate-y-1 transition-all duration-500 flex items-center gap-5 relative overflow-hidden group animate-in fade-in zoom-in-95 slide-in-from-bottom-4 duration-700 fill-mode-both" style={{ animationDelay: `${idx * 100}ms` }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className={`w-14 h-14 rounded-xl flex items-center justify-center shrink-0 shadow-sm relative z-10 ${kpi.bg}`}>
                   <Icon className={`w-6 h-6 ${kpi.color}`} />
@@ -45,7 +45,7 @@ export default async function AdminDashboard() {
       {/* Recent Activity */}
       <section>
         <h2 className="text-xl font-heading font-bold mb-6">Recent Activity</h2>
-        <div className="bg-card border border-border/60 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-shadow duration-300 overflow-hidden animate-in fade-in duration-700 slide-in-from-bottom-2 delay-150 fill-mode-both">
+        <div className="bg-card border border-border/60 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-shadow duration-300 overflow-hidden animate-in fade-in zoom-in-[0.98] slide-in-from-bottom-6 duration-1000 delay-300 fill-mode-both">
           <div className="divide-y divide-border/60">
             {recentActivity.length === 0 ? (
               <div className="p-10 text-center text-muted-foreground">No recent activity.</div>
