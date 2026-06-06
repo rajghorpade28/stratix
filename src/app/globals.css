@@ -34,43 +34,41 @@
 }
 
 :root {
-  /* Premium High-Contrast Brand Experience */
+  /* Premium Dark Futuristic Brand Experience */
   
-  /* Primary Background: Pure White */
-  --background: #FAFAFA;
-  /* Foreground: Deep Charcoal */
-  --foreground: #0A0A0B;
+  /* Primary Background: Dark Graphite / Deep Indigo */
+  --background: #09090B;
+  /* Foreground: Warm White */
+  --foreground: #FAFAFA;
   
-  /* Cards: Premium White */
-  --card: #FFFFFF;
-  --card-foreground: #0A0A0B;
+  /* Cards: Rich Indigo / Dark Glass */
+  --card: #110C1D;
+  --card-foreground: #FAFAFA;
   
-  --popover: #FFFFFF;
-  --popover-foreground: #0A0A0B;
+  --popover: #110C1D;
+  --popover-foreground: #FAFAFA;
   
-  /* Primary: Deep Purple */
-  --primary: #4C1D95;
-  --primary-hover: #5B21B6;
-  /* White text on deep purple buttons */
+  /* Primary: Neon Violet */
+  --primary: #8B5CF6;
+  --primary-hover: #A78BFA;
   --primary-foreground: #FFFFFF; 
   
-  /* Secondary Buttons: White background */
-  --secondary: #FFFFFF;
-  --secondary-foreground: #0A0A0B;
+  /* Secondary: Soft Lavender / Graphite */
+  --secondary: #1E1B4B;
+  --secondary-foreground: #E0E7FF;
   
-  /* Muted / Secondary Sections: Ultra Soft Grey */
-  --muted: #F4F4F5;
-  /* Muted Foreground / Secondary Text: Sleek Gray */
-  --muted-foreground: #71717A;
+  /* Muted Sections */
+  --muted: #18181B;
+  --muted-foreground: #A1A1AA;
   
-  /* Accent: Electric Violet */
-  --accent: #7C3AED;
+  /* Accent: Magenta Glow / Electric Violet */
+  --accent: #D946EF;
   --accent-foreground: #FFFFFF;
   
-  /* Borders: Light Gray */
-  --border: #E4E4E7;
-  --input: #E4E4E7;
-  --ring: #7C3AED;
+  /* Borders: Subtle white overlay */
+  --border: #27272A;
+  --input: #27272A;
+  --ring: #8B5CF6;
   
   /* Subtle rounded corners */
   --radius: 0.5rem; 
@@ -82,9 +80,10 @@
   }
   html {
     scroll-behavior: smooth;
+    color-scheme: dark;
   }
   body {
-    @apply text-foreground antialiased selection:bg-accent/20 selection:text-accent;
+    @apply text-foreground antialiased selection:bg-primary/30 selection:text-primary-foreground;
     background-color: var(--background);
   }
   
@@ -99,14 +98,14 @@
   }
   
   .glass {
-    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.04)];
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)];
   }
   
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-[#06B6D4];
   }
   
   .glow-orb {
-    @apply absolute rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-pulse;
+    @apply absolute rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-pulse;
   }
 }

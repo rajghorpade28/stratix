@@ -29,13 +29,13 @@ export function ProgressTracker({ currentStep, totalSteps, stepName }: ProgressT
         </div>
       </div>
       
-      <div className="relative h-2 w-full bg-border/50 rounded-full overflow-hidden flex gap-1 shadow-inner">
+      <div className="relative h-2.5 w-full bg-border/20 rounded-full overflow-hidden flex gap-1 shadow-inner backdrop-blur-md">
         {Array.from({ length: totalSteps }).map((_, i) => {
           const isActive = i === currentStep - 1;
           const isCompleted = i < currentStep - 1;
           
           return (
-            <div key={i} className="h-full flex-1 relative rounded-full overflow-hidden bg-background/20">
+            <div key={i} className="h-full flex-1 relative rounded-full overflow-hidden bg-white/5">
               {(isCompleted || isActive) && (
                 <motion.div
                   initial={{ x: "-100%" }}
@@ -43,7 +43,7 @@ export function ProgressTracker({ currentStep, totalSteps, stepName }: ProgressT
                   transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: isActive ? 0.2 : 0 }}
                   className={cn(
                     "absolute inset-0 rounded-full",
-                    isCompleted ? "bg-primary/40" : "bg-gradient-to-r from-primary to-accent shadow-[0_0_10px_rgba(124,58,237,0.5)]"
+                    isCompleted ? "bg-primary/40" : "bg-gradient-to-r from-primary via-accent to-[#06B6D4] shadow-[0_0_15px_rgba(217,70,239,0.8)]"
                   )}
                 />
               )}
