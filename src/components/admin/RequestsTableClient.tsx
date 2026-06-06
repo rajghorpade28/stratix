@@ -25,10 +25,10 @@ export function RequestsTableClient({ initialRequests, type }: { initialRequests
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 animate-in fade-in duration-700 slide-in-from-bottom-2">
+    <div className="bg-card border border-border/60 rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(124,58,237,0.08)] transition-all duration-300 animate-in fade-in duration-700 slide-in-from-bottom-2">
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
-          <thead className="bg-muted/50 text-muted-foreground font-medium border-b border-border whitespace-nowrap">
+          <thead className="bg-muted/30 text-muted-foreground font-medium border-b border-border/60 whitespace-nowrap">
             <tr>
               <th className="px-6 py-4">ID / Date</th>
               <th className="px-6 py-4">Client Details</th>

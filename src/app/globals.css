@@ -7,9 +7,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
@@ -34,46 +34,46 @@
 }
 
 :root {
-  /* Premium Purple-Themed Brand Experience */
+  /* Premium High-Contrast Brand Experience */
   
-  /* Primary Background: Warm Ivory / Soft Cream */
-  --background: #FCFAF5;
-  /* Foreground: Very Dark Charcoal */
-  --foreground: #1A1523;
+  /* Primary Background: Pure White */
+  --background: #FAFAFA;
+  /* Foreground: Deep Charcoal */
+  --foreground: #0A0A0B;
   
-  /* Cards: White */
+  /* Cards: Premium White */
   --card: #FFFFFF;
-  --card-foreground: #1A1523;
+  --card-foreground: #0A0A0B;
   
   --popover: #FFFFFF;
-  --popover-foreground: #1A1523;
+  --popover-foreground: #0A0A0B;
   
-  /* Primary: Deep Royal Purple */
-  --primary: #5E2B97;
-  --primary-hover: #7645B8;
+  /* Primary: Deep Purple */
+  --primary: #4C1D95;
+  --primary-hover: #5B21B6;
   /* White text on deep purple buttons */
   --primary-foreground: #FFFFFF; 
   
   /* Secondary Buttons: White background */
   --secondary: #FFFFFF;
-  --secondary-foreground: #1A1523;
+  --secondary-foreground: #0A0A0B;
   
-  /* Muted / Secondary Sections: Soft Lavender Tint */
-  --muted: #F4F0F8;
-  /* Muted Foreground / Secondary Text: Muted Dark Grey */
-  --muted-foreground: #605A69;
+  /* Muted / Secondary Sections: Ultra Soft Grey */
+  --muted: #F4F4F5;
+  /* Muted Foreground / Secondary Text: Sleek Gray */
+  --muted-foreground: #71717A;
   
-  /* Accent: Deep Royal Purple */
-  --accent: #5E2B97;
+  /* Accent: Electric Violet */
+  --accent: #7C3AED;
   --accent-foreground: #FFFFFF;
   
-  /* Borders: Soft Lavender/Cream Tint */
-  --border: #E6E1ED;
-  --input: #E6E1ED;
-  --ring: #5E2B97;
+  /* Borders: Light Gray */
+  --border: #E4E4E7;
+  --input: #E4E4E7;
+  --ring: #7C3AED;
   
   /* Subtle rounded corners */
-  --radius: 0.25rem; 
+  --radius: 0.5rem; 
 }
 
 @layer base {
@@ -84,12 +84,8 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply text-foreground antialiased selection:bg-accent selection:text-accent-foreground;
+    @apply text-foreground antialiased selection:bg-accent/20 selection:text-accent;
     background-color: var(--background);
-    background-image: 
-      radial-gradient(at 0% 0%, rgba(94, 43, 151, 0.03) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, rgba(94, 43, 151, 0.03) 0px, transparent 50%);
-    background-attachment: fixed;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -100,5 +96,17 @@
 @layer utilities {
   .editorial-panel {
     @apply bg-card border border-border shadow-md relative overflow-hidden rounded;
+  }
+  
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.04)];
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+  }
+  
+  .glow-orb {
+    @apply absolute rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-pulse;
   }
 }

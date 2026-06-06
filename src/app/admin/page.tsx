@@ -27,13 +27,14 @@ export default async function AdminDashboard() {
           {kpis.map((kpi, idx) => {
             const Icon = kpi.icon;
             return (
-              <div key={idx} className="bg-card border border-border p-6 rounded-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex items-center gap-4">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${kpi.bg}`}>
+              <div key={idx} className="bg-card border border-border/60 p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(124,58,237,0.08)] hover:-translate-y-1 transition-all duration-300 flex items-center gap-5 relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className={`w-14 h-14 rounded-xl flex items-center justify-center shrink-0 shadow-sm relative z-10 ${kpi.bg}`}>
                   <Icon className={`w-6 h-6 ${kpi.color}`} />
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">{kpi.label}</p>
-                  <h3 className="text-3xl font-bold mt-1">{kpi.value}</h3>
+                <div className="relative z-10">
+                  <p className="text-[13px] font-semibold tracking-wide text-muted-foreground uppercase">{kpi.label}</p>
+                  <h3 className="text-3xl font-heading font-bold mt-1 text-foreground">{kpi.value}</h3>
                 </div>
               </div>
             );
@@ -44,10 +45,10 @@ export default async function AdminDashboard() {
       {/* Recent Activity */}
       <section>
         <h2 className="text-xl font-heading font-bold mb-6">Recent Activity</h2>
-        <div className="bg-card border border-border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden animate-in fade-in duration-700 slide-in-from-bottom-2 delay-150 fill-mode-both">
-          <div className="divide-y divide-border">
+        <div className="bg-card border border-border/60 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-shadow duration-300 overflow-hidden animate-in fade-in duration-700 slide-in-from-bottom-2 delay-150 fill-mode-both">
+          <div className="divide-y divide-border/60">
             {recentActivity.length === 0 ? (
-              <div className="p-8 text-center text-muted-foreground">No recent activity.</div>
+              <div className="p-10 text-center text-muted-foreground">No recent activity.</div>
             ) : (
               recentActivity.map((activity, idx) => {
                 let identifier = "Unknown";
@@ -60,21 +61,21 @@ export default async function AdminDashboard() {
                 }
 
                 return (
-                  <div key={idx} className="p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-accent/5 transition-colors">
+                  <div key={idx} className="p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-muted/50 transition-colors">
                     <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="inline-flex items-center rounded-full bg-accent/10 px-3 py-1 text-[11px] font-bold tracking-wider text-accent uppercase">
                           {activity.type}
                         </span>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-[13px] font-medium text-muted-foreground">
                           {formatDistanceToNow(activity.date, { addSuffix: true })}
                         </span>
                       </div>
-                      <p className="text-foreground font-medium">{identifier}</p>
+                      <p className="text-foreground font-semibold text-base">{identifier}</p>
                     </div>
                     {activity.type !== "New User Registered" && activity.type !== "Contact Submission" && (
-                       <div className="text-sm">
-                         Status: <span className="font-semibold">{(activity.data as any).status}</span>
+                       <div className="text-sm px-4 py-2 bg-background border border-border/50 rounded-lg shadow-sm">
+                         Status: <span className="font-bold text-foreground">{(activity.data as any).status}</span>
                        </div>
                     )}
                   </div>

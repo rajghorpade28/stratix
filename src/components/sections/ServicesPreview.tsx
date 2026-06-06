@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, Share2, Target, PenTool, Search, MessageCircle, Magnet, MapPin, Layout, Cpu, Palette, AppWindow } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -74,6 +74,60 @@ const marketingServices = [
   }
 ];
 
+function TiltCard({ children, className, href, onClick }: { children: React.ReactNode, className?: string, href?: string, onClick?: any }) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7deg", "-7deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7deg", "7deg"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  const content = (
+    <motion.div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateY,
+        rotateX,
+        transformStyle: "preserve-3d",
+      }}
+      className={`relative w-full h-full ${className}`}
+    >
+      <div 
+        style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }}
+        className="w-full h-full"
+      >
+        {children}
+      </div>
+    </motion.div>
+  );
+
+  if (href) {
+    return <Link href={href} onClick={onClick} className="block w-full h-full perspective-[1000px] group">{content}</Link>;
+  }
+
+  return <div className="block w-full h-full perspective-[1000px] group">{content}</div>;
+}
+
 export function ServicesPreview() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -81,7 +135,6 @@ export function ServicesPreview() {
   const [pendingHref, setPendingHref] = useState("");
 
   const handleServiceClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    // If we're loading session, prevent navigation to avoid flickering issues
     if (status === "loading") {
       e.preventDefault();
       return;
@@ -106,9 +159,9 @@ export function ServicesPreview() {
 
         <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 md:gap-8 mb-12 md:mb-16">
           <div className="max-w-2xl">
-            <h2 className="text-sm font-medium tracking-[0.1em] text-accent uppercase mb-4">Our Expertise</h2>
+            <h2 className="text-sm font-medium tracking-[0.1em] text-accent uppercase mb-4 animate-pulse">Our Expertise</h2>
             <h3 className="text-2xl sm:text-3xl md:text-5xl font-heading font-bold tracking-tight text-foreground leading-tight">
-              Everything you need for a stronger digital presence.
+              Everything you need for a <span className="text-gradient">stronger digital presence.</span>
             </h3>
           </div>
           <div className="pb-2">
@@ -128,51 +181,49 @@ export function ServicesPreview() {
             <h3 className="text-2xl font-heading font-bold text-foreground">Services</h3>
             <p className="text-muted-foreground mt-2 text-sm md:text-base">Things we build and create for your business.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {buildServices.map((service, idx) => {
               const CardInner = (
-                <>
+                <div className="relative h-full glass rounded-2xl p-8 hover:border-accent/40 hover:shadow-[0_0_40px_rgba(124,58,237,0.15)] transition-all duration-500 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
                   <motion.div 
-                    className="w-12 h-12 rounded-full bg-accent/5 border border-accent/20 flex items-center justify-center mb-5 group-hover:bg-accent group-hover:text-primary-foreground group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 ease-out"
+                    className="w-14 h-14 rounded-xl bg-background border border-border flex items-center justify-center mb-6 relative z-10 group-hover:border-accent/50 group-hover:shadow-[0_0_20px_rgba(124,58,237,0.2)] transition-all duration-500"
                   >
-                    <service.icon className="w-5 h-5 text-accent group-hover:text-primary-foreground transition-colors duration-500" />
+                    <service.icon className="w-6 h-6 text-foreground group-hover:text-accent transition-colors duration-500" />
                   </motion.div>
-                  <h4 className="text-[17px] font-heading font-bold text-foreground mb-2 tracking-tight group-hover:text-accent transition-colors">
+                  
+                  <h4 className="text-xl font-heading font-bold text-foreground mb-3 tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-accent transition-all duration-300 relative z-10">
                     {service.name}
                   </h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
+                  
+                  <p className="text-[15px] text-muted-foreground leading-relaxed relative z-10">
                     {service.desc}
                   </p>
+                  
                   {service.ctaText && (
-                    <div className="flex items-center gap-2 text-accent font-bold text-[13px] uppercase tracking-wide overflow-hidden max-h-0 opacity-0 group-hover:max-h-12 group-hover:opacity-100 group-hover:mt-6 transition-all duration-500 ease-out">
+                    <div className="flex items-center gap-2 text-accent font-bold text-[13px] uppercase tracking-wider overflow-hidden max-h-0 opacity-0 group-hover:max-h-12 group-hover:opacity-100 group-hover:mt-8 transition-all duration-500 ease-out relative z-10">
                       {service.ctaText} <ArrowRight size={14} className="transform -translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 delay-100" />
                     </div>
                   )}
-                </>
+                </div>
               );
 
               return (
                 <motion.div 
                   key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="h-full"
+                  transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="h-full perspective-1000"
                 >
-                  {service.href ? (
-                    <Link 
-                      href={service.href}
-                      onClick={(e) => handleServiceClick(e, service.href!)}
-                      className="block h-full group p-6 bg-card border border-border/50 rounded-lg hover:border-primary/40 hover:shadow-[0_12px_40px_rgba(94,43,151,0.12)] hover:-translate-y-1 transition-all duration-300"
-                    >
-                      {CardInner}
-                    </Link>
-                  ) : (
-                    <div className="block h-full group p-6 bg-card border border-border/50 rounded-lg hover:border-primary/40 hover:shadow-[0_12px_40px_rgba(94,43,151,0.12)] hover:-translate-y-1 transition-all duration-300 cursor-default">
-                      {CardInner}
-                    </div>
-                  )}
+                  <TiltCard 
+                    href={service.href} 
+                    onClick={service.href ? (e: any) => handleServiceClick(e, service.href!) : undefined}
+                  >
+                    {CardInner}
+                  </TiltCard>
                 </motion.div>
               );
             })}
@@ -185,27 +236,35 @@ export function ServicesPreview() {
             <h3 className="text-2xl font-heading font-bold text-foreground">Marketing Services</h3>
             <p className="text-muted-foreground mt-2 text-sm md:text-base">Activities and campaigns focused on customer acquisition and business growth.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {marketingServices.map((service, idx) => (
               <motion.div 
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="group p-6 bg-card border border-border/50 rounded-lg hover:border-primary/40 hover:shadow-[0_12px_40px_rgba(94,43,151,0.12)] hover:-translate-y-1 transition-all duration-300 cursor-default"
+                transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="perspective-1000"
               >
-                <motion.div 
-                  className="w-12 h-12 rounded-full bg-accent/5 border border-accent/20 flex items-center justify-center mb-5 group-hover:bg-accent group-hover:text-primary-foreground group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 ease-out"
-                >
-                  <service.icon className="w-5 h-5 text-accent group-hover:text-primary-foreground transition-colors duration-500" />
-                </motion.div>
-                <h4 className="text-[17px] font-heading font-bold text-foreground mb-2 tracking-tight group-hover:text-accent transition-colors">
-                  {service.name}
-                </h4>
-                <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
-                  {service.desc}
-                </p>
+                <TiltCard>
+                  <div className="relative h-full glass rounded-2xl p-8 hover:border-accent/40 hover:shadow-[0_0_40px_rgba(124,58,237,0.15)] transition-all duration-500 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    <motion.div 
+                      className="w-14 h-14 rounded-xl bg-background border border-border flex items-center justify-center mb-6 relative z-10 group-hover:border-accent/50 group-hover:shadow-[0_0_20px_rgba(124,58,237,0.2)] transition-all duration-500"
+                    >
+                      <service.icon className="w-6 h-6 text-foreground group-hover:text-accent transition-colors duration-500" />
+                    </motion.div>
+                    
+                    <h4 className="text-xl font-heading font-bold text-foreground mb-3 tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-accent transition-all duration-300 relative z-10">
+                      {service.name}
+                    </h4>
+                    
+                    <p className="text-[15px] text-muted-foreground leading-relaxed relative z-10">
+                      {service.desc}
+                    </p>
+                  </div>
+                </TiltCard>
               </motion.div>
             ))}
           </div>

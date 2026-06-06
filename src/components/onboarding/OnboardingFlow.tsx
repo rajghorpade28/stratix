@@ -133,24 +133,45 @@ export function OnboardingFlow() {
             <motion.div
               key={currentStep}
               custom={direction}
-              variants={variants}
+              variants={{
+                initial: (dir: number) => ({
+                  x: dir > 0 ? 80 : -80,
+                  y: 20,
+                  opacity: 0,
+                  scale: 0.95
+                }),
+                animate: {
+                  x: 0,
+                  y: 0,
+                  opacity: 1,
+                  scale: 1,
+                  transition: { type: "spring" as const, stiffness: 350, damping: 30 }
+                },
+                exit: (dir: number) => ({
+                  x: dir > 0 ? -80 : 80,
+                  y: -20,
+                  opacity: 0,
+                  scale: 0.95,
+                  transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] }
+                })
+              }}
               initial="initial"
               animate="animate"
               exit="exit"
-              className="w-full bg-background"
+              className="w-full bg-transparent"
             >
               {renderStep()}
             </motion.div>
           </AnimatePresence>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-border/50 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
+        <div className="mt-12 pt-8 border-t border-border/40 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
           {currentStep > 1 ? (
             <button
               onClick={handleBack}
-              className="flex items-center justify-center gap-2 px-6 py-3 rounded-md font-semibold transition-colors text-muted-foreground hover:text-foreground hover:bg-accent/20 w-full sm:w-auto"
+              className="group flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl font-bold transition-all text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 w-full sm:w-auto"
             >
-              <ArrowLeft size={18} />
+              <ArrowLeft size={18} className="transform group-hover:-translate-x-1 transition-transform" />
               Back
             </button>
           ) : (
@@ -162,35 +183,37 @@ export function OnboardingFlow() {
               <button
                 type="submit"
                 form="step7-form"
-                className="flex items-center justify-center gap-2 px-8 py-3 rounded-md font-semibold transition-colors bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto shadow-md"
+                className="group relative flex items-center justify-center gap-3 px-10 py-4 rounded-xl font-bold transition-all bg-foreground text-background hover:scale-[1.02] active:scale-95 w-full sm:w-auto shadow-xl"
               >
-                Continue
-                <ArrowRight size={18} />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-20 rounded-xl transition-opacity duration-300 blur-md"></div>
+                <span className="relative z-10">Continue</span>
+                <ArrowRight size={18} className="relative z-10 transform group-hover:translate-x-1 transition-transform" />
               </button>
             ) : (
               <button
                 onClick={handleNext}
-                className="flex items-center justify-center gap-2 px-8 py-3 rounded-md font-semibold transition-colors bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto shadow-md"
+                className="group relative flex items-center justify-center gap-3 px-10 py-4 rounded-xl font-bold transition-all bg-foreground text-background hover:scale-[1.02] active:scale-95 w-full sm:w-auto shadow-xl"
               >
-                Continue
-                <ArrowRight size={18} />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-20 rounded-xl transition-opacity duration-300 blur-md"></div>
+                <span className="relative z-10">Continue</span>
+                <ArrowRight size={18} className="relative z-10 transform group-hover:translate-x-1 transition-transform" />
               </button>
             )
           ) : (
             <button
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="flex items-center justify-center gap-2 px-8 py-4 rounded-md font-bold transition-colors bg-accent text-accent-foreground hover:bg-accent/90 w-full sm:w-auto shadow-lg shadow-accent/20 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="group relative flex items-center justify-center gap-3 px-10 py-4 rounded-xl font-bold transition-all bg-gradient-to-r from-primary to-accent text-white hover:scale-[1.02] active:scale-95 w-full sm:w-auto shadow-[0_10px_30px_rgba(124,58,237,0.3)] disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <>
-                  Submitting Project...
-                  <Loader2 size={20} className="animate-spin" />
+                  <span className="relative z-10">Submitting Project...</span>
+                  <Loader2 size={20} className="relative z-10 animate-spin" />
                 </>
               ) : (
                 <>
-                  Submit Requirements
-                  <CheckCircle size={20} />
+                  <span className="relative z-10">Submit Requirements</span>
+                  <CheckCircle size={20} className="relative z-10 transform group-hover:scale-110 transition-transform" />
                 </>
               )}
             </button>

@@ -16,38 +16,51 @@ interface RadioCardProps {
 export function RadioCard({ title, description, selected, onClick, className, icon }: RadioCardProps) {
   return (
     <motion.button
-      whileHover={{ scale: 1.01 }}
+      whileHover={{ scale: 1.02, y: -2 }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
       type="button"
       className={cn(
-        "relative w-full p-4 rounded-xl border-2 text-left transition-all overflow-hidden bg-card",
+        "relative w-full p-5 rounded-2xl text-left transition-all duration-300 overflow-hidden",
         selected 
-          ? "border-primary bg-primary/5 shadow-[0_0_15px_rgba(var(--primary-color),0.1)]" 
-          : "border-border hover:border-primary/50 hover:bg-accent/30",
+          ? "glass shadow-[0_0_30px_rgba(124,58,237,0.15)] ring-2 ring-accent" 
+          : "bg-card/50 backdrop-blur-sm border border-border/60 hover:border-accent/40 hover:bg-white/40",
         className
       )}
     >
-      <div className="flex items-start gap-4">
+      {selected && (
+        <motion.div
+          layoutId="radio-card-active-bg"
+          className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/5 z-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        />
+      )}
+      
+      <div className="relative z-10 flex items-start gap-4">
         <div className={cn(
-          "mt-0.5 flex-shrink-0 flex items-center justify-center w-5 h-5 rounded-full border transition-colors",
-          selected ? "border-primary bg-primary text-primary-foreground" : "border-muted-foreground/30"
+          "mt-0.5 flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full border-2 transition-all duration-300",
+          selected ? "border-accent bg-accent text-primary-foreground shadow-[0_0_10px_rgba(124,58,237,0.4)] scale-110" : "border-muted-foreground/30"
         )}>
-          {selected && <Check size={12} strokeWidth={3} />}
+          {selected && <Check size={14} strokeWidth={3} className="animate-in zoom-in duration-200" />}
         </div>
         
         <div className="flex-1">
-          <div className="flex items-center gap-2">
-            {icon && <span className="text-primary">{icon}</span>}
+          <div className="flex items-center gap-3">
+            {icon && <span className={cn("transition-colors", selected ? "text-accent" : "text-muted-foreground")}>{icon}</span>}
             <h3 className={cn(
-              "font-heading font-semibold text-base leading-tight transition-colors",
-              selected ? "text-foreground" : "text-foreground/80"
+              "font-heading font-bold text-[1.05rem] leading-tight transition-colors",
+              selected ? "text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent" : "text-foreground/90"
             )}>
               {title}
             </h3>
           </div>
           {description && (
-            <p className="mt-1.5 text-[13px] text-muted-foreground leading-relaxed">
+            <p className={cn(
+              "mt-2 text-[13.5px] leading-relaxed transition-colors",
+              selected ? "text-foreground/80" : "text-muted-foreground"
+            )}>
               {description}
             </p>
           )}
